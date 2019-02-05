@@ -5,6 +5,8 @@ from passlib.hash import sha256_crypt
 from functools import wraps
 from pymysql.cursors import DictCursor
 from flask_sslify import SSLify
+from utilities import *
+
 
 app = Flask(__name__)
 sslify = SSLify(app)
@@ -46,25 +48,33 @@ class RegisterForm(Form):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
+    print(form.validate())
+    if request.method == 'POST': #and form.validate():
+        print("starting request")
         name = form.name.data
         email = form.email.data
         username = form.username.data
         password = sha256_crypt.encrypt(str(form.password.data))
-        # Cursor
-        conn = mysql.connect()
-        cur = conn.cursor()
-        #cur = mysql.connection.cursor()
-        x = cur.execute('SELECT * FROM users WHERE username = %s', [username])
-        if int(x) == 0:
-            cur.execute('INSERT INTO users(name, email, username, password) VALUES(%s, %s, %s, %s)', (name, email, username , password))
-            conn.commit()
-            cur.close()
-            flash('You are now registered and can log in', 'success')
-            return redirect(url_for('login'))
-        else:
-            flash('Username already exists', 'danger')
-            return redirect(url_for('register'))
+
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
+                print("checking if user exists")
+                user_exists = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+                if int(user_exists) == 0:
+                    print("inserting username etc")
+                    cursor.execute('INSERT INTO users(name, email, username, password) VALUES(%s, %s, %s, %s)', (name, email, username , password))
+                    connection.commit()
+                    flash('You are now registered and can log in', 'success')
+                    return redirect(url_for('login'))
+                else:
+                    print("username exists")
+                    flash('Username already exists', 'danger')
+                    return redirect(url_for('register'))
+        finally:
+            connection.close()
+    else:
+        print("Not post")
 
 
 
@@ -123,4 +133,4 @@ def dashboard():
     return render_template('dashboard.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(ssl_context='adhoc')
