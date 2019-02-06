@@ -1,0 +1,6 @@
+flask-mysql
+wtforms
+passlib
+PyMySQL
+flask-sslify
+pyOpenSSL

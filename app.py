@@ -48,9 +48,7 @@ class RegisterForm(Form):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
-    print(form.validate())
     if request.method == 'POST': #and form.validate():
-        print("starting request")
         name = form.name.data
         email = form.email.data
         username = form.username.data
@@ -59,24 +57,19 @@ def register():
         try:
             connection = create_connection()
             with connection.cursor() as cursor:
-                print("checking if user exists")
+                #Checking if the username is in the database
                 user_exists = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
                 if int(user_exists) == 0:
-                    print("inserting username etc")
                     cursor.execute('INSERT INTO users(name, email, username, password) VALUES(%s, %s, %s, %s)', (name, email, username , password))
                     connection.commit()
                     flash('You are now registered and can log in', 'success')
                     return redirect(url_for('login'))
                 else:
-                    print("username exists")
+                    #Redirect if username is taken
                     flash('Username already exists', 'danger')
                     return redirect(url_for('register'))
         finally:
             connection.close()
-    else:
-        print("Not post")
-
-
 
     return render_template('register.html', form=form)
 
@@ -87,10 +80,10 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password_candidate = request.form['password']
-        cur = mysql.get_db().cursor()
-        result = cur.execute('SELECT * FROM users WHERE username = %s', [username])
+        cursor = create_connection().cursor()
+        result = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
         if result > 0:
-            data = cur.fetchone()
+            data = cursor.fetchone()
             password = data['password']
             # Compare Passwords
             if sha256_crypt.verify(password_candidate, password):
@@ -103,7 +96,7 @@ def login():
             else:
                 error = 'Invalid login'
                 return render_template('login.html', error=error)
-            cur.close()
+            cursor.close()
         else:
             error = 'Username not found'
             return render_template('login.html', error=error)
