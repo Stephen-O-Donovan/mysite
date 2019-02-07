@@ -1,3 +1,4 @@
+# encoding: utf-8
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
 from flaskext.mysql import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators, TextField, SubmitField
