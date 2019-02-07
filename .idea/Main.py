@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 def main():
     print("Team 5!")
 
