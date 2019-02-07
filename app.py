@@ -1,7 +1,7 @@
 # encoding: utf-8
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
 from flaskext.mysql import MySQL
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators, TextField, SubmitField
+from wtforms import Form, SelectField, BooleanField,StringField, TextAreaField, PasswordField, validators, TextField, SubmitField
 from passlib.hash import sha256_crypt
 from functools import wraps
 from pymysql.cursors import DictCursor
@@ -36,10 +36,17 @@ def index():
 
 
 class RegisterForm(Form):
-    name = StringField('Name', [validators.Length(min=1, max=50)])
-    username = StringField('Username', [validators.Length(min=2, max=50)])
-    email = StringField('Email', [validators.Length(min=3, max=50)])
-    password = PasswordField('Password', [
+    Prefix = SelectField(u'Prefix', choices=[('mr','Mr.'),('mrs','Mrs.'),('ms','Ms.'),('dr','Dr.')])
+    First_Name = StringField('First Name', [validators.Length(min=1, max=50)])
+    SurName = StringField('SurName', [validators.Length(min=1, max=50)])
+    Suffix = SelectField(u'Suffix', choices=[('phd','PHD'),('n/a','N/A.')])
+    Email = StringField('Email', [validators.Length(min=3, max=50)])
+    Job_Title = StringField('Job Title', [validators.Length(min=2, max=50)])
+    Phone = StringField('Phone', [validators.Length(min=2, max=50)])
+    Phone_Extension = StringField('Phone Extension', [validators.Length(min=2, max=50)])
+    Administrator = BooleanField()
+
+    Password = PasswordField('Password', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
@@ -50,24 +57,30 @@ class RegisterForm(Form):
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST': #and form.validate():
-        name = form.name.data
-        email = form.email.data
-        username = form.username.data
-        password = sha256_crypt.encrypt(str(form.password.data))
+        Prefix = form.Prefix.data
+        First_Name = form.First_Name.data
+        SurName = form.SurName.data
+        Suffix = form.Suffix.data
+        Email = form.Email.data
+        Job_Title = form.Job_Title.data
+        Phone = form.Phone.data
+        Phone_Extension = form.Phone_Extension.data
+        Administrator = form.Administrator.data
+        Password = sha256_crypt.encrypt(str(form.Password.data))
 
         try:
             connection = create_connection()
             with connection.cursor() as cursor:
                 #Checking if the username is in the database
-                user_exists = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+                user_exists = cursor.execute('SELECT * FROM Registration WHERE Email = %s', [Email])
                 if int(user_exists) == 0:
-                    cursor.execute('INSERT INTO users(name, email, username, password) VALUES(%s, %s, %s, %s)', (name, email, username , password))
+                    cursor.execute('INSERT INTO Registration(Prefix,First_Name,SurName,Suffix,Email,Job_Title,Phone,Phone_Extension,Administrator,Password) VALUES( %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)', (Prefix,First_Name,SurName,Suffix,Email,Job_Title,Phone,Phone_Extension,Administrator,Password))
                     connection.commit()
                     flash('You are now registered and can log in', 'success')
                     return redirect(url_for('login'))
                 else:
                     #Redirect if username is taken
-                    flash('Username already exists', 'danger')
+                    flash('Email already in use', 'danger')
                     return redirect(url_for('register'))
         finally:
             connection.close()
