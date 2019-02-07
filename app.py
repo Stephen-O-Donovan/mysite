@@ -57,24 +57,23 @@ class RegisterForm(Form):
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST': #and form.validate():
-        Prefix = form.Prefix.data
-        First_Name = form.First_Name.data
-        SurName = form.SurName.data
-        Suffix = form.Suffix.data
-        Email = form.Email.data
-        Job_Title = form.Job_Title.data
-        Phone = form.Phone.data
-        Phone_Extension = form.Phone_Extension.data
-        Administrator = form.Administrator.data
-        Password = sha256_crypt.encrypt(str(form.Password.data))
+        prefix = form.Prefix.data
+        first_name = form.First_Name.data
+        surname = form.SurName.data
+        suffix = form.Suffix.data
+        email = form.Email.data
+        job_title = form.Job_Title.data
+        phone = form.Phone.data
+        phone_extension = form.Phone_Extension.data
+        password = sha256_crypt.encrypt(str(form.Password.data))
 
         try:
             connection = create_connection()
             with connection.cursor() as cursor:
                 #Checking if the username is in the database
-                user_exists = cursor.execute('SELECT * FROM Registration WHERE Email = %s', [Email])
+                user_exists = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
                 if int(user_exists) == 0:
-                    cursor.execute('INSERT INTO Registration(Prefix,First_Name,SurName,Suffix,Email,Job_Title,Phone,Phone_Extension,Administrator,Password) VALUES( %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)', (Prefix,First_Name,SurName,Suffix,Email,Job_Title,Phone,Phone_Extension,Administrator,Password))
+                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,suffix,email,job_title,phone,phone_extension,password) VALUES( %s,%s, %s, %s, %s, %s, %s, %s, %s)', (prefix,first_name,surname,suffix,email,job_title,phone,phone_extension,password))
                     connection.commit()
                     flash('You are now registered and can log in', 'success')
                     return redirect(url_for('login'))
@@ -92,10 +91,10 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password_candidate = request.form['password']
         cursor = create_connection().cursor()
-        result = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+        result = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
         if result > 0:
             data = cursor.fetchone()
             password = data['password']
@@ -103,7 +102,7 @@ def login():
             if sha256_crypt.verify(password_candidate, password):
                 # Passed
                 session['logged_in'] = True
-                session['username'] = username
+                session['email'] = email
 
                 flash('You are now logged in', 'success')
                 return redirect(url_for('dashboard'))
