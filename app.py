@@ -147,44 +147,60 @@ def show_profile():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
-            #Checking if the email is in the profile tables and users teable
+            #get data from tables
             cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
             p1_data = cursor.fetchone()
-            cursor.execute('SELECT * FROM Profile_Academic_Col WHERE email = %s', [email])
+
+            cursor.execute('SELECT * FROM Profile_Education_Info WHERE email = %s', [email])
             p2_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_Communication WHERE email = %s', [email])
-            p3_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_DandA WHERE email = %s', [email])
-            p4_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_Education_info WHERE email = %s', [email])
-            p5_data = cursor.fetchall()
+
             cursor.execute('SELECT * FROM Profile_Employment WHERE email = %s', [email])
-            p6_data = cursor.fetchall()
+            p3_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Profess_soc WHERE email = %s', [email])
+            p4_data = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM Profile_DandA WHERE email = %s', [email])
+            p5_data = cursor.fetchall()
+            
             cursor.execute('SELECT * FROM Profile_Funding WHERE email = %s', [email])
+            p6_data = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM Profile_Teamate WHERE email = %s', [email])
             p7_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_IandC WHERE email = %s', [email])
-            p8_data = cursor.fetchall()
+            
             cursor.execute('SELECT * FROM Profile_Impact WHERE email = %s', [email])
+            p8_data = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM Profile_IandC WHERE email = %s', [email])
             p9_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_None_Academic_Col WHERE email = %s', [email])
+            
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s', [email])
             p10_data = cursor.fetchall()
+            
             cursor.execute('SELECT * FROM Profile_Presentation WHERE email = %s', [email])
             p11_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_Profess_soc WHERE email = %s', [email])
+            
+            cursor.execute('SELECT * FROM Profile_Academic_Col WHERE email = %s', [email])
             p12_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_Public_Engagement WHERE email = %s', [email])
+            
+            cursor.execute('SELECT * FROM Profile_None_Academic_Col WHERE email = %s', [email])
             p13_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s', [email])
-            p14_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_SFI_Fund_Ratio WHERE email = %s', [email])
-            p15_data = cursor.fetchall()
-            cursor.execute('SELECT * FROM Profile_Teamate WHERE email = %s', [email])
-            p16_data = cursor.fetchall()
+            
             cursor.execute('SELECT * FROM Profile_Workshop WHERE email = %s', [email])
+            p14_data = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM Profile_Communication WHERE email = %s', [email])
+            p15_data = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM Profile_SFI_Fund_Ratio WHERE email = %s', [email])
+            p16_data = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM Profile_Public_Engagement WHERE email = %s', [email])
             p17_data = cursor.fetchall()
     finally:
         connection.close()
-    return render_template('show_profile.html')
+    return render_template('show_profile.html', p1_data=p1_data,p2_data=p2_data,p3_data=p3_data)
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
