@@ -135,8 +135,203 @@
             <li class="breadcrumb-item">
               <a href="#">Profile</a>
             </li>
-            <li class="breadcrumb-item active">Overview</li>
           </ol>
+
+          <h3>General Information</h3>
+            <ul>
+                <li>First Name: {{ p1_data.firstname }}</li>
+                <li>Last Name: {{ p1_data.surname }}</li>
+                <li>Job Title: {{ p1_data.job_title }}</li>
+                <li>Prefix: {{ p1_data.prefix }}</li>
+                <li>Suffix: {{ p1_data.suffix }}</li>
+                <li>Phone: {{ p1_data.phone }}</li>
+                <li>Phone Extension: {{ p1_data.phone_extension }}</li>
+                <li>Email: {{ p1_data.email }}</li>
+                <li>ORCID: {{ p1_data.orcid }}</li>
+            </ul>
+
+          <h3>Profile Information</h3>
+            <h5>Education Information:</h5>
+                {% for row in p2_data %}
+                <ul>
+                    <li>Degree: {{ row.degree }}</li>
+                    <li>Field of Study: {{ row.field_of_study }}</li>
+                    <li>Institution: {{ row.institution }}</li>
+                    <li>Location: {{ row.location }}</li>
+                    <li>Year of Degree Award: {{ row.degree_year }}</li>
+                </ul>
+                {% endfor %}
+            <h5>Employment:</h5>
+                {% for row in p3_data %}
+                <ul>
+                    <li>Institution/Company: {{ row.institution }}</li>
+                    <li>Location: {{ row.location }}</li>
+                    <li>Years: {{ row.degree_year }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Professional Societies (Membership):</h5>
+                {% for row in p4_data %}
+                <ul>
+                    <li>Start Date: {{ row.start_date }}</li>
+                    <li>End Date: {{ row.end_date }}</li>
+                    <li>Name Of Society: {{ row.name_of_soc }}</li>
+                    <li>Type of Membership: {{ row.type_of_membership }}</li>
+                    <li>Status: {{ row.status }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Distinctions and Awards:</h5>
+              {% for row in p5_data %}
+                <ul>
+                    <li>Year: {{ row.DandA_year }}</li>
+                    <li>Awarding Body: {{ row.award_body }}</li>
+                    <li>Details of Award: {{ row.detail }}</li>
+                    <li>Team Member Name: {{ row.teamate_name }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Funding Diversification:</h5>
+                {% for row in p6_data %}
+                <ul>
+                    <li>Start Date: {{ row.start_date }}</li>
+                    <li>End Date: {{ row.end_date }}</li>
+                    <li>Amount of Funding: {{ row.amount_fund }}</li>
+                    <li>Funding Body: {{ row.fund_body }}</li>
+                    <li>Funding Programme: {{ row.fund_program }}</li>
+                    <li>Status: {{ row.status }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Team members:</h5>
+                {% for row in p7_data %}
+                <ul>
+                    <li>Start Date with Team: {{ row.degree }}</li>
+                    <li>Departure date: {{ row.field_of_study }}</li>
+                    <li>Name: {{ row.institution }}</li>
+                    <li>Position within the Team: {{ row.location }}</li>
+                    <li>Primary Attribution: {{ row.degree_year }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Impacts:</h5>
+                {% for row in p8_data %}
+                <ul>
+                    <li>Impact Title: {{ row.impact_title }}</li>
+                    <li>Impact Category: {{ row.impact_category }}</li>
+                    <li>Primary Beneficiary: {{ row.primary_beneficiary }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Innovation and Commercialisation:</h5>
+                {% for row in p9_data %}
+                <ul>
+                    <li>Year: {{ row.IandC_year }}</li>
+                    <li>Type: {{ row.IandC_type }}</li>
+                    <li>Title: {{ row.primary_beneficiary }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Publications:</h5>
+                {% for row in p10_data %}
+                <ul>
+                    <li>Publication Year: {{ row.pub_yr }}</li>
+                    <li>Publication Type: {{ row.pub_type }}</li>
+                    <li>Title: {{ row.title }}</li>
+                    <li>Journal/Conferencename: {{ row.journal_name }}</li>
+                    <li>Publication Status: {{ row.pub_status }}</li>
+                    <li>DOI: {{ row.DOI }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+            <h5>Presentations:</h5>
+                {% for row in p11_data %}
+                <ul>
+                    <li>Year: {{ row.presentation_year }}</li>
+                    <li>Title of Presentation: {{ row.title }}</li>
+                    <li>Event Type: {{ row.evt_type }}</li>
+                    <li>Organising Body: {{ row.org_body }}</li>
+                    <li>Location: {{ row.location }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Academic Collaborations:</h5>
+                {% for row in p12_data %}
+                <ul>
+                    <li>Start Date: {{ row.start_date }}</li>
+                    <li>End Date: {{ row.end_date }}</li>
+                    <li>Name of Institution: {{ row.institution_name }}</li>
+                    <li>Department within Institution: {{ row.department_in_institution }}</li>
+                    <li>Location: {{ row.location }}</li>
+                    <li>Name of Collaborator: {{ row.collaborator_name }}</li>
+                    <li>Primary Goal of Collaboration: {{ row.primary_goal }}</li>
+                    <li>Frequency Of Interaction: {{ row.frequency_of_interaction }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>None-academic Collaborations:</h5>
+                {% for row in p13_data %}
+                <ul>
+                    <li>Start Date: {{ row.start_date }}</li>
+                    <li>End Date: {{ row.end_date }}</li>
+                    <li>Name of Institution: {{ row.institution_name }}</li>
+                    <li>Department within Institution: {{ row.department_in_institution }}</li>
+                    <li>Location: {{ row.location }}</li>
+                    <li>Name of Collaborator: {{ row.collaborator_name }}</li>
+                    <li>Primary Goal of Collaboration: {{ row.primary_goal }}</li>
+                    <li>Frequency Of Interaction: {{ row.frequency_of_interaction }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Conferences/Workshops/Seminars Organized:</h5>
+                {% for row in p14_data %}
+                <ul>
+                    <li>Start Date: {{ row.start_date }}</li>
+                    <li>End Date: {{ row.end_date }}</li>
+                    <li>Title: {{ row.title }}</li>
+                    <li>Event Type: {{ row.evt_type }}</li>
+                    <li>Role: {{ row.evt_role }}</li>
+                    <li>Location of Event: {{ row.evt_location }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Communications Overview:</h5>
+                {% for row in p15_data %}
+                <ul>
+                    <li>Year: {{ row.comm_year }}</li>
+                    <li>Number of Publiclectures/Demonstrations: {{ row.public_lecture_no }}</li>
+                    <li>Number of Visits: {{ row.visits_no }}</li>
+                    <li>Number of Media Interactions: {{ row.media_interaction_no }}</li>
+                </ul>
+                {% endfor %}
+            
+            <h5>SFI Funding Ratio:</h5>
+                {% for row in p16_data %}
+                <ul>
+                    <li>Year: {{ row.fund_year }}</li>
+                    <li>Percentage of Annual Spend From SFI: {{ row.percentage }}</li>
+                </ul>
+                {% endfor %}
+
+            <h5>Education and Public Engagement:</h5>
+                {% for row in p17_data %}
+                <ul>
+                    <li>Name of project: {{ row.project_name }}</li>
+                    <li>Start Date: {{ row.start_date }}</li>
+                    <li>End Date: {{ row.end_date }}</li>
+                    <li>Activity Type: {{ row.activity_type }}</li>
+                    <li>Project Topic: {{ row.project_topic }}</li>
+                    <li>Target Geographical Area: {{ row.target_area }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                {% endfor %}
 
 
         <!-- Sticky Footer -->
