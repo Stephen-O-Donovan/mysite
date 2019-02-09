@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+import os
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
 from flaskext.mysql import MySQL
 from wtforms import Form, SelectField, BooleanField,StringField, TextAreaField, PasswordField, validators, TextField, SubmitField
@@ -7,7 +8,10 @@ from functools import wraps
 from pymysql.cursors import DictCursor
 from flask_sslify import SSLify
 from utilities import *
+from werkzeug.utils import secure_filename
 
+
+UPLOAD_FOLDER = 'storage/proposals'
 
 app = Flask(__name__)
 sslify = SSLify(app)
@@ -24,6 +28,7 @@ app.config['MYSQL_DATABASE_USER'] = 'team5ucc'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'alphaVase'
 app.config['MYSQL_DATABASE_DB'] = 'team5ucc$users'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 # Initialise MySQL
@@ -51,6 +56,10 @@ class RegisterForm(Form):
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
     confirm = PasswordField('Confirm Password')
+
+
+class CreateProposalForm(Form):
+    proposal_name = StringField('Proposal Name', [validators.Length(min=1, max=300)])
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -201,6 +210,48 @@ def show_profile():
     finally:
         connection.close()
     return render_template('show_profile.html', p1_data=p1_data,p2_data=p2_data,p3_data=p3_data)
+
+@app.route('/proposalcreation', methods=['GET', 'POST'])
+def create_proposal():
+    form = CreateProposalForm(request.form)
+    if request.method == 'POST':
+        if 'DescriptionOfTargetGroup' not in request.files or 'DescriptionOfProposalDeadlines' not in request.files:
+            flash('Please include all files')
+            print(request.files)
+            return redirect(request.url)
+
+        description_of_target_group = request.files['DescriptionOfTargetGroup']
+        description_of_proposal_deadlines = request.files['DescriptionOfProposalDeadlines']
+
+        if description_of_target_group.filename == '' or description_of_proposal_deadlines.filename == '':
+            flash('Please include all files')
+            print("1")
+            return redirect(request.url)
+
+        if description_of_target_group and allowed_file(description_of_target_group.filename):
+            target_group_filename = secure_filename(description_of_target_group.filename)
+            description_of_target_group.save(os.path.join(app.config['UPLOAD_FOLDER'], target_group_filename))
+
+        if description_of_proposal_deadlines and allowed_file(description_of_proposal_deadlines.filename):
+            proposal_deadline_filename = secure_filename(description_of_proposal_deadlines.filename)
+            description_of_proposal_deadlines.save(os.path.join(app.config['UPLOAD_FOLDER'], proposal_deadline_filename))
+
+            try:
+                connection = create_connection()
+
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        'INSERT INTO CFP(proposal_name, description_of_target_group, description_of_proposal_deadlines) VALUES( %s, %s, %s)',
+                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename))
+                    connection.commit()
+                    flash('Your files have been uploaded', 'success')
+
+            finally:
+                connection.close()
+
+        flash('File Uploaded')
+    return render_template('admin_create_proposal.html', form=form)
+
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
