@@ -166,7 +166,7 @@
                 <ul>
                     <li>Institution/Company: {{ row.institution }}</li>
                     <li>Location: {{ row.location }}</li>
-                    <li>Years: {{ row.degree_year }}</li>
+                    <li>Years: {{ row.emp_years }}</li>
                 </ul>
                 {% endfor %}
 
@@ -207,11 +207,11 @@
             <h5>Team members:</h5>
                 {% for row in p7_data %}
                 <ul>
-                    <li>Start Date with Team: {{ row.degree }}</li>
-                    <li>Departure date: {{ row.field_of_study }}</li>
-                    <li>Name: {{ row.institution }}</li>
-                    <li>Position within the Team: {{ row.location }}</li>
-                    <li>Primary Attribution: {{ row.degree_year }}</li>
+                    <li>Start Date with Team: {{ row.start_date }}</li>
+                    <li>Departure date: {{ row.depart_date }}</li>
+                    <li>Name: {{ row.name }}</li>
+                    <li>Position within the Team: {{ row.position }}</li>
+                    <li>Primary Attribution: {{ row.grant_no }}</li>
                 </ul>
                 {% endfor %}
 
@@ -228,9 +228,9 @@
             <h5>Innovation and Commercialisation:</h5>
                 {% for row in p9_data %}
                 <ul>
-                    <li>Year: {{ row.IandC_year }}</li>
-                    <li>Type: {{ row.IandC_type }}</li>
-                    <li>Title: {{ row.primary_beneficiary }}</li>
+                    <li>Year: {{ row.year }}</li>
+                    <li>Type: {{ row.type }}</li>
+                    <li>Title: {{ row.title }}</li>
                     <li>Primary Attribution: {{ row.grant_no }}</li>
                 </ul>
                 {% endfor %}
