@@ -200,7 +200,7 @@ def show_profile():
             p17_data = cursor.fetchall()
     finally:
         connection.close()
-    return render_template('show_profile.html', p1_data=p1_data,p2_data=p2_data,p3_data=p3_data)
+    return render_template('show_profile.html', p1_data=p1_data,p2_data=p2_data,p3_data=p3_data,p4_data=p4_data,p5_data=p5_data,p6_data=p6_data,p7_data=p7_data,p8_data=p8_data,p9_data=p9_data,p10_data=p10_data,p11_data=p11_data,p12_data=p12_data,p13_data=p13_data,p14_data=p14_data,p15_data=p15_data,p16_data=p16_data,p17_data=p17_data)
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
