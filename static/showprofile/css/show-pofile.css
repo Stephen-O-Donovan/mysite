@@ -5,3 +5,33 @@
   margin-left: auto;
 }
 
+.container .btn.btn-info{
+	background-color: powderblue;
+	color: black;
+}
+
+.container .panel-group h5{
+	border: 2px solid LightGrey;
+  	border-radius: 5px;
+  	background-color:orange;
+}
+
+.container .panel-group a{
+	color: black; 
+	text-decoration: none;
+}
+
+.col-sm-10{
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding: 5px;
+}
+
+.container .panel-group p{
+	margin-bottom:0;
+	border: 2px solid LightGrey;
+  	border-radius: 5px;
+  	background-color: lightgreen; 
+	text-decoration: underline;
+}
