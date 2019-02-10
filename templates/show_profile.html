@@ -130,208 +130,477 @@
 
         <div class="container-fluid">
 
+         
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
               <a href="#">Profile</a>
             </li>
+            <li class="breadcrumb-item"><a href="url_for('eidt_profile')">Check Here to Edit Your Profile</a></li>
           </ol>
 
-          <h3>General Information</h3>
-            <ul>
-                <li>First Name: {{ p1_data.first_name }}</li>
-                <li>Last Name: {{ p1_data.surname }}</li>
-                <li>Job Title: {{ p1_data.job_title }}</li>
-                <li>Prefix: {{ p1_data.prefix }}</li>
-                <li>Suffix: {{ p1_data.suffix }}</li>
-                <li>Phone: {{ p1_data.phone }}</li>
-                <li>Phone Extension: {{ p1_data.phone_extension }}</li>
-                <li>Email: {{ p1_data.email }}</li>
-                <li>ORCID: {{ p1_data.orcid }}</li>
+
+          <!--Profile show here-->
+          <div class="container">
+          <a href="#general" class="btn btn-info" data-toggle="collapse"><h3>General Information</h3></a>
+          <div id="general" class="collapse">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-dark">First Name: {{ p1_data.first_name }}</li>
+                <li class="list-group-item list-group-item-dark">Last Name: {{ p1_data.surname }}</li>
+                <li class="list-group-item list-group-item-dark">Job Title: {{ p1_data.job_title }}</li>
+                <li class="list-group-item list-group-item-dark">Prefix: {{ p1_data.prefix }}</li>
+                <li class="list-group-item list-group-item-dark">Suffix: {{ p1_data.suffix }}</li>
+                <li class="list-group-item list-group-item-dark">Phone: {{ p1_data.phone }}</li>
+                <li class="list-group-item list-group-item-dark">Phone Extension: {{ p1_data.phone_extension }}</li>
+                <li class="list-group-item list-group-item-dark">Email: {{ p1_data.email }}</li>
+                <li class="list-group-item list-group-item-dark">ORCID: {{ p1_data.orcid }}</li>
             </ul>
 
+            </div>
+         </div>
+
+<div class="container">
+        <a href="#profile" class="btn btn-info" data-toggle="collapse"> 
           <h3>Profile Information</h3>
-            <h5>Education Information:</h5>
+         </a>
+         <div id="profile" class="collapse">
+        <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+        <a data-toggle="collapse" href="#collapse1">
+                Education Information
+        </a>
+      </h5>
+    </div>
                 {% for row in p2_data %}
-                <ul>
-                    <li>Degree: {{ row.degree }}</li>
-                    <li>Field of Study: {{ row.field_of_study }}</li>
-                    <li>Institution: {{ row.institution }}</li>
-                    <li>Location: {{ row.location }}</li>
-                    <li>Year of Degree Award: {{ row.degree_year }}</li>
+                <div id="collapse1" class="panel-collapse collapse">
+                <p>Education detail: {{loop.index}}</p>
+                    <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Degree: {{ row.degree }}</li>
+                    <li class="list-group-item list-group-item-dark">Field of Study: {{ row.field_of_study }}</li>
+                    <li class="list-group-item list-group-item-dark">Institution: {{ row.institution }}</li>
+                    <li class="list-group-item list-group-item-dark">Location: {{ row.location }}</li>
+                    <li class="list-group-item list-group-item-dark">Year of Degree Award: {{ row.degree_year }}</li>
                 </ul>
+                </div>
+
                 {% endfor %}
-            <h5>Employment:</h5>
+        </div>
+    </div>
+</div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+        <a data-toggle="collapse" href="#collapse2">
+                Employment
+        </a>
+      </h5>
+    </div>
+                
                 {% for row in p3_data %}
-                <ul>
-                    <li>Institution/Company: {{ row.institution }}</li>
-                    <li>Location: {{ row.location }}</li>
-                    <li>Years: {{ row.emp_years }}</li>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <p>Employment detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Institution/Company: {{ row.institution }}</li>
+                    <li class="list-group-item list-group-item-dark">Location: {{ row.location }}</li>
+                    <li class="list-group-item list-group-item-dark">Years: {{ row.emp_years }}</li>
                 </ul>
+                </div>
                 {% endfor %}
+        </div>
+    </div>
+</div>
 
-            <h5>Professional Societies (Membership):</h5>
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+        <a data-toggle="collapse" href="#collapse3">
+                Professional Societies (Membership)
+        </a>
+      </h5>
+    </div>
                 {% for row in p4_data %}
-                <ul>
-                    <li>Start Date: {{ row.start_date }}</li>
-                    <li>End Date: {{ row.end_date }}</li>
-                    <li>Name Of Society: {{ row.name_of_soc }}</li>
-                    <li>Type of Membership: {{ row.type_of_membership }}</li>
-                    <li>Status: {{ row.status }}</li>
-                </ul>
-                {% endfor %}
 
-            <h5>Distinctions and Awards:</h5>
-              {% for row in p5_data %}
-                <ul>
-                    <li>Year: {{ row.DandA_year }}</li>
-                    <li>Awarding Body: {{ row.award_body }}</li>
-                    <li>Details of Award: {{ row.detail }}</li>
-                    <li>Team Member Name: {{ row.teamate_name }}</li>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <p>Membership detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Start Date: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">End Date: {{ row.end_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Name Of Society: {{ row.name_of_soc }}</li>
+                    <li class="list-group-item list-group-item-dark">Type of Membership: {{ row.type_of_membership }}</li>
+                    <li class="list-group-item list-group-item-dark">Status: {{ row.status }}</li>
                 </ul>
+                </div>
                 {% endfor %}
+        </div>
+    </div>
+</div>
 
-            <h5>Funding Diversification:</h5>
-                {% for row in p6_data %}
-                <ul>
-                    <li>Start Date: {{ row.start_date }}</li>
-                    <li>End Date: {{ row.end_date }}</li>
-                    <li>Amount of Funding: {{ row.amount_fund }}</li>
-                    <li>Funding Body: {{ row.fund_body }}</li>
-                    <li>Funding Programme: {{ row.fund_program }}</li>
-                    <li>Status: {{ row.status }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse4">
+                Distinctions and Awards
+            </a>
+      </h5>
+    </div>
 
-            <h5>Team members:</h5>
-                {% for row in p7_data %}
-                <ul>
-                    <li>Start Date with Team: {{ row.start_date }}</li>
-                    <li>Departure date: {{ row.depart_date }}</li>
-                    <li>Name: {{ row.name }}</li>
-                    <li>Position within the Team: {{ row.position }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
+               {% for row in p5_data %}
+                <div id="collapse4" class="panel-collapse collapse">
+                    <p>Award detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Year: {{ row.DandA_year }}</li>
+                    <li class="list-group-item list-group-item-dark">Awarding Body: {{ row.award_body }}</li>
+                    <li class="list-group-item list-group-item-dark">Details of Award: {{ row.detail }}</li>
+                    <li class="list-group-item list-group-item-dark">Team Member Name: {{ row.teamate_name }}</li>
                 </ul>
+                </div>
                 {% endfor %}
+            </div>
+        </div>
+    </div>
 
-            <h5>Impacts:</h5>
-                {% for row in p8_data %}
-                <ul>
-                    <li>Impact Title: {{ row.impact_title }}</li>
-                    <li>Impact Category: {{ row.impact_category }}</li>
-                    <li>Primary Beneficiary: {{ row.primary_beneficiary }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-
-            <h5>Innovation and Commercialisation:</h5>
-                {% for row in p9_data %}
-                <ul>
-                    <li>Year: {{ row.year }}</li>
-                    <li>Type: {{ row.type }}</li>
-                    <li>Title: {{ row.title }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-
-            <h5>Publications:</h5>
-                {% for row in p10_data %}
-                <ul>
-                    <li>Publication Year: {{ row.pub_yr }}</li>
-                    <li>Publication Type: {{ row.pub_type }}</li>
-                    <li>Title: {{ row.title }}</li>
-                    <li>Journal/Conferencename: {{ row.journal_name }}</li>
-                    <li>Publication Status: {{ row.pub_status }}</li>
-                    <li>DOI: {{ row.DOI }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-            <h5>Presentations:</h5>
-                {% for row in p11_data %}
-                <ul>
-                    <li>Year: {{ row.presentation_year }}</li>
-                    <li>Title of Presentation: {{ row.title }}</li>
-                    <li>Event Type: {{ row.evt_type }}</li>
-                    <li>Organising Body: {{ row.org_body }}</li>
-                    <li>Location: {{ row.location }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-
-            <h5>Academic Collaborations:</h5>
-                {% for row in p12_data %}
-                <ul>
-                    <li>Start Date: {{ row.start_date }}</li>
-                    <li>End Date: {{ row.end_date }}</li>
-                    <li>Name of Institution: {{ row.institution_name }}</li>
-                    <li>Department within Institution: {{ row.department_in_institution }}</li>
-                    <li>Location: {{ row.location }}</li>
-                    <li>Name of Collaborator: {{ row.collaborator_name }}</li>
-                    <li>Primary Goal of Collaboration: {{ row.primary_goal }}</li>
-                    <li>Frequency Of Interaction: {{ row.frequency_of_interaction }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-
-            <h5>None-academic Collaborations:</h5>
-                {% for row in p13_data %}
-                <ul>
-                    <li>Start Date: {{ row.start_date }}</li>
-                    <li>End Date: {{ row.end_date }}</li>
-                    <li>Name of Institution: {{ row.institution_name }}</li>
-                    <li>Department within Institution: {{ row.department_in_institution }}</li>
-                    <li>Location: {{ row.location }}</li>
-                    <li>Name of Collaborator: {{ row.collaborator_name }}</li>
-                    <li>Primary Goal of Collaboration: {{ row.primary_goal }}</li>
-                    <li>Frequency Of Interaction: {{ row.frequency_of_interaction }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-
-            <h5>Conferences/Workshops/Seminars Organized:</h5>
-                {% for row in p14_data %}
-                <ul>
-                    <li>Start Date: {{ row.start_date }}</li>
-                    <li>End Date: {{ row.end_date }}</li>
-                    <li>Title: {{ row.title }}</li>
-                    <li>Event Type: {{ row.evt_type }}</li>
-                    <li>Role: {{ row.evt_role }}</li>
-                    <li>Location of Event: {{ row.evt_location }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
-                </ul>
-                {% endfor %}
-
-            <h5>Communications Overview:</h5>
-                {% for row in p15_data %}
-                <ul>
-                    <li>Year: {{ row.comm_year }}</li>
-                    <li>Number of Publiclectures/Demonstrations: {{ row.public_lecture_no }}</li>
-                    <li>Number of Visits: {{ row.visits_no }}</li>
-                    <li>Number of Media Interactions: {{ row.media_interaction_no }}</li>
-                </ul>
-                {% endfor %}
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse5">
+                Funding Diversification
+            </a>
+        </h5>
+    </div>
             
-            <h5>SFI Funding Ratio:</h5>
-                {% for row in p16_data %}
-                <ul>
-                    <li>Year: {{ row.fund_year }}</li>
-                    <li>Percentage of Annual Spend From SFI: {{ row.percentage }}</li>
+                {% for row in p6_data %}
+                <div id="collapse5" class="panel-collapse collapse">
+                    <p>Funding detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Start Date: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">End Date: {{ row.end_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Amount of Funding: {{ row.amount_fund }}</li>
+                    <li class="list-group-item list-group-item-dark">Funding Body: {{ row.fund_body }}</li>
+                    <li class="list-group-item list-group-item-dark">Funding Programme: {{ row.fund_program }}</li>
+                    <li class="list-group-item list-group-item-dark">Status: {{ row.status }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
                 </ul>
+                </div>
                 {% endfor %}
+            </div>
+        </div>
+    </div>
 
-            <h5>Education and Public Engagement:</h5>
-                {% for row in p17_data %}
-                <ul>
-                    <li>Name of project: {{ row.project_name }}</li>
-                    <li>Start Date: {{ row.start_date }}</li>
-                    <li>End Date: {{ row.end_date }}</li>
-                    <li>Activity Type: {{ row.activity_type }}</li>
-                    <li>Project Topic: {{ row.project_topic }}</li>
-                    <li>Target Geographical Area: {{ row.target_area }}</li>
-                    <li>Primary Attribution: {{ row.grant_no }}</li>
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse6">
+                Team members
+            </a>
+        </h5>
+    </div>
+            
+                {% for row in p7_data %}
+                <div id="collapse6" class="panel-collapse collapse">
+                    <p>Team Member detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Start Date with Team: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Departure date: {{ row.depart_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Name: {{ row.name }}</li>
+                    <li class="list-group-item list-group-item-dark">Position within the Team: {{ row.position }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
                 </ul>
+            </div>
                 {% endfor %}
+           </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse7">
+                Impacts
+            </a>
+        </h5>
+    </div>
+            
+                {% for row in p8_data %}
+                <div id="collapse7" class="panel-collapse collapse">
+                    <p>Impact detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Impact Title: {{ row.impact_title }}</li>
+                    <li class="list-group-item list-group-item-dark">Impact Category: {{ row.impact_category }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Beneficiary: {{ row.primary_beneficiary }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse8">
+                Innovation and Commercialisation
+            </a>
+        </h5>
+    </div>
+                {% for row in p9_data %}
+                <div id="collapse8" class="panel-collapse collapse">
+                    <p>Innovation detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Year: {{ row.year }}</li>
+                    <li class="list-group-item list-group-item-dark">Type: {{ row.type }}</li>
+                    <li class="list-group-item list-group-item-dark">Title: {{ row.title }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse9">
+                Publications
+            </a>
+        </h5>
+    </div>
+
+                {% for row in p10_data %}
+                <div id="collapse9" class="panel-collapse collapse">
+                    <p>Publication detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Publication Year: {{ row.pub_yr }}</li>
+                    <li class="list-group-item list-group-item-dark">Publication Type: {{ row.pub_type }}</li>
+                    <li class="list-group-item list-group-item-dark">Title: {{ row.title }}</li>
+                    <li class="list-group-item list-group-item-dark">Journal/Conferencename: {{ row.journal_name }}</li>
+                    <li class="list-group-item list-group-item-dark">Publication Status: {{ row.pub_status }}</li>
+                    <li class="list-group-item list-group-item-dark">DOI: {{ row.DOI }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+           <a data-toggle="collapse" href="#collapse10">
+                Presentations
+            </a>
+        </h5>
+    </div>
+                {% for row in p11_data %}
+                <div id="collapse10" class="panel-collapse collapse">
+                    <p>Presentation detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Year: {{ row.presentation_year }}</li>
+                    <li class="list-group-item list-group-item-dark">Title of Presentation: {{ row.title }}</li>
+                    <li class="list-group-item list-group-item-dark">Event Type: {{ row.evt_type }}</li>
+                    <li class="list-group-item list-group-item-dark">Organising Body: {{ row.org_body }}</li>
+                    <li class="list-group-item list-group-item-dark">Location: {{ row.location }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse11">
+                Academic Collaborations
+            </a>
+        </h5>
+    </div>
+            
+                {% for row in p12_data %}
+                <div id="collapse11" class="panel-collapse collapse">
+                    <p>Academic Collaboration detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Start Date: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">End Date: {{ row.end_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Name of Institution: {{ row.institution_name }}</li>
+                    <li class="list-group-item list-group-item-dark">Department within Institution: {{ row.department_in_institution }}</li>
+                    <li class="list-group-item list-group-item-dark">Location: {{ row.location }}</li>
+                    <li class="list-group-item list-group-item-dark">Name of Collaborator: {{ row.collaborator_name }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Goal of Collaboration: {{ row.primary_goal }}</li>
+                    <li class="list-group-item list-group-item-dark">Frequency Of Interaction: {{ row.frequency_of_interaction }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+           </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse12">
+                None-academic Collaborations
+            </a>
+        </h5>
+    </div>
+                {% for row in p13_data %}
+                <div id="collapse12" class="panel-collapse collapse">
+                    <p>None-academic Collaboration detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Start Date: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">End Date: {{ row.end_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Name of Institution: {{ row.institution_name }}</li>
+                    <li class="list-group-item list-group-item-dark">Department within Institution: {{ row.department_in_institution }}</li>
+                    <li class="list-group-item list-group-item-dark">Location: {{ row.location }}</li>
+                    <li class="list-group-item list-group-item-dark">Name of Collaborator: {{ row.collaborator_name }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Goal of Collaboration: {{ row.primary_goal }}</li>
+                    <li class="list-group-item list-group-item-dark">Frequency Of Interaction: {{ row.frequency_of_interaction }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse13">
+                Conferences/Workshops/Seminars Organized
+            </a>
+        </h5>
+    </div>
+                {% for row in p14_data %}
+                <div id="collapse13" class="panel-collapse collapse">
+                    <p>Conferences/Workshops/Seminars Organized detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Start Date: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">End Date: {{ row.end_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Title: {{ row.title }}</li>
+                    <li class="list-group-item list-group-item-dark">Event Type: {{ row.evt_type }}</li>
+                    <li class="list-group-item list-group-item-dark">Role: {{ row.evt_role }}</li>
+                    <li class="list-group-item list-group-item-dark">Location of Event: {{ row.evt_location }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse14">
+                Communications Overview
+            </a>
+        </h5>
+    </div>
+                {% for row in p15_data %}
+                <div id="collapse14" class="panel-collapse collapse">
+                    <p>Communication detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Year: {{ row.comm_year }}</li>
+                    <li class="list-group-item list-group-item-dark">Number of Publiclectures/Demonstrations: {{ row.public_lecture_no }}</li>
+                    <li class="list-group-item list-group-item-dark">Number of Visits: {{ row.visits_no }}</li>
+                    <li class="list-group-item list-group-item-dark">Number of Media Interactions: {{ row.media_interaction_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+            
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse15">
+                SFI Funding Ratio
+            </a>
+        </h5>
+    </div>
+                {% for row in p16_data %}
+                <div id="collapse15" class="panel-collapse collapse">
+                    <p>SFI Funding Ratio detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Year: {{ row.fund_year }}</li>
+                    <li class="list-group-item list-group-item-dark">Percentage of Annual Spend From SFI: {{ row.percentage }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+           </div>
+        </div>
+    </div>
+
+            <div class="col-sm-10">
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h5 class="panel-title">
+            <a data-toggle="collapse" href="#collapse16">
+                Education and Public Engagement
+            </a>
+        </h5>
+    </div>
+                {% for row in p17_data %}
+                <div id="collapse16" class="panel-collapse collapse">
+                    <p>Education and Public Engagement detail: {{loop.index}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">Name of project: {{ row.project_name }}</li>
+                    <li class="list-group-item list-group-item-dark">Start Date: {{ row.start_date }}</li>
+                    <li class="list-group-item list-group-item-dark">End Date: {{ row.end_date }}</li>
+                    <li class="list-group-item list-group-item-dark">Activity Type: {{ row.activity_type }}</li>
+                    <li class="list-group-item list-group-item-dark">Project Topic: {{ row.project_topic }}</li>
+                    <li class="list-group-item list-group-item-dark">Target Geographical Area: {{ row.target_area }}</li>
+                    <li class="list-group-item list-group-item-dark">Primary Attribution: {{ row.grant_no }}</li>
+                </ul>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+            </div>
+        </div>
+         
 
 
         <!-- Sticky Footer -->
