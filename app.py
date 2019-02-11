@@ -219,7 +219,6 @@ def create_proposal():
     if request.method == 'POST':
         if 'DescriptionOfTargetGroup' not in request.files or 'DescriptionOfProposalDeadlines' not in request.files:
             flash('Please include all files')
-            print(request.files)
             return redirect(request.url)
 
         description_of_target_group = request.files['DescriptionOfTargetGroup']
@@ -227,16 +226,17 @@ def create_proposal():
 
         if description_of_target_group.filename == '' or description_of_proposal_deadlines.filename == '':
             flash('Please include all files')
-            print("1")
             return redirect(request.url)
 
-        if description_of_target_group and allowed_file(description_of_target_group.filename):
+        if (description_of_target_group and allowed_file(description_of_target_group.filename)) and (description_of_proposal_deadlines and allowed_file(description_of_proposal_deadlines.filename)):
             target_group_filename = secure_filename(description_of_target_group.filename)
             description_of_target_group.save(os.path.join(app.config['UPLOAD_FOLDER'], target_group_filename))
-
-        if description_of_proposal_deadlines and allowed_file(description_of_proposal_deadlines.filename):
             proposal_deadline_filename = secure_filename(description_of_proposal_deadlines.filename)
             description_of_proposal_deadlines.save(os.path.join(app.config['UPLOAD_FOLDER'], proposal_deadline_filename))
+
+
+        else:
+            flash('Please select two .pdf files for upload')
 
             try:
                 connection = create_connection()
