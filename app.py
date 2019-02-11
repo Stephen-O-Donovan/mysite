@@ -234,10 +234,6 @@ def create_proposal():
             proposal_deadline_filename = secure_filename(description_of_proposal_deadlines.filename)
             description_of_proposal_deadlines.save(os.path.join(app.config['UPLOAD_FOLDER'], proposal_deadline_filename))
 
-
-        else:
-            flash('Please select two .pdf files for upload')
-
             try:
                 connection = create_connection()
 
@@ -250,8 +246,9 @@ def create_proposal():
 
             finally:
                 connection.close()
+        else:
+            flash('Please select two .pdf files for upload')
 
-        flash('File Uploaded')
     return render_template('admin_create_proposal.html', form=form)
 
 
