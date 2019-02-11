@@ -42,13 +42,14 @@ def index():
 
 class RegisterForm(Form):
     Prefix = SelectField(u'Prefix', choices=[('mr','Mr.'),('mrs','Mrs.'),('ms','Ms.'),('dr','Dr.')])
-    First_Name = StringField('First Name', [validators.Length(min=1, max=50)])
-    SurName = StringField('SurName', [validators.Length(min=1, max=50)])
-    Suffix = SelectField(u'Suffix', choices=[('phd','PHD'),('n/a','N/A.')])
-    Email = StringField('Email', [validators.Length(min=3, max=50)])
-    Job_Title = StringField('Job Title', [validators.Length(min=2, max=50)])
-    Phone = StringField('Phone', [validators.Length(min=2, max=50)])
-    Phone_Extension = StringField('Phone Extension', [validators.Length(min=2, max=50)])
+    First_Name = StringField('First Name', [validators.DataRequired(),validators.Length(min=1, max=50)])
+    SurName = StringField('SurName', [validators.DataRequired(),validators.Length(min=1, max=50)])
+    Suffix = SelectField(u'Suffix',[validators.DataRequired()], choices=[('phd','PHD'),('n/a','N/A.')])
+    Email = StringField('Email', [validators.DataRequired(),validators.Length(min=3, max=50)])
+    Job_Title = StringField('Job Title', [validators.DataRequired(),validators.Length(min=2, max=50)])
+    Institution = StringField('Institution', [validators.DataRequired(),validators.Length(min=2, max=50)])
+    Phone = StringField('Phone', [validators.DataRequired(),validators.Length(min=2, max=50)])
+    Phone_Extension = SelectField(u'Phone Extension',[validators.DataRequired()], choices=[('etc','etc.'),('353','+353')])
     Administrator = BooleanField()
 
     Password = PasswordField('Password', [
@@ -72,6 +73,7 @@ def register():
         suffix = form.Suffix.data
         email = form.Email.data
         job_title = form.Job_Title.data
+        institution = form.Institution.data
         phone = form.Phone.data
         phone_extension = form.Phone_Extension.data
         password = sha256_crypt.encrypt(str(form.Password.data))
@@ -82,7 +84,7 @@ def register():
                 #Checking if the username is in the database
                 user_exists = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
                 if int(user_exists) == 0:
-                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,suffix,email,job_title,phone,phone_extension,password) VALUES( %s,%s, %s, %s, %s, %s, %s, %s, %s)', (prefix,first_name,surname,suffix,email,job_title,phone,phone_extension,password))
+                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password) VALUES( %s,%s, %s, %s, %s, %s, %s, %s,%s, %s)', (prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password))
                     connection.commit()
                     flash('You are now registered and can log in', 'success')
                     return redirect(url_for('login'))
@@ -168,43 +170,43 @@ def show_profile():
 
             cursor.execute('SELECT * FROM Profile_Profess_soc WHERE email = %s', [email])
             p4_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_DandA WHERE email = %s', [email])
             p5_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Funding WHERE email = %s', [email])
             p6_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Teamate WHERE email = %s', [email])
             p7_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Impact WHERE email = %s', [email])
             p8_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_IandC WHERE email = %s', [email])
             p9_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s', [email])
             p10_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Presentation WHERE email = %s', [email])
             p11_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Academic_Col WHERE email = %s', [email])
             p12_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_None_Academic_Col WHERE email = %s', [email])
             p13_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Workshop WHERE email = %s', [email])
             p14_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Communication WHERE email = %s', [email])
             p15_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_SFI_Fund_Ratio WHERE email = %s', [email])
             p16_data = cursor.fetchall()
-            
+
             cursor.execute('SELECT * FROM Profile_Public_Engagement WHERE email = %s', [email])
             p17_data = cursor.fetchall()
     finally:
