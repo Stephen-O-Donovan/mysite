@@ -17,16 +17,15 @@ h6 {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-
+/*
 header.masthead {
-  position: relative;
-  background-color: #343a40;
-  background: url("../img/bg-masthead.jpg") no-repeat center center;
-  background-size: cover;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
-}
 
+  background: url("../img/SFI_logo_2016__master_colour_Boarder.jpg") center;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
+/*
 header.masthead .overlay {
   position: absolute;
   background-color: #212529;
@@ -36,7 +35,7 @@ header.masthead .overlay {
   left: 0;
   opacity: 0.3;
 }
-
+*/
 header.masthead h1 {
   font-size: 2rem;
 }
@@ -105,10 +104,10 @@ header.masthead h1 {
 .call-to-action {
   position: relative;
   background-color: #343a40;
-  background: url("../img/bg-masthead.jpg") no-repeat center center;
+  background: url("../img/SFI_logo_2016__master_colour_Boarder.jpg") no-repeat center center;
   background-size: cover;
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .call-to-action .overlay {
@@ -124,4 +123,44 @@ header.masthead h1 {
 footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
+}
+/*
+.container {
+  position: relative;
+  width: 50%;
+}
+*/
+.image {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 0.3;
+}
+
+.text {
+  color: black;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
