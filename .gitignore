@@ -3,3 +3,9 @@ static/showprofile/.DS_Store
 static/.DS_Store
 .DS_Store
 static/showprofile/css/.Rhistory
+.DS_Store
+.gitignore
+app.pyc
+utilities.pyc
+static/.DS_Store
+.DS_Store
