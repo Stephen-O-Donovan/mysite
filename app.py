@@ -6,29 +6,19 @@ from wtforms import Form, SelectField, BooleanField,StringField, TextAreaField, 
 from passlib.hash import sha256_crypt
 from functools import wraps
 from pymysql.cursors import DictCursor
-from flask_sslify import SSLify
+#from flask_sslify import SSLify
 from utilities import *
 from werkzeug.utils import secure_filename
+
 
 
 UPLOAD_FOLDER = 'storage/proposals'
 
 app = Flask(__name__)
-sslify = SSLify(app)
+#sslify = SSLify(app)
 app.secret_key = 'alphaHodder'
-#Config MySQL - below is remote host
-#app.config['MYSQL_DATABASE_HOST'] = 'team5ucc.cloudaccess.host'
-#app.config['MYSQL_DATABASE_USER'] = 'vjvpukus'
-#app.config['MYSQL_DATABASE_PASSWORD'] = 'gv4+Bez9B9[FB9'
-#app.config['MYSQL_DATABASE_DB'] = 'vjvpukus'
-#app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-#this is working, cannot be accessed remotely
-app.config['MYSQL_DATABASE_HOST'] = 'team5ucc.mysql.pythonanywhere-services.com'
-app.config['MYSQL_DATABASE_USER'] = 'team5ucc'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'alphaVase'
-app.config['MYSQL_DATABASE_DB'] = 'team5ucc$users'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 
 # Initialise MySQL
@@ -70,7 +60,7 @@ def register():
     form = RegistrationType(request.form)
     if request.method == 'POST':
         user_type = form.User_Type.data
-
+        
         if user_type=="R":
             return redirect(url_for('researcherRegistration'))
 
@@ -82,7 +72,7 @@ def register():
 @app.route('/researcherRegistration', methods=['GET', 'POST'])
 def researcherRegistration():
     form = RegisterForm(request.form)
-    if request.method == 'POST': #and form.validate():
+    if request.method == 'POST' and form.validate():
         prefix = form.Prefix.data
         first_name = form.First_Name.data
         surname = form.SurName.data
