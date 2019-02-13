@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SFI - Register</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/main.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/landing-page.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-light bg-light static-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">SFI</a>
+        <a class="btn btn-primary" href="/login">Sign In</a>
+      </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead text-white text-center">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12 mx-auto">
+              {% include 'includes/_messages.html' %}
+              {% from 'includes/_formhelpers.html' import render_field %}
+               <form method='POST' class="main-form needs-validation" novalidate>
+                  <fieldset>
+                  <legend>Personal info</legend>
+                  <div class="row">
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Prefix, class_='form-control')}}
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Suffix, class_='form-control')}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.First_Name, class_='form-control')}}
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.SurName, class_='form-control')}}
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class='form-group'>
+                      {{render_field(form.Job_Title, class_='form-control')}}
+                  </div>
+                  <div class='form-group'>
+                      {{render_field(form.Institution, class_='form-control')}}
+                  </div>
+
+
+                </fieldset>
+                <fieldset>
+                <legend>Contact Information</legend>
+                  <div class='form-group'>
+                      {{render_field(form.Email, class_='form-control')}}
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Phone_Extension, class_='form-control')}}
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Phone, class_='form-control')}}
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+
+                </fieldset>
+                <fieldset>
+                  <legend>Password</legend>
+                  <div class='form-group'>
+                      {{render_field(form.Password, class_='form-control')}}
+                  </div>
+
+                  <div class='form-group'>
+                      {{render_field(form.confirm, class_='form-control')}}
+                  </div>
+                </fieldset>
+                  <p><input type='submit' value='submit' class='btn btn-block btn-lg btn-primary'></p>
+              </form>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var form= document.querySelector(".needs-validation");
+      form.addEventListener("submit",function(event){
+        if (form.checkValidity() ==false){
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add("was-validated")
+      })
+    </script>
+  </body>
+
+</html>

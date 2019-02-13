@@ -39,32 +39,48 @@ mysql.init_app(app)
 def index():
     return render_template('index.html')
 
+class RegistrationType(Form):
+    User_Type = SelectField(u'Register as', choices=[('R','Researcher'),('A','Admin'),('C','Consultant'),('U','University')])
 
 class RegisterForm(Form):
     Prefix = SelectField(u'Prefix', choices=[('mr','Mr.'),('mrs','Mrs.'),('ms','Ms.'),('dr','Dr.')])
-    First_Name = StringField('First Name', [validators.DataRequired(),validators.Length(min=1, max=50)])
-    SurName = StringField('SurName', [validators.DataRequired(),validators.Length(min=1, max=50)])
+    First_Name = StringField('First Name', [validators.DataRequired()])
+    SurName = StringField('Surname', [validators.DataRequired(),validators.Length(min=2, max=50)])
     Suffix = SelectField(u'Suffix',[validators.DataRequired()], choices=[('phd','PHD'),('n/a','N/A.')])
-    Email = StringField('Email', [validators.DataRequired(),validators.Length(min=3, max=50)])
+    Email = StringField('Email', [validators.DataRequired(),validators.Length(min=3, max=50),validators.Email(message="Invalid email")])
     Job_Title = StringField('Job Title', [validators.DataRequired(),validators.Length(min=2, max=50)])
     Institution = StringField('Institution', [validators.DataRequired(),validators.Length(min=2, max=50)])
     Phone = StringField('Phone', [validators.DataRequired(),validators.Length(min=2, max=50)])
-    Phone_Extension = SelectField(u'Phone Extension',[validators.DataRequired()], choices=[('etc','etc.'),('353','+353')])
+    Phone_Extension = SelectField(u'Phone Extension',[validators.DataRequired()], choices=[('353','+353'),('etc','etc.')])
     Administrator = BooleanField()
 
-    Password = PasswordField('Password', [
+    Password = PasswordField('Password')
+    confirm = PasswordField('Confirm Password', [
         validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords do not match')
+        validators.EqualTo("Password", message='Passwords do not match')
     ])
-    confirm = PasswordField('Confirm Password')
+
 
 
 class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.Length(min=1, max=300)])
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    form = RegistrationType(request.form)
+    if request.method == 'POST':
+        user_type = form.User_Type.data
+
+        if user_type=="R":
+            return redirect(url_for('researcherRegistration'))
+
+    return render_template('register.html',form=form)
+
+
+
+
+@app.route('/researcherRegistration', methods=['GET', 'POST'])
+def researcherRegistration():
     form = RegisterForm(request.form)
     if request.method == 'POST': #and form.validate():
         prefix = form.Prefix.data
@@ -91,11 +107,11 @@ def register():
                 else:
                     #Redirect if username is taken
                     flash('Email already in use', 'danger')
-                    return redirect(url_for('register'))
+                    return redirect(url_for('researcherRegistration'))
         finally:
             connection.close()
 
-    return render_template('register.html', form=form)
+    return render_template('researcherRegistration.html', form=form)
 
 
 # Login
