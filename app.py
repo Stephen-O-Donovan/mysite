@@ -153,7 +153,26 @@ def logout():
 @app.route('/dashboard')
 @is_logged_in
 def dashboard():
-    return render_template('dashboard.html')
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Pending'])
+            pendingProposalsData = cursor.rowcount
+            
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Published'])
+            publishedProposalsData = cursor.rowcount
+
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'In press'])
+            pressProposalsData = cursor.rowcount
+
+            cursor.execute('SELECT * FROM Profile_Funding WHERE email = %s', [email])
+            rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('dashboard.html', pendingProposalsData=pendingProposalsData, pressProposalsData=pressProposalsData,publishedProposalsData=publishedProposalsData, rows=rows)
 
 
 @app.route('/profile')
