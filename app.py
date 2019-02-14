@@ -63,6 +63,8 @@ def register():
         
         if user_type=="R":
             return redirect(url_for('researcherRegistration'))
+        if user_type == "A":
+            return redirect(url_for('adminRegistration'))
 
     return render_template('register.html',form=form)
 
@@ -112,6 +114,8 @@ def login():
         password_candidate = request.form['password']
         cursor = create_connection().cursor()
         result = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+        form = RegistrationType(request.form)
+        user_type = form.User_Type.data
         if result > 0:
             data = cursor.fetchone()
             password = data['password']
@@ -120,9 +124,12 @@ def login():
                 # Passed
                 session['logged_in'] = True
                 session['email'] = email
-
-                flash('You are now logged in', 'success')
-                return redirect(url_for('dashboard'))
+                #Admin or not
+                if user_type == "A":
+                    flash('log in as admin', 'success')
+                    return redirect(url_for('admindashboard'))
+                else:
+                    return redirect(url_for('dashboard'))
             else:
                 error = 'Invalid login'
                 return render_template('login.html', error=error)
@@ -173,6 +180,11 @@ def dashboard():
     finally:
         connection.close()
     return render_template('dashboard.html', pendingProposalsData=pendingProposalsData, pressProposalsData=pressProposalsData,publishedProposalsData=publishedProposalsData, rows=rows)
+
+@app.route('/admindashboard')
+@is_logged_in
+def admindashboard():
+    return render_template('admindashboard.html')
 
 
 @app.route('/profile')
