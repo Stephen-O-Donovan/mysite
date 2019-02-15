@@ -310,11 +310,13 @@ def login():
         password_candidate = request.form['password']
         cursor = create_connection().cursor()
         result = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+        #user_type = cursor.execute('SELECT user_type FROM Users WHERE email = %s', [email])
         form = RegistrationType(request.form)
-        user_type = form.User_Type.data
+        #user_type = form.User_Type.data
         if result > 0:
             data = cursor.fetchone()
             password = data['password']
+            user_type = data['user_type']
             # Compare Passwords
             if sha256_crypt.verify(password_candidate, password):
                 # Passed
@@ -322,9 +324,16 @@ def login():
                 session['email'] = email
                 #Admin or not
                 if user_type == "A":
-                    flash('log in as admin', 'success')
-                    return redirect(url_for('admindashboard'))
+                    flash('logged in as admin', 'success')
+                    return redirect(url_for('adminDashboard'))
+                elif user_type == "C":
+                    flash('logged in as consultant', 'success')
+                    return redirect(url_for('consultantDashboard'))
+                elif user_type == "U":
+                    flash('logged in as university admin', 'success')
+                    return redirect(url_for('universityDashboard'))
                 else:
+                    flash('logged in as researcher', 'success')
                     return redirect(url_for('dashboard'))
             else:
                 error = 'Invalid login'
@@ -368,10 +377,21 @@ def dashboard():
         connection.close()
     return render_template('dashboard.html', pendingProposalsData=pendingProposalsData, pressProposalsData=pressProposalsData,publishedProposalsData=publishedProposalsData, rows=rows)
 
-@app.route('/admindashboard')
+@app.route('/adminDashboard')
 @is_logged_in
-def admindashboard():
-    return render_template('admindashboard.html')
+def adminDashboard():
+    return render_template('adminDashboard.html')
+
+@app.route('/universityDashboard')
+@is_logged_in
+def universityDashboard():
+    return render_template('universityDashboard.html')
+
+
+@app.route('/consultantDashboard')
+@is_logged_in
+def consultantDashboard():
+    return render_template('consultantDashboard.html')
 
 
 @app.route('/profile')
