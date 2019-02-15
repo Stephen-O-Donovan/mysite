@@ -44,7 +44,7 @@
               {% from 'includes/_formhelpers.html' import render_field %}
                <form method='POST' class="main-form needs-validation" novalidate>
                   <fieldset>
-                  <legend>Personal info</legend>
+                  <legend><b>Personal Information</b></legend>
                   <div class="row">
                     <div class="col">
                       <div class='form-group'>
@@ -73,18 +73,29 @@
 
 
 
+                  </fieldset>
 
-                  <div class='form-group'>
-                      {{render_field(form.Job_Title, class_='form-control')}}
+                  <fieldset>
+                  <legend><b>Professional Information</b></legend>
+                  <div class="row">
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Job_Title, class_='form-control')}}
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Institution, class_='form-control')}}
+                      </div>
+                    </div>
                   </div>
                   <div class='form-group'>
-                      {{render_field(form.Institution, class_='form-control')}}
+                      {{render_field(form.Orcid, class_='form-control')}}
                   </div>
-
-
                 </fieldset>
+
                 <fieldset>
-                <legend>Contact Information</legend>
+                <legend><b>Contact Information</b></legend>
                   <div class='form-group'>
                       {{render_field(form.Email, class_='form-control')}}
                   </div>
