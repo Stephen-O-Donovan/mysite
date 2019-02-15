@@ -503,6 +503,50 @@ def create_proposal():
 
     return render_template('admin_create_proposal.html', form=form)
 
+@app.route('/pendingProposals')
+@is_logged_in
+def pendingProposals():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Pending'])
+            rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('pendingProposals.html', rows=rows)
+
+@app.route('/activeProposals')
+@is_logged_in
+def activeProposals():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Active'])
+            rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('activeProposals.html', rows=rows)
+
+@app.route('/pressProposals')
+@is_logged_in
+def pressProposals():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'In press'])
+            rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('pressProposals.html', rows=rows)
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
