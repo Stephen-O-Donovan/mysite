@@ -131,8 +131,12 @@
           <div class="container">
           <a href="#general" class="btn btn-info" data-toggle="collapse"><h3>General Information</h3></a>
           <div id="general" class="collapse">
+            {% from 'includes/_formhelpers.html' import render_field %}
             <ul class="list-group">
-                <li class="list-group-item list-group-item-dark">First Name: {{ p1_data.first_name }}</li>
+                <li class="list-group-item list-group-item-dark">First Name: {{ p1_data.first_name }}
+
+                      {{render_field(form.edit)}}
+                  </li>
                 <li class="list-group-item list-group-item-dark">Last Name: {{ p1_data.surname }}</li>
                 <li class="list-group-item list-group-item-dark">Job Title: {{ p1_data.job_title }}</li>
                 <li class="list-group-item list-group-item-dark">Prefix: {{ p1_data.prefix }}</li>

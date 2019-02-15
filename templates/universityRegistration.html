@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -8,10 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SFI - Sign In</title>
+    <title>SFI - Register</title>
 
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/main.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -29,8 +30,7 @@
     <nav class="navbar navbar-light bg-light static-top">
       <div class="container">
         <a class="navbar-brand" href="/">SFI</a>
-        <a class="btn btn-primary" href="/register">Register Page</a>
-        <a class="btn btn-primary" href="/unilogin">University Login Page</a>
+        <a class="btn btn-primary" href="/login">Sign In</a>
       </div>
     </nav>
 
@@ -40,23 +40,41 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-12 mx-auto">
-            <form method='POST'>
               {% include 'includes/_messages.html' %}
-              <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="email" placeholder="Enter Your Email" value={{request.form.email}}>
+              {% from 'includes/_formhelpers.html' import render_field %}
+               <form method='POST' class="main-form needs-validation" novalidate>
+                  <fieldset>
+                  <legend>University info</legend>
+                  <div class="row">
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.University_Name, class_='form-control')}}
                       </div>
+                    </div>
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
-                      <div class="form-group">
-                          <input type="password" class="form-control" name="password" placeholder="Enter Your Password" value={{request.form.password}}>
+                  <div class="row">
+                    <div class="col">
+                      <div class='form-group'>
+                          {{render_field(form.Location, class_='form-control')}}
                       </div>
+                    </div>
                   </div>
-              </div>
-              <button type="submit" class="btn btn-block btn-lg btn-primary">Submit</button>
-          </form>
+
+
+                </fieldset>
+                <fieldset>
+                  <legend>Password</legend>
+                  <div class='form-group'>
+                      {{render_field(form.Password, class_='form-control')}}
+                  </div>
+
+                  <div class='form-group'>
+                      {{render_field(form.confirm, class_='form-control')}}
+                  </div>
+                </fieldset>
+                  <p><input type='submit' value='submit' class='btn btn-block btn-lg btn-primary'></p>
+              </form>
           </div>
         </div>
       </div>
@@ -65,7 +83,6 @@
     <!-- Bootstrap core JavaScript -->
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
   </body>
 
 </html>

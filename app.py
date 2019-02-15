@@ -10,16 +10,12 @@ from pymysql.cursors import DictCursor
 from utilities import *
 from werkzeug.utils import secure_filename
 
-
-
 UPLOAD_FOLDER = 'storage/proposals'
 
 app = Flask(__name__)
 #sslify = SSLify(app)
 app.secret_key = 'alphaHodder'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
 
 # Initialise MySQL
 mysql = MySQL(cursorclass=DictCursor)
@@ -50,7 +46,15 @@ class RegisterForm(Form):
         validators.EqualTo("Password", message='Passwords do not match')
     ])
 
+class UniRegisterForm(Form):
+    University_Name = StringField('University Name', [validators.DataRequired()])
+    Location = StringField('Location', [validators.DataRequired(),validators.Length(min=2, max=50)])
 
+    Password = PasswordField('Password')
+    confirm = PasswordField('Confirm Password', [
+        validators.DataRequired(),
+        validators.EqualTo("Password", message='Passwords do not match')
+    ])
 
 class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.Length(min=1, max=300)])
@@ -60,16 +64,17 @@ def register():
     form = RegistrationType(request.form)
     if request.method == 'POST':
         user_type = form.User_Type.data
-        
+
         if user_type=="R":
             return redirect(url_for('researcherRegistration'))
         if user_type == "A":
             return redirect(url_for('adminRegistration'))
+        if user_type == "U":
+            return redirect(url_for('universityRegistration'))
+        if user_type == "C":
+            return redirect(url_for('consultantRegistration'))
 
     return render_template('register.html',form=form)
-
-
-
 
 @app.route('/researcherRegistration', methods=['GET', 'POST'])
 def researcherRegistration():
@@ -85,6 +90,7 @@ def researcherRegistration():
         phone = form.Phone.data
         phone_extension = form.Phone_Extension.data
         password = sha256_crypt.encrypt(str(form.Password.data))
+        user_type = "R"
 
         try:
             connection = create_connection()
@@ -92,7 +98,7 @@ def researcherRegistration():
                 #Checking if the username is in the database
                 user_exists = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
                 if int(user_exists) == 0:
-                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password) VALUES( %s,%s, %s, %s, %s, %s, %s, %s,%s, %s)', (prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password))
+                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password, user_type) VALUES( %s,%s, %s, %s, %s, %s, %s, %s,%s, %s, %s)', (prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password, user_type))
                     connection.commit()
                     flash('You are now registered and can log in', 'success')
                     return redirect(url_for('login'))
@@ -105,6 +111,99 @@ def researcherRegistration():
 
     return render_template('researcherRegistration.html', form=form)
 
+@app.route('/consultantRegistration', methods=['GET', 'POST'])
+def consultantRegistration():
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        prefix = form.Prefix.data
+        first_name = form.First_Name.data
+        surname = form.SurName.data
+        suffix = form.Suffix.data
+        email = form.Email.data
+        job_title = form.Job_Title.data
+        institution = form.Institution.data
+        phone = form.Phone.data
+        phone_extension = form.Phone_Extension.data
+        password = sha256_crypt.encrypt(str(form.Password.data))
+        user_type = "C"
+
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
+                #Checking if the username is in the database
+                user_exists = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+                if int(user_exists) == 0:
+                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password, user_type) VALUES( %s,%s, %s, %s, %s, %s, %s, %s,%s, %s, %s)', (prefix,first_name,surname,suffix,email,job_title,institution,phone,phone_extension,password, user_type))
+                    connection.commit()
+                    flash('You are now registered and can log in', 'success')
+                    return redirect(url_for('login'))
+                else:
+                    #Redirect if username is taken
+                    flash('Email already in use', 'danger')
+                    return redirect(url_for('consultantRegistration'))
+        finally:
+            connection.close()
+
+    return render_template('consultantRegistration.html', form=form)
+
+@app.route('/adminRegistration', methods=['GET', 'POST'])
+def adminRegistration():
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        prefix = form.Prefix.data
+        first_name = form.First_Name.data
+        surname = form.SurName.data
+        email = form.Email.data
+        phone = form.Phone.data
+        phone_extension = form.Phone_Extension.data
+        password = sha256_crypt.encrypt(str(form.Password.data))
+        user_type = "A"
+
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
+                #Checking if the username is in the database
+                user_exists = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+                if int(user_exists) == 0:
+                    cursor.execute('INSERT INTO Users(prefix,first_name,surname,email,phone,phone_extension,password, user_type) VALUES( %s, %s, %s, %s, %s,%s, %s, %s)', (prefix,first_name,surname,email,phone,phone_extension,password, user_type))
+                    connection.commit()
+                    flash('Administrator succesfully logged in', 'success')
+                    return redirect(url_for('login'))
+                else:
+                    #Redirect if username is taken
+                    flash('Email already in use', 'danger')
+                    return redirect(url_for('adminRegistration'))
+        finally:
+            connection.close()
+
+    return render_template('adminRegistration.html', form=form)
+
+@app.route('/universityRegistration', methods=['GET', 'POST'])
+def universityRegistration():
+    form = UniRegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        university_name = form.University_Name.data
+        location = form.Location.data
+        password = sha256_crypt.encrypt(str(form.Password.data))
+
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
+                #Checking if the username is in the database
+                user_exists = cursor.execute('SELECT * FROM University_Users WHERE university_name = %s', [university_name])
+                if int(user_exists) == 0:
+                    cursor.execute('INSERT INTO University_Users(university_name, location, password) VALUES(%s, %s, %s)', (university_name, location ,password))
+                    connection.commit()
+                    flash('University registered', 'success')
+                    return redirect(url_for('login'))
+                else:
+                    #Redirect if username is taken
+                    flash('Email already in use', 'danger')
+                    return redirect(url_for('universityRegistration'))
+        finally:
+            connection.close()
+
+    return render_template('universityRegistration.html', form=form)
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])
@@ -114,11 +213,13 @@ def login():
         password_candidate = request.form['password']
         cursor = create_connection().cursor()
         result = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+        #user_type = cursor.execute('SELECT user_type FROM Users WHERE email = %s', [email])
         form = RegistrationType(request.form)
-        user_type = form.User_Type.data
+        #user_type = form.User_Type.data
         if result > 0:
             data = cursor.fetchone()
             password = data['password']
+            user_type = data['user_type']
             # Compare Passwords
             if sha256_crypt.verify(password_candidate, password):
                 # Passed
@@ -126,9 +227,13 @@ def login():
                 session['email'] = email
                 #Admin or not
                 if user_type == "A":
-                    flash('log in as admin', 'success')
-                    return redirect(url_for('admindashboard'))
+                    flash('logged in as admin', 'success')
+                    return redirect(url_for('adminDashboard'))
+                elif user_type == "C":
+                    flash('logged in as consultant', 'success')
+                    return redirect(url_for('consultantDashboard'))
                 else:
+                    flash('logged in as researcher', 'success')
                     return redirect(url_for('dashboard'))
             else:
                 error = 'Invalid login'
@@ -140,6 +245,33 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/unilogin', methods=['GET', 'POST'])
+def unilogin():
+    if request.method == 'POST':
+        university_name = request.form['university_name']
+        password_candidate = request.form['password']
+        cursor = create_connection().cursor()
+        result = cursor.execute('SELECT * FROM University_Users WHERE university_name = %s', [university_name])
+        form = RegistrationType(request.form)
+        if result > 0:
+            data = cursor.fetchone()
+            password = data['password']
+            # Compare Passwords
+            if sha256_crypt.verify(password_candidate, password):
+                # Passed
+                session['logged_in'] = True
+                session['university_name'] = university_name
+                #Admin or not
+                return redirect(url_for('universityDashboard'))
+            else:
+                error = 'Invalid login'
+                return render_template('unilogin.html', error=error)
+            cursor.close()
+        else:
+            error = 'Username not found'
+            return render_template('unilogin.html', error=error)
+
+    return render_template('unilogin.html')
 # Check for user auth
 def is_logged_in(f):
     @wraps(f)
@@ -167,7 +299,7 @@ def dashboard():
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Pending'])
             pendingProposalsData = cursor.rowcount
-            
+
             cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Published'])
             publishedProposalsData = cursor.rowcount
 
@@ -181,11 +313,20 @@ def dashboard():
         connection.close()
     return render_template('dashboard.html', pendingProposalsData=pendingProposalsData, pressProposalsData=pressProposalsData,publishedProposalsData=publishedProposalsData, rows=rows)
 
-@app.route('/admindashboard')
+@app.route('/adminDashboard')
 @is_logged_in
-def admindashboard():
-    return render_template('admindashboard.html')
+def adminDashboard():
+    return render_template('adminDashboard.html')
 
+@app.route('/consultantDashboard')
+@is_logged_in
+def consultantDashboard():
+    return render_template('consultantDashboard.html')
+
+@app.route('/universityDashboard')
+@is_logged_in
+def universityDashboard():
+    return render_template('universityDashboard.html')
 
 @app.route('/profile')
 @is_logged_in
