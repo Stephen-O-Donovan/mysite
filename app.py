@@ -27,7 +27,15 @@ mysql.init_app(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            #get data from tables
+            cursor.execute('SELECT * FROM CFP')
+            cfp_data = cursor.fetchall()
+    finally:
+        connection.close()
+    return render_template('index.html',cfp_data=cfp_data)
 
 class RegistrationType(Form):
     User_Type = SelectField(u'Register as', choices=[('R','Researcher'),('A','Admin'),('C','Consultant'),('U','University')])
