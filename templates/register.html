@@ -35,6 +35,8 @@
     </nav>
 
     <!-- Masthead -->
+
+    <!-- register form-->
     <header class="masthead text-white text-center">
       <div class="overlay"></div>
       <div class="container">
@@ -43,8 +45,10 @@
               {% include 'includes/_messages.html' %}
               {% from 'includes/_formhelpers.html' import render_field %}
                <form method='POST' class="main-form">
+                  <h2>Select a user type to register</h2>
                   <fieldset>
                   <div class='form-group'>
+
                       {{render_field(form.User_Type, class_='form-control')}}
                   </div>
                 </fieldset>
@@ -54,11 +58,9 @@
         </div>
       </div>
     </header>
-
     <!-- Bootstrap core JavaScript -->
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
   </body>
 
 </html>

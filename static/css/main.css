@@ -1,4 +1,25 @@
 .main-form{
+  padding:2em;
+  background:white;
+  border:0.2em solid #4785b8;
+  border-radius:2em;
   width:500px;
   margin: auto;
+
+  color:#4785b8;
+  box-shadow:5px 5px 7px grey;
+}
+.main-form legend{
+  border-bottom: 3px solid #00ffcc;
+  border-radius:0.5em;
+}
+h2{
+  border-bottom: 3px solid #00ffcc;
+  border-radius:0.5em;
+}
+.help-inline{
+  color:red;
+}
+form .btn{
+  background:#4785b8;
 }
