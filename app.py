@@ -380,6 +380,14 @@ def dashboard():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
+
+            #redirect to limited dashboard if not yet verified
+            cursor.execute('SELECT is_verified FROM Users WHERE email = %s', [email])
+            verified = cursor.fetchone()
+            if not verified:
+                return render_template('basicDashboard.html')
+
+
             cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Pending'])
             pendingProposalsData = cursor.rowcount
 
@@ -593,4 +601,5 @@ def fundingstatus():
 
 
 if __name__ == '__main__':
-    app.run(ssl_context='adhoc')
+    #app.run(ssl_context='adhoc')
+    app.run(debug=True)
