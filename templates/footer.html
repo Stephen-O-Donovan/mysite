@@ -1,0 +1,118 @@
+<!-- Footer -->
+<link href="static/css/main.css" rel="stylesheet">
+
+<footer class="footer bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+        <ul class="list-inline mb-2">
+          <li class="list-inline-item">
+            <a id="aboutClick">About</a>
+          </li>
+          <li class="list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a id="contactClick">Contact</a>
+          </li>
+          <li class="list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a id="termsClick">Terms of Use</a>
+          </li>
+          <li class="list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a id="privacyClick">Privacy Policy</a>
+          </li>
+        </ul>
+        <p class="text-muted small mb-4 mb-lg-0">&copy; Team5 UCC 2019. All Rights Reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="aboutPopup" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Group project website for third year Computer Science</p>
+  </div>
+</div>
+
+<div id="contactPopup" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Please contact someone about something</p>
+  </div>
+</div>
+
+<div id="termsPopup" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>All rights reserved</p>
+  </div>
+</div>
+
+<div id="privacyPopup" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>We promise to use your data responsibly</p>
+  </div>
+</div>
+
+<script type="text/javascript">
+var aboutPopup = document.getElementById('aboutPopup');
+var contactPopup = document.getElementById('contactPopup');
+var termsPopup = document.getElementById('termsPopup');
+var privacyPopup = document.getElementById('privacyPopup');
+
+var aboutBtn = document.getElementById("aboutClick");
+var contactBtn = document.getElementById("contactClick");
+var termsBtn = document.getElementById("termsClick");
+var privacyBtn = document.getElementById("privacyClick");
+
+var span = document.getElementsByClassName("close")[0];
+
+aboutBtn.onclick = function() {
+  aboutPopup.style.display = "block";
+  contactPopup.style.display = "none";
+  termsPopup.style.display = "none";
+  privacyPopup.style.display = "none";
+}
+
+contactBtn.onclick = function() {
+  aboutPopup.style.display = "none";
+  contactPopup.style.display = "block";
+  termsPopup.style.display = "none";
+  privacyPopup.style.display = "none";
+}
+
+termsBtn.onclick = function() {
+  aboutPopup.style.display = "none";
+  contactPopup.style.display = "none";
+  termsPopup.style.display = "block";
+  privacyPopup.style.display = "none";
+}
+
+privacyBtn.onclick = function() {
+  aboutPopup.style.display = "none";
+  contactPopup.style.display = "none";
+  termsPopup.style.display = "none";
+  privacyPopup.style.display = "block";
+}
+
+span.onclick = function() {
+  aboutPopup.style.display = "none";
+  contactPopup.style.display = "none";
+  termsPopup.style.display = "none";
+  privacyPopup.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == aboutPopup |
+      event.target == contactPopup |
+      event.target == termsPopup |
+      event.target == privacyPopup) {
+    aboutPopup.style.display = "none";
+    contactPopup.style.display = "none";
+    termsPopup.style.display = "none";
+    privacyPopup.style.display = "none";
+  }
+}
+</script>
