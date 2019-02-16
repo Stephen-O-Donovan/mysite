@@ -122,7 +122,17 @@ class ConsultantRegisterForm(Form):
 
 
 class CreateProposalForm(Form):
-    proposal_name = StringField('Proposal Name', [validators.Length(min=1, max=300)])
+    proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
+    email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
+                                  validators.Email(message="Invalid email")])
+    description = StringField('Description', [validators.DataRequired(message='Please enter a description'), validators.Length(min=50, max=65000)])
+    report_guidelines = TextAreaField('Report Guidelines', [validators.DataRequired(message='Please enter guidelines'), validators.Length(min=20, max=65000)])
+    eligibility_criteria = TextAreaField('Eligibility Criteria', [validators.DataRequired(message='Please enter criteria'),
+                                                          validators.Length(min=20, max=65000)])
+    duration = StringField('Grant Duration', [validators.DataRequired(message='Please enter duration'), validators.Length(min=5, max=20)])
+    time_frame = StringField('Start Time Frame', [validators.DataRequired(message='Please enter start time frame'), validators.Length(min=5, max=100)])
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -466,6 +476,7 @@ def show_profile():
     return render_template('show_profile.html', p1_data=p1_data,p2_data=p2_data,p3_data=p3_data,p4_data=p4_data,p5_data=p5_data,p6_data=p6_data,p7_data=p7_data,p8_data=p8_data,p9_data=p9_data,p10_data=p10_data,p11_data=p11_data,p12_data=p12_data,p13_data=p13_data,p14_data=p14_data,p15_data=p15_data,p16_data=p16_data,p17_data=p17_data)
 
 @app.route('/proposalcreation', methods=['GET', 'POST'])
+@is_logged_in
 def create_proposal():
     form = CreateProposalForm(request.form)
     if request.method == 'POST':
@@ -491,8 +502,12 @@ def create_proposal():
 
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        'INSERT INTO CFP(proposal_name, description_of_target_group, description_of_proposal_deadlines) VALUES( %s, %s, %s)',
-                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename))
+                        'INSERT INTO CFP(proposal_name, description_of_target_group, description_of_proposal_deadlines,'
+                        ' email, call_text, report_guidelines, eligibility_criteria, duration, time_frame)'
+                        ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename, form.email.data,
+                         form.description.data, form.report_guidelines.data, form.eligibility_criteria.data,
+                         form.duration.data, form.time_frame.data))
                     connection.commit()
                     flash('Your files have been uploaded', 'success')
 
