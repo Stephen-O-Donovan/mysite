@@ -9,6 +9,7 @@ from pymysql.cursors import DictCursor
 #from flask_sslify import SSLify
 from utilities import *
 from werkzeug.utils import secure_filename
+from forms import *
 
 
 
@@ -412,9 +413,10 @@ def consultantDashboard():
     return render_template('consultantDashboard.html')
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @is_logged_in
 def show_profile():
+    form1 = BasicProfileForm(request.form)
     if 'email' in session:
         email = session['email']
     try:
@@ -473,7 +475,18 @@ def show_profile():
             p17_data = cursor.fetchall()
     finally:
         connection.close()
-    return render_template('show_profile.html', p1_data=p1_data,p2_data=p2_data,p3_data=p3_data,p4_data=p4_data,p5_data=p5_data,p6_data=p6_data,p7_data=p7_data,p8_data=p8_data,p9_data=p9_data,p10_data=p10_data,p11_data=p11_data,p12_data=p12_data,p13_data=p13_data,p14_data=p14_data,p15_data=p15_data,p16_data=p16_data,p17_data=p17_data)
+    if request.method == 'POST':
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            if request.form['submit'] == 'Save Personal Info':
+                cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s, job_title=%s, institution=%s,'
+                               'orcid=%s, phone=%s, phone_extension=%s'
+                               'WHERE email=%s',
+                               [form1.first_name.data, form1.surname.data, form1.suffix.data, form1.job_title.data,
+                                form1.institution.data, form1.orcid.data, form1.phone.data, form1.phone_extension.data,
+                                email])
+                connection.commit()
+    return render_template('new_show_profile.html', form1=form1, p1_data=p1_data)
 
 @app.route('/proposalcreation', methods=['GET', 'POST'])
 @is_logged_in
