@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
 from flaskext.mysql import MySQL
-from wtforms import Form, SelectField, BooleanField,StringField,IntegerField, TextAreaField, PasswordField, validators, TextField, SubmitField
+from wtforms import Form, SelectField, BooleanField,StringField,IntegerField, TextAreaField, PasswordField, validators, TextField, SubmitField, DateField
 from passlib.hash import sha256_crypt
 from functools import wraps
 from pymysql.cursors import DictCursor
@@ -37,14 +37,14 @@ class ProfileAcademicColForm(Form):
     location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=50)])
     collaborator_name = StringField('Name of Collaborator', [validators.DataRequired(), validators.Length(min=2, max=30)])
     primary_goal = StringField('Primary Goal of Collaboration', [validators.DataRequired(), validators.Length(min=2, max=60)])
-    frequency_of_interaction = IntegerField('Frequency Of Interaction', [validators.DataRequired((message="Please enter a valid number")])
+    frequency_of_interaction = IntegerField('Frequency Of Interaction', [validators.DataRequired(message="Please enter a valid number")])
     grant_no = StringField('Primary Attribution', [validators.DataRequired(), validators.Length(min=1, max=18)])
 
 class ProfileCommunicationForm(Form):
     comm_year = IntegerField('Year', [validators.DataRequired(), validators.number_range(min=1900, max=date.today().year)])
-    public_lecture_no = IntegerField('Number of Public lectures/Demonstrations', [validators.DataRequired((message="Please enter a valid number")])
-    visits_no = IntegerField('Number of Visits', [validators.DataRequired((message="Please enter a valid number")])
-    media_interaction_no = IntegerField('Number of Media Interactions', [validators.DataRequired((message="Please enter a valid number")])
+    public_lecture_no = IntegerField('Number of Public lectures/Demonstrations', [validators.DataRequired(message="Please enter a valid number")])
+    visits_no = IntegerField('Number of Visits', [validators.DataRequired(message="Please enter a valid number")])
+    media_interaction_no = IntegerField('Number of Media Interactions', [validators.DataRequired(message="Please enter a valid number")])
 
 class ProfileDandAForm(Form):
     DandA_year = IntegerField('Year', [validators.DataRequired(), validators.number_range(min=1900, max=date.today().year)])
@@ -62,7 +62,7 @@ class ProfileEducationForm(Form):
 class ProfileEmploymentForm(Form):
     institution = StringField('Institution', [validators.DataRequired(), validators.Length(min=2, max=50)])
     location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=50)])
-    emp_years = IntegerField('Years', [validators.DataRequired((message="Please enter a valid number")])
+    emp_years = IntegerField('Years', [validators.DataRequired(message="Please enter a valid number")])
 
 class ProfileFundingForm(Form):
     start_date = DateField('Start Date', [validators.DataRequired()])
@@ -93,7 +93,7 @@ class ProfileNonAcademicColForm(Form):
     location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=50)])
     collaborator_name = StringField('Name of Collaborator', [validators.DataRequired(), validators.Length(min=2, max=30)])
     primary_goal = StringField('Primary Goal of Collaboration', [validators.DataRequired(), validators.Length(min=2, max=60)])
-    frequency_of_interaction = IntegerField('Frequency Of Interaction', [validators.DataRequired((message="Please enter a valid number")])
+    frequency_of_interaction = IntegerField('Frequency Of Interaction', [validators.DataRequired(message="Please enter a valid number")])
     grant_no = StringField('Primary Attribution', [validators.DataRequired(), validators.Length(min=1, max=18)])
 
 class ProfilePresentationForm(Form):
