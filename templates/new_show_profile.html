@@ -188,53 +188,118 @@
                 <form class="form-horizontal" role="form" method="POST">
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form1.first_name, class_='form-control', value=p1_data.first_name)}}
+                      {{render_field(form2.degree, class_='form-control')}}
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form1.surname, class_='form-control', value=p1_data.surname)}}
+                      {{render_field(form2.field_of_study, class_='form-control')}}
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form1.suffix, class_='form-control', value=p1_data.suffix)}}
+                      {{render_field(form2.institution, class_='form-control')}}
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form1.job_title, class_='form-control', value=p1_data.job_title)}}
+                      {{render_field(form2.location, class_='form-control')}}
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form1.institution, class_='form-control', value=p1_data.institution)}}
+                      {{render_field(form2.institution, class_='form-control')}}
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form1.orcid, class_='form-control', value=p1_data.orcid)}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-lg-8">
-                      {{render_field(form1.phone, class_='form-control', value=p1_data.phone)}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-lg-8">
-                      {{render_field(form1.phone_extension, class_='form-control', value=p1_data.phone_extension)}}
+                      {{render_field(form2.degree_year, class_='form-control')}}
                     </div>
                   </div>
                   <div class="form-group">
                   <label class="col-md-3 control-label"></label>
                   <div class="col-md-8">
-                    <input type="submit" class="btn btn-primary" name="submit" value="Save Education Info">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Education Info">
                     <span></span>
                     <input type="reset" class="btn btn-default" value="Cancel">
                   </div>
+                  </div>
+                </form>
+
+                {% for row in p2_data %}
+                <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group list-group-flush">
+                      <ul class="list-group">
+                        <li class="list-group-item ">Degree: {{ row.degree }}</li>
+                        <li class="list-group-item">Field of Study: {{ row.field_of_study }}</li>
+                        <li class="list-group-item">Institution: {{ row.institution }}</li>
+                        <li class="list-group-item">Location: {{ row.location }}</li>
+                        <li class="list-group-item">Year of Degree Award: {{ row.degree_year }}</li>
+                        <li class="list-group-item">
+                          <input name='degree' type='text' value='{{ row.degree }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Education Info">
+                        </li>
+                      </ul>
                 </div>
-              </form>
+                </form>
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse3">Employment Info</a>
+              </h3>
+            </div>
+
+            <div id="collapse3" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form3.institution, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form3.location, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form3.emp_years, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Employment Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+                {% for row in p3_data %}
+
+                <div class="form-group list-group-flush">
+                    <form class="form-horizontal" role="form" method="POST">
+                      <ul class="list-group">
+                        <li class="list-group-item">Institution/Company: {{ row.institution }}</li>
+                        <li class="list-group-item">Location: {{ row.location }}</li>
+                        <li class="list-group-item">Years: {{ row.emp_years }}</li>
+                          <input name='institution' type='text' value='{{ row.institution }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Employment Info">
+                        </li>
+                      </ul>
+                    </form>
+                </div>
+                {% endfor %}
+
             </div>
           </div>
         </div>

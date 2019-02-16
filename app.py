@@ -425,8 +425,43 @@ def consultantDashboard():
 @is_logged_in
 def show_profile():
     form1 = BasicProfileForm(request.form)
+    form2 = ProfileEducationForm(request.form)
+    form3 = ProfileEmploymentForm(request.form)
     if 'email' in session:
         email = session['email']
+    if request.method == 'POST':
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            if request.form['submit'] == 'Save Personal Info':
+                cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s, job_title=%s, institution=%s,'
+                               'orcid=%s, phone=%s, phone_extension=%s'
+                               'WHERE email=%s',
+                               [form1.first_name.data, form1.surname.data, form1.suffix.data, form1.job_title.data,
+                                form1.institution.data, form1.orcid.data, form1.phone.data, form1.phone_extension.data,
+                                email])
+                connection.commit()
+
+            elif request.form['submit'] == 'Add Education Info':
+                cursor.execute('INSERT INTO Profile_Education_Info (email, degree, field_of_study, institution, location, degree_year)'
+                               ' VALUES (%s, %s, %s, %s, %s, %s)',
+                               [email, form2.degree.data, form2.field_of_study.data, form2.institution.data, form2.location.data, form2.degree_year.data])
+                connection.commit()
+                pass
+            elif request.form['submit'] == 'Remove Education Info':
+                cursor.execute('DELETE FROM Profile_Education_Info WHERE degree=%s AND email=%s', [request.form['degree'], email])
+                connection.commit()
+
+            elif request.form['submit'] == 'Add Employment Info':
+                cursor.execute(
+                    'INSERT INTO Profile_Employment (email, institution, location, emp_years)'
+                    ' VALUES (%s, %s, %s, %s)',
+                    [email, form3.institution.data, form3.location.data, form3.emp_years.data])
+                connection.commit()
+            elif request.form['submit'] == 'Remove Employment Info':
+                cursor.execute('DELETE FROM Profile_Employment WHERE institution=%s AND email=%s',
+                               [request.form['institution'], email])
+                connection.commit()
+
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
@@ -483,18 +518,7 @@ def show_profile():
             p17_data = cursor.fetchall()
     finally:
         connection.close()
-    if request.method == 'POST':
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            if request.form['submit'] == 'Save Personal Info':
-                cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s, job_title=%s, institution=%s,'
-                               'orcid=%s, phone=%s, phone_extension=%s'
-                               'WHERE email=%s',
-                               [form1.first_name.data, form1.surname.data, form1.suffix.data, form1.job_title.data,
-                                form1.institution.data, form1.orcid.data, form1.phone.data, form1.phone_extension.data,
-                                email])
-                connection.commit()
-    return render_template('new_show_profile.html', form1=form1, p1_data=p1_data)
+    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
 @app.route('/proposalcreation', methods=['GET', 'POST'])
 @is_logged_in
