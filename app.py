@@ -548,5 +548,21 @@ def pressProposals():
         connection.close()
     return render_template('pressProposals.html', rows=rows)
 
+@app.route('/fundingstatus')
+@is_logged_in
+def fundingstatus():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Profile_Funding WHERE email = %s', [email])
+            fdata = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('fundingStatus.html', fdata=fdata)
+
+
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
