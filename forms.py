@@ -34,6 +34,3 @@ class ProfileEducationForm(Form):
     institution = StringField('Institution', [validators.DataRequired(), validators.Length(min=2, max=50)])
     location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=20)])
     degree_year = IntegerField('Degree Year', [validators.DataRequired(), validators.number_range(min=1900, max=date.today().year)])
-
-class ProfileAcademicCol(Form):
-    fund_year = 
