@@ -595,14 +595,14 @@ def activeProposals():
 
 @app.route('/activeProjects')
 @is_logged_in
-def activeProjects():
-    if 'email' in session:
-        email = session['email']
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM Project WHERE email = %s AND active = %s', [email, 'y'])
-            rows = cursor.fetchall()
+# def activeProjects():
+#     if 'email' in session:
+#         email = session['email']
+#     try:
+#         connection = create_connection()
+#         with connection.cursor() as cursor:
+#             cursor.execute('SELECT * FROM Project WHERE email = %s AND active = %s', [email, 'y'])
+#             rows = cursor.fetchall()
 
     finally:
         connection.close()
