@@ -1,0 +1,51 @@
+#container{
+    padding: 10px;
+    border: 2px solid LightGrey;
+    border-radius: 5px;
+    background-color:LightCyan  ;
+}
+
+#container article{
+	margin: 5px;
+	padding: 5px;
+    border: 2px solid LightGrey;
+    border-radius: 5px;
+    background-color:LightPink  ;
+}
+
+#container #h5{
+	margin: 5px;
+	padding: 5px;
+    border: 2px solid LightGrey;
+    border-radius: 5px;
+    background-color:Gold ;
+}
+
+#container h5{
+	margin: 0;
+	text-align: center;
+	text-decoration: underline;
+}
+
+#container h6{
+	margin: 0;
+	text-decoration: underline;
+}
+
+#container p{
+	margin: 0;
+	padding: 5px;
+    border: 1px solid Plum    ;
+    border-radius: 5px;
+    background-color:  Plum  ;
+}
+
+#container #abc{
+	margin: 5px;
+	padding: 5px;
+    border: 1px solid LightGrey    ;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color:pink;
+}
+

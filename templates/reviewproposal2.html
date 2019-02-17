@@ -9,10 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Dashboard</title>
+    <title>SB Admin - Review proposal</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="../static/css/main.css" rel="stylesheet">
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
@@ -24,13 +23,17 @@
     <!-- Custom styles for this template-->
     <link href="static/dash/css/sb-admin.css" rel="stylesheet">
 
+    <!-- Another custom styles for this template -->
+    <link rel="stylesheet" href="static/proposal/reviewproposal.css">
+
+
   </head>
 
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html">SFI User Dashboard</a>
+      <a class="navbar-brand mr-1" href="index.html">SFI Admin Account</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -94,22 +97,22 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{{url_for('adminDashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span>Admin Dashboard</span>
           </a>
         </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Proposals</span>
+            <span>Tasks</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Dashboard:</h6>
-            <a class="dropdown-item" href="#.html">Pending Proposals</a>
-            <a class="dropdown-item" href="#.html">Pending Proposals</a>
-            <a class="dropdown-item" href="#.html">Proposals in Press</a>
+            <a class="dropdown-item" href="#.html">AS1</a>
+            <a class="dropdown-item" href="#.html">AS2</a>
+            <a class="dropdown-item" href="#.html">AS3</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="{{ url_for('show_profile') }}">Profile Page</a>
@@ -130,7 +133,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('reviewproposal') }}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Review proposal</span></a>
+            <span>Review Proposal</span></a>
         </li>
       </ul>
 
@@ -138,37 +141,109 @@
 
         <div class="container-fluid">
 
-          <!-- register form-->
-          <header class="masthead text-white text-center">
-            <div class="overlay"></div>
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-12 mx-auto">
-                    {% include 'includes/_messages.html' %}
-                    {% from 'includes/_formhelpers.html' import render_field %}
-                     <form method='POST' class="main-form">
-                        <h2>Select a user type to register</h2>
-                        <fieldset>
-                        <div class='form-group'>
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Accepted Proposals</a>
+            </li>
+            <li class="breadcrumb-item active">{{ rpdata2.email }} proposal</li>
+          </ol>
 
-                            {{render_field(form.User_Type, class_='form-control')}}
-                        </div>
-                      </fieldset>
-                        <p><input type='submit' value='Next' class='btn btn-block btn-lg btn-primary'></p>
-                    </form>
-                </div>
-              </div>
-            </div>
-          </header>
-
-
+      <!-- proposal detail start in here-->
+              <div id="container">
+                 <article id="h5">
+                    <h5 >Proposal Title: {{ rpdata2.proposal_name }}</h5>
+                 </article>
+                 <article>
+                    <h6>Duration of award requested:</h6>
+                    <p>{{ rpdata2.duration_of_award_in_months}}</p>
+               </article>
+               <article>
+                    <h6>National Research Priority (NRP) Area:</h6>
+                    {% if rpdata2.nrp_area  == 'A'%}
+                        <p>Priority Area A - Future Networks and Communications</p>
+                    {% elif rpdata2.nrp_area  == 'B'%}
+                        <p>Priority Area B - Data Analytics, Management, Security and Privacy </p>
+                    {% elif rpdata2.nrp_area  == 'C'%}
+                        <p>Priority Area C - Digital Platforms, Content and Applications </p>
+                    {% elif rpdata2.nrp_area  == 'D'%}
+                        <p>Priority Area D - Connected Health and Independent Living </p>
+                    {% elif rpdata2.nrp_area  == 'E'%}
+                        <p>Priority Area E - Medical Devices </p>
+                    {% elif rpdata2.nrp_area  == 'F'%}
+                        <p>Priority Area F – Diagnostics </p>
+                    {% elif rpdata2.nrp_area  == 'G'%}
+                        <p>Priority Area G – Therapeutics: Synthesis, Formulation, Processing and Drug Delivery </p>
+                    {% elif rpdata2.nrp_area  == 'H'%}
+                        <p>Priority Area H - Food for Health </p>
+                    {% elif rpdata2.nrp_area  == 'I'%}
+                        <p>Priority Area I - Sustainable Food Production and Processing </p>
+                    {% elif rpdata2.nrp_area  == 'J'%}
+                        <p>Priority Area J – Marine Renewable Energy </p>
+                    {% elif rpdata2.nrp_area  == 'K'%}
+                        <p>Priority Area K - Smart Grids & Smart Cities </p>
+                    {% elif rpdata2.nrp_area  == 'L'%}
+                        <p>Priority Area L - Manufacturing Competitiveness </p>
+                    {% elif rpdata2.nrp_area  == 'M'%}
+                        <p>Priority Area M - Processing Technologies and Novel Materials </p>
+                    {% elif rpdata2.nrp_area  == 'N'%}
+                        <p>Priority Area N - Innovation in Services and Business Processes </p>
+                    {% elif rpdata2.nrp_area  == 'S'%}
+                        <p>Software</p>
+                    {% else %}
+                        <p>Other</p>
+                    {% endif %}
+               </article>
+               <article>
+                    <h6>How the proposal is aligned with SFI's legal remit:</h6>
+                    <p>{{ rpdata2.sfi_legal_remit }}</p>
+               </article>
+               <article>
+                    <h6>Ethical issues:</h6>
+                    <p>{{ rpdata2.ethical_issues }}</p>
+               </article>
+               <article>
+                    <h6>Applicant’s location (country) at the time of submission</h6>
+                    <p> {{ rpdata2.applicant_country }}</p>
+               </article>
+               <article>
+                    <h6>A list of co-applicants, if applicable</h6>
+                    
+                    <p>{{ rpdata2.list_of_co_applicants }}</p>
+               </article>
+               <article>
+                    <h6>A list of collaborators, if applicable.</h6>
+                    <p>Formmat: Name, organization, Email;</p>
+                    <p>{{ rpdata2.list_of_collaborators }}</p>
+               </article>
+               <article>
+                    <h6>Scientific abstract</h6>
+                    <p>{{ rpdata2.scientific_abstract }}</p>
+               </article>
+               <article>
+                    <h6>Programme doucments:</h6>
+                    <a id="bca" href="{{ url_for('static',filename='img/bgimg1.jpg') }}" download>
+                      <p>{{ rpdata2.program_documents }}</p>
+                    </a>
+               </article>
+               <article>
+                    <h6>A declaration stating</h6>
+                    <p>
+                      “Submission of an application confirms acceptance of and agreement with the SFI Terms and Conditions of Research Grants; that the applicant meets eligibility requirements; that the project is in full agreement with all legal and regulatory matters governing research in Ireland; that no aspect of this project is already being funded from another source and that all details provided are correct.”
+                    </p>
+                    <p>I Agreed</p>
+               </article>
+            <a id="abc" href="{{ url_for('reviewproposal') }}">Back to previos page</a>    
+          </div>
+      <!--proposal detail end here-->
+        </div>
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
       <!--  <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright © Your Website 2018</span>
+              <span>Copyright © Team5 2019</span>
             </div>
           </div>
         </footer> -->

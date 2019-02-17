@@ -623,6 +623,38 @@ def fundingstatus():
         connection.close()
     return render_template('fundingStatus.html', fdata=fdata)
 
+@app.route('/reviewproposal')
+@is_logged_in
+def reviewproposal():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1')
+            rpdata = cursor.fetchall()
+    finally:
+        connection.close()
+    return render_template('reviewproposal.html', rpdata=rpdata)
+
+@app.route('/reviewproposa2')
+@is_logged_in
+def reviewproposal2():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+
+    try:
+        e = request.args.get('e',None)
+        proposal_name = request.args.get('proposal_name',None)
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM GrantApplication WHERE submitted=1 AND email = %s AND proposal_name = %s',(e,proposal_name))
+            rpdata2 = cursor.fetchone()
+            print(rpdata2)
+    finally:
+        connection.close()
+    return render_template('reviewproposal2.html', rpdata2=rpdata2)
+
 
 if __name__ == '__main__':
     #app.run(ssl_context='adhoc')

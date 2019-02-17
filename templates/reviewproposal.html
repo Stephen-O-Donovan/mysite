@@ -9,10 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Dashboard</title>
+    <title>SB Admin - Review proposal</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="../static/css/main.css" rel="stylesheet">
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
@@ -30,7 +29,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html">SFI User Dashboard</a>
+      <a class="navbar-brand mr-1" href="index.html">SFI Admin Account</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -94,22 +93,22 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{{url_for('adminDashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span>Admin Dashboard</span>
           </a>
         </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Proposals</span>
+            <span>Tasks</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Dashboard:</h6>
-            <a class="dropdown-item" href="#.html">Pending Proposals</a>
-            <a class="dropdown-item" href="#.html">Pending Proposals</a>
-            <a class="dropdown-item" href="#.html">Proposals in Press</a>
+            <a class="dropdown-item" href="#.html">AS1</a>
+            <a class="dropdown-item" href="#.html">AS2</a>
+            <a class="dropdown-item" href="#.html">AS3</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="{{ url_for('show_profile') }}">Profile Page</a>
@@ -130,7 +129,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('reviewproposal') }}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Review proposal</span></a>
+            <span>Review Proposal</span></a>
         </li>
       </ul>
 
@@ -138,37 +137,53 @@
 
         <div class="container-fluid">
 
-          <!-- register form-->
-          <header class="masthead text-white text-center">
-            <div class="overlay"></div>
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-12 mx-auto">
-                    {% include 'includes/_messages.html' %}
-                    {% from 'includes/_formhelpers.html' import render_field %}
-                     <form method='POST' class="main-form">
-                        <h2>Select a user type to register</h2>
-                        <fieldset>
-                        <div class='form-group'>
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Accepted Proposals</a>
+            </li>
+            <li class="breadcrumb-item active">Overview</li>
+          </ol>
 
-                            {{render_field(form.User_Type, class_='form-control')}}
-                        </div>
-                      </fieldset>
-                        <p><input type='submit' value='Next' class='btn btn-block btn-lg btn-primary'></p>
-                    </form>
-                </div>
+      <!--list of accepted proposal start in here-->
+           <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Accepted Proposals</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Proposal Name</th>
+                      <th>From Researcher</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in rpdata %}
+                    <tr>
+                        <td>
+                          <a href="{{ url_for('reviewproposal2', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
+                        </td>
+                        <td>{{ row.email }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
               </div>
             </div>
-          </header>
+          </div>
 
-
+    
+      <!--list of accepted proposal list end here-->
+        </div>
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
       <!--  <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright © Your Website 2018</span>
+              <span>Copyright © Team5 2019</span>
             </div>
           </div>
         </footer> -->
