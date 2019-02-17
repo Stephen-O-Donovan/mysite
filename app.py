@@ -593,6 +593,21 @@ def activeProposals():
         connection.close()
     return render_template('activeProposals.html', rows=rows)
 
+@app.route('/activeProjects')
+@is_logged_in
+# def activeProjects():
+#     if 'email' in session:
+#         email = session['email']
+#     try:
+#         connection = create_connection()
+#         with connection.cursor() as cursor:
+#             cursor.execute('SELECT * FROM Project WHERE email = %s AND active = %s', [email, 'y'])
+#             rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('activeProjects.html', rows=rows)
+
 @app.route('/pressProposals')
 @is_logged_in
 def pressProposals():
