@@ -6,23 +6,146 @@
       <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
         <ul class="list-inline mb-2">
           <li class="list-inline-item">
-            <a id="aboutClick">About</a>
+            <a href="#" data-toggle="modal" data-target="#aboutPopup">About</a>
           </li>
           <li class="list-inline-item">&sdot;</li>
           <li class="list-inline-item">
-            <a id="contactClick">Contact</a>
+            <a href="#" data-toggle="modal" data-target="#contactPopup">Contact</a>
           </li>
           <li class="list-inline-item">&sdot;</li>
           <li class="list-inline-item">
-            <a id="termsClick">Terms of Use</a>
+            <a href="#" data-toggle="modal" data-target="#termsPopup">Terms of Service</a>
           </li>
           <li class="list-inline-item">&sdot;</li>
           <li class="list-inline-item">
-            <a id="privacyClick">Privacy Policy</a>
+            <a href="#" data-toggle="modal" data-target="#privacyPopup">Privacy</a>
           </li>
         </ul>
         <p class="text-muted small mb-4 mb-lg-0">&copy; Team5 UCC 2019. All Rights Reserved.</p>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="aboutPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">About</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Group project website for third year Computer Science</div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="contactPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Contact</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Please contact someone about something</div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="termsPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Terms of Service</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">All rights reserved</div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="privacyPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Privacy</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">We promise to use your data responsibly</div>
+
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  var aboutPopup = document.getElementById('aboutPopup');
+  var contactPopup = document.getElementById('contactPopup');
+  var termsPopup = document.getElementById('termsPopup');
+  var privacyPopup = document.getElementById('privacyPopup');
+
+  var aboutBtn = document.getElementById("aboutClick");
+  var contactBtn = document.getElementById("contactClick");
+  var termsBtn = document.getElementById("termsClick");
+  var privacyBtn = document.getElementById("privacyClick");
+
+  var span = document.getElementsByClassName("close")[0];
+
+  aboutBtn.onclick = function() {
+    aboutPopup.style.display = "block";
+    contactPopup.style.display = "none";
+    termsPopup.style.display = "none";
+    privacyPopup.style.display = "none";
+  }
+
+  contactBtn.onclick = function() {
+    aboutPopup.style.display = "none";
+    contactPopup.style.display = "block";
+    termsPopup.style.display = "none";
+    privacyPopup.style.display = "none";
+  }
+
+  termsBtn.onclick = function() {
+    aboutPopup.style.display = "none";
+    contactPopup.style.display = "none";
+    termsPopup.style.display = "block";
+    privacyPopup.style.display = "none";
+  }
+
+  privacyBtn.onclick = function() {
+    aboutPopup.style.display = "none";
+    contactPopup.style.display = "none";
+    termsPopup.style.display = "none";
+    privacyPopup.style.display = "block";
+  }
+
+  span.onclick = function() {
+    aboutPopup.style.display = "none";
+    contactPopup.style.display = "none";
+    termsPopup.style.display = "none";
+    privacyPopup.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == aboutPopup |
+        event.target == contactPopup |
+        event.target == termsPopup |
+        event.target == privacyPopup) {
+      aboutPopup.style.display = "none";
+      contactPopup.style.display = "none";
+      termsPopup.style.display = "none";
+      privacyPopup.style.display = "none";
+    }
+  }
+
+</script>
+
 </footer>

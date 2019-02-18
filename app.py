@@ -384,7 +384,7 @@ def dashboard():
             #redirect to limited dashboard if not yet verified
             cursor.execute('SELECT is_verified FROM Users WHERE email = %s', [email])
             verified = cursor.fetchone()
-            if not verified:
+            if verified == {u'is_verified': 0}:
                 return render_template('basicDashboard.html')
 
 
@@ -465,6 +465,11 @@ def show_profile():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
+
+            #redirect to basic show profile page if not verified
+            cursor.execute('SELECT is_verified FROM Users WHERE email = %s', [email])
+            verified = cursor.fetchone()
+
             #get data from tables
             cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
             p1_data = cursor.fetchone()
@@ -518,6 +523,9 @@ def show_profile():
             p17_data = cursor.fetchall()
     finally:
         connection.close()
+
+    if verified == {u'is_verified': 0}:
+        return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
     return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
 @app.route('/proposalcreation', methods=['GET', 'POST'])
@@ -604,10 +612,9 @@ def activeProjects():
             cursor.execute('SELECT * FROM Project WHERE email = %s AND active = %s', [email, 'y'])
             rows = cursor.fetchall()
 
-   finally:
+    finally:
        connection.close()
     return render_template('activeProjects.html', rows=rows)
-   return render_template('activeProjects.html')
 
 @app.route('/pressProposals')
 @is_logged_in
