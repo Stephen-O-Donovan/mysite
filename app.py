@@ -50,6 +50,7 @@ def index():
 
 class RegistrationType(Form):
     User_Type = SelectField(u'', choices=[('R','Researcher'),('A','Admin'),('C','Consultant'),('U','University')])
+
 class AdminRegistrationType(Form):
     User_Type = SelectField(u'', choices=[('A','Admin'),('C','Consultant'),('U','University')])
 
@@ -409,11 +410,34 @@ def dashboard():
 def adminDashboard():
     return render_template('adminDashboard.html')
 
-@app.route('/universityDashboard')
+@app.route('/universityDashboard', methods=['GET', 'POST'])
 @is_logged_in
 def universityDashboard():
-    return render_template('universityDashboard.html')
 
+    if 'email' in session:
+        email = session['email']
+
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+
+            #if request.method == 'POST':
+            #verify = request.args.get('verify', None)
+            #cursor.execute('UPDATE Users SET title="bbbbb" WHERE email = %s', [verify])
+
+            cursor.execute('SELECT institution FROM Users WHERE email = %s', [email])
+            row = cursor.fetchone()
+            institution = row['institution']
+
+            cursor.execute('SELECT * FROM Users WHERE institution = %s AND is_verified = 1', [institution])
+            verifiedResearchers = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Users WHERE institution = %s AND is_verified = 0', [institution])
+            unVerifiedResearchers = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('universityDashboard.html', verifiedResearchers=verifiedResearchers, unVerifiedResearchers=unVerifiedResearchers)
 
 @app.route('/consultantDashboard')
 @is_logged_in
