@@ -384,7 +384,7 @@ def dashboard():
             #redirect to limited dashboard if not yet verified
             cursor.execute('SELECT is_verified FROM Users WHERE email = %s', [email])
             verified = cursor.fetchone()
-            if not verified:
+            if verified == {u'is_verified': 0}:
                 return render_template('basicDashboard.html')
 
 
@@ -604,10 +604,9 @@ def activeProjects():
             cursor.execute('SELECT * FROM Project WHERE email = %s AND active = %s', [email, 'y'])
             rows = cursor.fetchall()
 
-   finally:
+    finally:
        connection.close()
     return render_template('activeProjects.html', rows=rows)
-   return render_template('activeProjects.html')
 
 @app.route('/pressProposals')
 @is_logged_in
