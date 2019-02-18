@@ -21,6 +21,8 @@
     <!-- Custom styles for this template -->
     <link href="static/css/landing-page.min.css" rel="stylesheet">
 
+    <link href="../static/css/login.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -41,20 +43,16 @@
           <div class="col-xl-12 mx-auto">
             <form method='POST'>
               {% include 'includes/_messages.html' %}
-              <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+              <h2>Login</h2>
                       <div class="form-group">
                           <input type="text" class="form-control" name="email" placeholder="Enter Your Email" value={{request.form.email}}>
                       </div>
-                  </div>
 
-                  <div class="col-xs-12 col-sm-6">
                       <div class="form-group">
                           <input type="password" class="form-control" name="password" placeholder="Enter Your Password" value={{request.form.password}}>
                       </div>
-                  </div>
-              </div>
               <button type="submit" class="btn btn-block btn-lg btn-primary">Submit</button>
+
           </form>
           </div>
         </div>
