@@ -426,6 +426,7 @@ def universityDashboard():
             if request.method == 'GET':
                 verify = request.args.get('verify', '')
                 cursor.execute('UPDATE Users SET is_verified = 1 WHERE email = %s', [verify])
+                connection.commit()
 
             cursor.execute('SELECT institution FROM Users WHERE email = %s', [email])
             row = cursor.fetchone()
