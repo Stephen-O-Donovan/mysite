@@ -431,7 +431,7 @@ def universityDashboard():
             row = cursor.fetchone()
             institution = row['institution']
 
-            cursor.execute('SELECT * FROM Users WHERE institution = %s AND is_verified = 1', [institution])
+            cursor.execute('SELECT * FROM Users WHERE institution = %s AND is_verified = 1 AND email != %s', [institution, email])
             verifiedResearchers = cursor.fetchall()
 
             cursor.execute('SELECT * FROM Users WHERE institution = %s AND is_verified = 0', [institution])
