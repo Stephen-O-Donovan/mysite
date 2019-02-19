@@ -101,7 +101,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('show_profile') }}">
+          <a class="nav-link" href="{{ url_for('otherProfile') }}">
             <i class="fas fa-fw fa-grin"></i>
             <span>Profile</span></a>
         </li>
@@ -197,7 +197,7 @@
                         <td>{{ row.phone_extension }}</td>
                         <td>{{ row.phone }}</td>
                         <td>{{ row.orcid }}</td>
-                        <td><a href="{{ url_for('universityDashboard', verify = row.email) }}">Verify</a></td> 
+                        <td><a href="{{ url_for('universityDashboard', verify = row.email) }}">Verify</a></td>
         <!--                   <td><form action="/universityDashboard" method="POST"><input name="ver"><input type="submit" value={{ row.email }}></form></td> -->
                     </tr>
                     {% endfor %}
