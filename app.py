@@ -657,6 +657,21 @@ def pressProposals():
         connection.close()
     return render_template('pressProposals.html', rows=rows)
 
+@app.route('/pastProposals')
+@is_logged_in
+def pastProposals():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM GrantApplication WHERE email = %s AND submitted = %s', [email, '1'])
+            rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('pastProposals.html', rows=rows)
+
 @app.route('/fundingstatus')
 @is_logged_in
 def fundingstatus():
