@@ -46,8 +46,13 @@
     <div class="carousel-item{% if loop.index == 1 %} active{% endif %}">
         <div class="container">
       <article id="act">
-      <h5 >Call For Proposal: {{ info.proposal_name }}</h5>
+    <div class="text-center"> 
+      <a type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">
+        <h5 >Call For Proposal: {{ info.proposal_name }}</h5>
+      </a>
+    </div>
       </article>
+      <div id="demo" class="collapse">
       <article>
       <h6 >Target Audience:</h6>
       <p >{{ info.description_of_target_group }}</p>
@@ -77,6 +82,11 @@
       <p >Between {{ info.time_frame }}</p>
     </article>
 
+    <article>
+      <h6 >Download Call For Proposal As PDF:</h6>
+      <a href="" download="cfp_{{ info.proposal_name }}"><p>{{ info.additional_info }}</p></a>
+    </article>
+  </div>
         </div>
     </div>
     {% endfor %}

@@ -24,7 +24,7 @@ body {
 	margin:	0;
 	text-align: center;
 	border-bottom: 3px solid #00ffcc;
-    border-radius:0.5em;
+  border-radius:0.5em;
 }
 
 #c .container article h6{
@@ -42,4 +42,7 @@ body {
   	border-radius: 5px;
 }
 
+#c .container #act .btn.btn-info{
+  
+}
 
