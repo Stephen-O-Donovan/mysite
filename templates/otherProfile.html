@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Dashboard</title>
+    <title>{{ p1_data.first_name }} Profile</title>
 
     <!-- Bootstrap core CSS-->
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,13 +23,16 @@
     <!-- Custom styles for this template-->
     <link href="static/dash/css/sb-admin.css" rel="stylesheet">
 
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" type="text/css" href="static/showprofile/css/show-profile.css">
   </head>
 
   <body id="page-top">
 
+
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <!--  <a class="navbar-brand mr-1" href="index.html">SFI User Dashboard</a> -->
+      <a class="navbar-brand mr-1" href="index.html">SFI User Profile</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -93,123 +95,109 @@
 
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Admin Dashboard</span>
-          </a>
-        </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('dashboard')}}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Tasks</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">Dashboard:</h6>
-            <a class="dropdown-item" href="#.html">AS1</a>
-            <a class="dropdown-item" href="#.html">AS2</a>
-            <a class="dropdown-item" href="#.html">AS3</a>
-            <div class="dropdown-divider"></div>
-            <h6 class="dropdown-header">Other Pages:</h6>
-            <a class="dropdown-item" href="{{ url_for('otherProfile') }}">Profile Page</a>
-            <a class="dropdown-item" href="blank.html">Blank Page</a>
-          </div>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('show_profile') }}">
+              <i class="fas fa-fw fa-grin"></i>
+              <span>Profile</span></a>
+          </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('otherProfile') }}">
-            <i class="fas fa-fw fa-grin"></i>
-            <span>Profile</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('adminRegisterUser') }}">
-            <i class="fas fa-fw fa-grin"></i>
-            <span>Register a user</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
-        </li>
-      </ul>
+        </ul>
 
       <div id="content-wrapper">
 
-        <div class="container-fluid">
-
-          <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="#">Administrator Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Overview</li>
-          </ol>
+        <div class="-fluid">
 
 
-          <div class="row">
-            <div class="col-xl-4 col-sm-6 mb-3">
-              <div class="card text-white bg-primary o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-book-reader"></i>
-                  </div>
-                  <div class="mr-5">Admin stuff 2</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
+          <!--Profile show here-->
+            <div class="container">
+              <hr>
+              <div class="row">
+
+      <!-- edit form column -->
+      {% include 'includes/_messages.html' %}
+      {% from 'includes/_formhelpers.html' import render_field %}
+      <div class="col-md-9 personal-info">
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1">Personal Info</a>
+              </h3>
             </div>
-            <div class="col-xl-4 col-sm-6 mb-3">
-              <div class="card text-white bg-warning o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-book-open"></i>
+
+            <div id="collapse1" class="panel-collapse collapse show">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.first_name, class_='form-control', value=p1_data.first_name)}}
+                    </div>
                   </div>
-                  <div class="mr-5">AStuff1</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <div class="col-xl-4 col-sm-6 mb-3">
-              <div class="card text-white bg-success o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-book"></i>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.surname, class_='form-control', value=p1_data.surname)}}
+                    </div>
                   </div>
-                  <div class="mr-5">AStuff2</div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.suffix, class_='form-control', value=p1_data.suffix)}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.job_title, class_='form-control', value=p1_data.job_title)}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.institution, class_='form-control', value=p1_data.institution)}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.orcid, class_='form-control', value=p1_data.orcid)}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.phone, class_='form-control', value=p1_data.phone)}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form1.phone_extension, class_='form-control', value=p1_data.phone_extension)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Save Personal Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
+
+              </form>
             </div>
+
           </div>
-
         </div>
-        <!-- /.container-fluid -->
+      </div>
 
-        <!-- Sticky Footer -->
-      <!--  <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © Team5 2019</span>
-            </div>
-          </div>
-        </footer> -->
-
+    </div>
+  </div>
+<hr>
       </div>
       <!-- /.content-wrapper -->
 
@@ -239,6 +227,7 @@
         </div>
       </div>
     </div>
+  </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="static/dash/vendor/jquery/jquery.min.js"></script>
@@ -260,7 +249,6 @@
     <script src="static/dash/js/demo/chart-area-demo.js"></script>
 
   </body>
-
   <!-- Footer -->
   {% include 'footer.html' %}
 
