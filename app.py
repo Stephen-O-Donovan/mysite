@@ -743,9 +743,9 @@ def reviewproposal():
         connection.close()
     return render_template('reviewproposal.html', rpdata=rpdata)
 
-@app.route('/reviewproposa2')
+@app.route('/reviewIndividualProposal')
 @is_logged_in
-def reviewproposal2():
+def reviewIndividualProposal():
     if 'email' not in session:
         return redirect(url_for('login'))
 
@@ -759,7 +759,7 @@ def reviewproposal2():
             print(rpdata2)
     finally:
         connection.close()
-    return render_template('reviewproposal2.html', rpdata2=rpdata2)
+    return render_template('reviewIndividualProposal.html', rpdata2=rpdata2)
 
 
 if __name__ == '__main__':

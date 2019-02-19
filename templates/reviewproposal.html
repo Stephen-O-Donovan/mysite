@@ -163,7 +163,7 @@
                     {% for row in rpdata %}
                     <tr>
                         <td>
-                          <a href="{{ url_for('reviewproposal2', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
+                          <a href="{{ url_for('reviewIndividualProposal', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
                         </td>
                         <td>{{ row.email }}</td>
                     </tr>
