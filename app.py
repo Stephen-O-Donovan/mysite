@@ -382,10 +382,22 @@ def dashboard():
         connection = create_connection()
         with connection.cursor() as cursor:
 
+
+            #redirect if not researcher
+            cursor.execute('SELECT user_type FROM Users WHERE email = %s', [email])
+            user_type = cursor.fetchone()
+            if user_type["user_type"] == "A":
+                return adminDashboard()
+            if user_type["user_type"] == "U":
+                return universityDashboard()
+            if user_type["user_type"] == "C":
+                return consultantDashboard()
+
+
             #redirect to limited dashboard if not yet verified
             cursor.execute('SELECT is_verified FROM Users WHERE email = %s', [email])
             verified = cursor.fetchone()
-            if verified == {u'is_verified': 0}:
+            if verified['is_verified'] == 0:
                 return render_template('basicDashboard.html')
 
 
