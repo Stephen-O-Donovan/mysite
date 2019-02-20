@@ -75,16 +75,16 @@ def login():
                 #Admin or not
                 if user_type == "A":
                     flash('logged in as admin', 'success')
-                    return redirect(url_for('adminDashboard'))
+                    return redirect(url_for('dashboard_page.adminDashboard'))
                 elif user_type == "C":
                     flash('logged in as consultant', 'success')
-                    return redirect(url_for('consultantDashboard'))
+                    return redirect(url_for('dashboard_page.consultantDashboard'))
                 elif user_type == "U":
                     flash('logged in as university admin', 'success')
-                    return redirect(url_for('universityDashboard'))
+                    return redirect(url_for('dashboard_page.universityDashboard'))
                 else:
                     flash('logged in as researcher', 'success')
-                    return redirect(url_for('dashboard'))
+                    return redirect(url_for('dashboard_page.dashboard'))
             else:
                 error = 'Invalid login'
                 return render_template('login.html', error=error)
