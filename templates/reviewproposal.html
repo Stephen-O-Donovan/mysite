@@ -122,12 +122,12 @@
             <span>Profile</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('adminRegisterUser') }}">
+          <a class="nav-link" href="{{ url_for('registration_page.adminRegisterUser') }}">
             <i class="fas fa-fw fa-grin"></i>
             <span>Register a user</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('reviewproposal') }}">
+          <a class="nav-link" href="{{ url_for('proposal_page.reviewproposal') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>Review Proposal</span></a>
         </li>
@@ -163,7 +163,7 @@
                     {% for row in rpdata %}
                     <tr>
                         <td>
-                          <a href="{{ url_for('reviewIndividualProposal', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
+                          <a href="{{ url_for('proposal_page.reviewIndividualProposal', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
                         </td>
                         <td>{{ row.email }}</td>
                     </tr>
@@ -174,19 +174,10 @@
             </div>
           </div>
 
-    
+
       <!--list of accepted proposal list end here-->
         </div>
         <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-      <!--  <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © Team5 2019</span>
-            </div>
-          </div>
-        </footer> -->
 
       </div>
       <!-- /.content-wrapper -->

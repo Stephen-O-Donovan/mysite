@@ -126,12 +126,12 @@
             <span>Profile</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('adminRegisterUser') }}">
+          <a class="nav-link" href="{{ url_for('registration_page.adminRegisterUser') }}">
             <i class="fas fa-fw fa-grin"></i>
             <span>Register a user</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('reviewproposal') }}">
+          <a class="nav-link" href="{{ url_for('proposal_page.reviewproposal') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>Review Proposal</span></a>
         </li>
@@ -208,7 +208,7 @@
                </article>
                <article>
                     <h6>A list of co-applicants, if applicable</h6>
-                    
+
                     <p>{{ rpdata2.list_of_co_applicants }}</p>
                </article>
                <article>
@@ -233,7 +233,7 @@
                     </p>
                     <p>I Agreed</p>
                </article>
-            <a id="abc" href="{{ url_for('reviewproposal') }}">Back to previos page</a>    
+            <a id="abc" href="{{ url_for('proposal_page.reviewproposal') }}">Back to previos page</a>    
           </div>
       <!--proposal detail end here-->
         </div>

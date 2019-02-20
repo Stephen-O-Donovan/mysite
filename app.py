@@ -21,6 +21,7 @@ app.secret_key = 'alphaHodder'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.register_blueprint(registration_page)
+app.register_blueprint(proposal_page)
 
 # Initialise MySQL
 mysql = MySQL(cursorclass=DictCursor)
@@ -323,79 +324,6 @@ def show_profile():
         return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
     return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
-@app.route('/adminCreateProposal', methods=['GET', 'POST'])
-@is_logged_in
-def create_proposal():
-    form = CreateProposalForm(request.form)
-    if request.method == 'POST':
-        if 'DescriptionOfTargetGroup' not in request.files or 'DescriptionOfProposalDeadlines' not in request.files:
-            flash('Please include all files')
-            return redirect(request.url)
-
-        description_of_target_group = request.files['DescriptionOfTargetGroup']
-        description_of_proposal_deadlines = request.files['DescriptionOfProposalDeadlines']
-
-        if description_of_target_group.filename == '' or description_of_proposal_deadlines.filename == '':
-            flash('Please include all files')
-            return redirect(request.url)
-
-        if (description_of_target_group and allowed_file(description_of_target_group.filename)) and (description_of_proposal_deadlines and allowed_file(description_of_proposal_deadlines.filename)):
-            target_group_filename = secure_filename(description_of_target_group.filename)
-            description_of_target_group.save(os.path.join(app.config['UPLOAD_FOLDER'], target_group_filename))
-            proposal_deadline_filename = secure_filename(description_of_proposal_deadlines.filename)
-            description_of_proposal_deadlines.save(os.path.join(app.config['UPLOAD_FOLDER'], proposal_deadline_filename))
-
-            try:
-                connection = create_connection()
-
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        'INSERT INTO CFP(proposal_name, description_of_target_group, description_of_proposal_deadlines,'
-                        ' nrp_area, call_text, report_guidelines, eligibility_criteria, duration, time_frame)'
-                        ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename, form.nrp_area.data,
-                         form.description.data, form.report_guidelines.data, form.eligibility_criteria.data,
-                         form.duration.data, form.time_frame.data))
-                    connection.commit()
-                    flash('Your files have been uploaded', 'success')
-
-            finally:
-                connection.close()
-        else:
-            flash('Please select two .pdf files for upload')
-
-    return render_template('adminCreateProposal.html', form=form)
-
-@app.route('/pendingProposals')
-@is_logged_in
-def pendingProposals():
-    if 'email' in session:
-        email = session['email']
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Pending'])
-            rows = cursor.fetchall()
-
-    finally:
-        connection.close()
-    return render_template('pendingProposals.html', rows=rows)
-
-@app.route('/activeProposals')
-@is_logged_in
-def activeProposals():
-    if 'email' in session:
-        email = session['email']
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'Active'])
-            rows = cursor.fetchall()
-
-    finally:
-        connection.close()
-    return render_template('activeProposals.html', rows=rows)
-
 @app.route('/activeProjects')
 @is_logged_in
 def activeProjects():
@@ -411,36 +339,6 @@ def activeProjects():
        connection.close()
     return render_template('activeProjects.html', rows=rows)
 
-@app.route('/pressProposals')
-@is_logged_in
-def pressProposals():
-    if 'email' in session:
-        email = session['email']
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s AND pub_status = %s', [email, 'In press'])
-            rows = cursor.fetchall()
-
-    finally:
-        connection.close()
-    return render_template('pressProposals.html', rows=rows)
-
-@app.route('/pastProposals')
-@is_logged_in
-def pastProposals():
-    if 'email' in session:
-        email = session['email']
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM GrantApplication WHERE email = %s AND submitted = %s', [email, '1'])
-            rows = cursor.fetchall()
-
-    finally:
-        connection.close()
-    return render_template('pastProposals.html', rows=rows)
-
 @app.route('/fundingstatus')
 @is_logged_in
 def fundingstatus():
@@ -455,39 +353,6 @@ def fundingstatus():
     finally:
         connection.close()
     return render_template('fundingStatus.html', fdata=fdata)
-
-@app.route('/reviewproposal')
-@is_logged_in
-def reviewproposal():
-    if 'email' not in session:
-        return redirect(url_for('login'))
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1')
-            rpdata = cursor.fetchall()
-    finally:
-        connection.close()
-    return render_template('reviewproposal.html', rpdata=rpdata)
-
-@app.route('/reviewIndividualProposal')
-@is_logged_in
-def reviewIndividualProposal():
-    if 'email' not in session:
-        return redirect(url_for('login'))
-
-    try:
-        e = request.args.get('e',None)
-        proposal_name = request.args.get('proposal_name',None)
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM GrantApplication WHERE submitted=1 AND email = %s AND proposal_name = %s',(e,proposal_name))
-            rpdata2 = cursor.fetchone()
-            print(rpdata2)
-    finally:
-        connection.close()
-    return render_template('reviewIndividualProposal.html', rpdata2=rpdata2)
-
 
 if __name__ == '__main__':
     #app.run(ssl_context='adhoc')
