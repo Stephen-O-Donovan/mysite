@@ -136,8 +136,9 @@ class SubmitProposalForm(Form):
 
 class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
-    email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
-                                  validators.Email(message="Invalid email")])
+    #email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
+    #                              validators.Email(message="Invalid email")])
+    nrp_area = StringField('Description', [validators.DataRequired(message='Please enter an NRP area'), validators.Length(min=1, max=1)])
     description = StringField('Description', [validators.DataRequired(message='Please enter a description'), validators.Length(min=50, max=65000)])
     report_guidelines = TextAreaField('Report Guidelines', [validators.DataRequired(message='Please enter guidelines'), validators.Length(min=20, max=65000)])
     eligibility_criteria = TextAreaField('Eligibility Criteria', [validators.DataRequired(message='Please enter criteria'),
@@ -635,9 +636,9 @@ def create_proposal():
                 with connection.cursor() as cursor:
                     cursor.execute(
                         'INSERT INTO CFP(proposal_name, description_of_target_group, description_of_proposal_deadlines,'
-                        ' email, call_text, report_guidelines, eligibility_criteria, duration, time_frame)'
+                        ' nrp_area, call_text, report_guidelines, eligibility_criteria, duration, time_frame)'
                         ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename, form.email.data,
+                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename, form.nrp_area.data,
                          form.description.data, form.report_guidelines.data, form.eligibility_criteria.data,
                          form.duration.data, form.time_frame.data))
                     connection.commit()
