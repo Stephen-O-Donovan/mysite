@@ -123,7 +123,7 @@ class ConsultantRegisterForm(Form):
 
 
 
-class CreateProposalForm(Form):
+class SubmitProposalForm(Form):
     # will display proposal name, duration and applicants email as uneditable fields
     ethical_issues = TextAreaField('Ethical Issues')
     applicant_country = StringField('Country', [validators.DataRequired(), validators.Length(min=3, max=50)])
@@ -134,7 +134,7 @@ class CreateProposalForm(Form):
     scientific_abstract = TextAreaField('Scientific Abstract', [validators.DataRequired(message='Please enter scientific abstract'), validators.Length(min=20, max=65000)])
 
 
-class SubmitProposalForm(Form):
+class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
     email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
                                   validators.Email(message="Invalid email")])
