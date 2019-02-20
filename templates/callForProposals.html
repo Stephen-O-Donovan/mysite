@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SFI - Create Proposals</title>
+    <title>Call for Proposals</title>
 
     <!-- Bootstrap core CSS-->
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,86 +23,72 @@
     <!-- Custom styles for this template-->
     <link href="static/dash/css/sb-admin.css" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="static/proposal/proposal.css" rel="stylesheet">
-
-
   </head>
 
   <body id="page-top">
+      {% include 'dashboardNav.html' %}
+    <div id="wrapper">
 
-    {% include 'dashboardNav.html' %}
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    {% include 'nav.html' %}
+      <!-- Sidebar -->
+      {% include 'nav.html' %}
 
       <div id="content-wrapper">
 
-        <div class="-fluid">
-
+        <div class="container-fluid">
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Submit Proposal</a>
+              <a href="#">Dashboard</a>
             </li>
+            <li class="breadcrumb-item active">Overview</li>
           </ol>
 
- <!-- star the create proposal page here -->
-    <header class="masthead text-center">
-      <div class="overlay"></div>
-      <div id="container" class="container">
-        <div class="row">
 
-          <div class="col-xl-12 mx-auto">
-              {% include 'includes/_messages.html' %}
-              {% from 'includes/_formhelpers.html' import render_field %}
-               <form method='POST' enctype=multipart/form-data>
-                  <div class='form-group'>
-                      Proposal: {{ proposal_name }}
-                  </div>
-                  <div class='form-group'>
-                      Duration: {{ duration }}
-                  </div>
-                  <div class='form-group'>
-                      Applicant: {{ email }}
-                  </div>
-
-              <!--   <div class="container">
-                   <label name=DescriptionOfProposalDeadlines>Description of proposal deadlines as pdf</label>
-                   <div>
-                   <input type=file name=DescriptionOfProposalDeadlines>
-                 </div>
-                 </div> -->
-                 <div class='form-group'>
-                      {{render_field(form.ethical_issues, class_='form-control')}}
-                  </div>
-                 <div class='form-group'>
-                      {{render_field(form.applicant_country, class_='form-control')}}
-                  </div>
-                 <div class='md-form'>
-                      {{render_field(form.list_of_co_applicants, class_='form-control', rows="3")}}
-                  </div>
-                 <div class='md-form'>
-                      {{render_field(form.list_of_collaborators, class_='form-control', rows="3")}}
-                  </div>
-                 <div class='form-group'>
-                      {{render_field(form.lay_abstract, class_='form-control')}}
-                  </div>
-                 <div class='form-group'>
-                      {{render_field(form.program_documents, class_='form-control')}}
-                  </div>
-                  <div class='form-group'>
-                       {{render_field(form.scientific_abstract, class_='form-control')}}
-                   </div>
-                  <p id='p-before-sumbit'><input id='submit' type='submit' value='submit' class='btn btn-block btn-lg btn-primary'></p>
-              </form>
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Call for Proposals</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Proposal Name</th>
+                      <th>Target Group</th>
+                      <th>Text</th>
+                      <th>Report Guidelines</th>
+                      <th>Eligibility Criteria</th>
+                      <th>Duration</th>
+                      <th>Time Frame</th>
+                      <th>Additional Information</th>
+                      <th>Apply</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ row.proposal_name }}</td>
+                        <td>{{ row.description_of_target_group }}</td>
+                        <td>{{ row.description_of_proposal_deadlines }}</td>
+                        <td>{{ row.call_text }}</td>
+                        <td>{{ row.report_guidelines }}</td>
+                        <td>{{ row.eligibility_criteria }}</td>
+                        <td>{{ row.duration }}</td>
+                        <td>{{ row.time_frame }}</td>
+                        <td>{{ row.additional_info }}</td>
+                        <td><a href="{{ url_for('proposal_page.proposalSubmission', proposal_name = row.proposal_name,
+                          duration = row.duration) }}">Apply</a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
+
         </div>
-      </div>
-    </header>
-  </div>
+        <!-- /.container-fluid -->
 
       </div>
       <!-- /.content-wrapper -->
@@ -134,6 +120,8 @@
       </div>
     </div>
 
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="static/dash/vendor/jquery/jquery.min.js"></script>
     <script src="static/dash/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -154,8 +142,6 @@
     <script src="static/dash/js/demo/chart-area-demo.js"></script>
 
   </body>
-
   <!-- Footer -->
   {% include 'footer.html' %}
-
 </html>

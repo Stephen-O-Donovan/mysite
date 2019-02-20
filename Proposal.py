@@ -31,13 +31,13 @@ class SubmitProposalForm(Form):
     lay_abstract = TextAreaField('Lay Abstract', [validators.DataRequired(message='Please enter lay abstract'), validators.Length(min=20, max=65000)])
     program_documents = TextAreaField('Program Documents', [validators.DataRequired(message='Please enter program documents'), validators.Length(min=20, max=65000)])
     scientific_abstract = TextAreaField('Scientific Abstract', [validators.DataRequired(message='Please enter scientific abstract'), validators.Length(min=20, max=65000)])
-
+    declaration_acceptance = BooleanField("I do declare", [validators.DataRequired(message='Please declare')])
 
 class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
     #email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
     #                              validators.Email(message="Invalid email")])
-    nrp_area = StringField('Description', [validators.DataRequired(message='Please enter an NRP area'), validators.Length(min=1, max=1)])
+    nrp_area = StringField('NRP Area', [validators.DataRequired(message='Please enter an NRP area'), validators.Length(min=1, max=1)])
     description = StringField('Description', [validators.DataRequired(message='Please enter a description'), validators.Length(min=50, max=65000)])
     report_guidelines = TextAreaField('Report Guidelines', [validators.DataRequired(message='Please enter guidelines'), validators.Length(min=20, max=65000)])
     eligibility_criteria = TextAreaField('Eligibility Criteria', [validators.DataRequired(message='Please enter criteria'),
@@ -87,6 +87,57 @@ def create_proposal():
             flash('Please select two .pdf files for upload')
 
     return render_template('adminCreateProposal.html', form=form)
+
+@proposal_page.route('/proposalSubmission', methods=['GET', 'POST'])
+@is_logged_in
+def proposalSubmission():
+    form = SubmitProposalForm(request.form)
+    proposal_name=''
+    duration=''
+
+    if 'email' in session:
+        email = session['email']
+
+    if request.method == 'POST':
+        if form.validate():
+            proposal_name = request.args.get('proposal_name', '')
+            duration = request.args.get('duration', '')
+            try:
+                connection = create_connection()
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        'INSERT INTO GrantApplication(proposal_name, duration_of_award, email,'
+                        ' ethical_issues, applicant_country, list_of_co_applicants, list_of_collaborators, lay_abstract,'
+                        ' declaration_acceptance, submitted, program_documents, scientific_abstract)'
+                        ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s, %i, %i, %s, %s)',
+                        (proposal_name, duration, email, form.ethical_issues.data,
+                         form.applicant_country.data, form.list_of_co_applicants.data, form.list_of_collaborators.data,
+                         form.lay_abstract.data, 1, 1, form.program_documents, form.scientific_abstract))
+                    connection.commit()
+                    flash('Application sent', 'success')
+            finally:
+                connection.close()
+        else:
+            flash('Please complete all fields')
+            return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration)
+
+    return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration)
+
+@proposal_page.route('/callForProposals')
+@is_logged_in
+def callForProposals():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM CFP')
+            rows = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('callForProposals.html', rows=rows, email=email)
+
 
 @proposal_page.route('/pendingProposals')
 @is_logged_in
