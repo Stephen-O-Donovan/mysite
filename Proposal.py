@@ -92,27 +92,45 @@ def create_proposal():
 @is_logged_in
 def proposalSubmission():
     form = SubmitProposalForm(request.form)
-    proposal_name=''
-    duration=''
+    proposal_name = request.args.get('proposal_name', '')
+    duration = request.args.get('duration', '')
+    #duration = 0
+    nrp_area = request.args.get('nrp_area', '')
+    sfi_legal_remit = ''
+    ro_approval = 0
+    submitted = 1
+    application_successful = 0
 
     if 'email' in session:
         email = session['email']
 
     if request.method == 'POST':
         if form.validate():
-            proposal_name = request.args.get('proposal_name', '')
-            duration = request.args.get('duration', '')
             try:
                 connection = create_connection()
                 with connection.cursor() as cursor:
+
                     cursor.execute(
-                        'INSERT INTO GrantApplication(proposal_name, duration_of_award, email,'
-                        ' ethical_issues, applicant_country, list_of_co_applicants, list_of_collaborators, lay_abstract,'
-                        ' declaration_acceptance, submitted, program_documents, scientific_abstract)'
-                        ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s, %i, %i, %s, %s)',
-                        (proposal_name, duration, email, form.ethical_issues.data,
-                         form.applicant_country.data, form.list_of_co_applicants.data, form.list_of_collaborators.data,
-                         form.lay_abstract.data, 1, 1, form.program_documents, form.scientific_abstract))
+                        'INSERT INTO GrantApplication'
+                        '(proposal_name, duration_of_award_in_months, nrp_area,'
+                        ' sfi_legal_remit, ethical_issues, applicant_country, '
+                        ' list_of_co_applicants, list_of_collaborators, lay_abstract,'
+                        ' declaration_acceptance, ro_approval, submitted,'
+                        ' application_successful, email, '
+                        ' program_documents, scientific_abstract)'
+                        ' VALUES( '
+                        ' %s, %s, %s, '
+                        ' %s, %s, %s, '
+                        ' %s, %s, %s, '
+                        ' %s, %s, %s, '
+                        ' %s, %s,'
+                        ' %s, %s)',
+                        (proposal_name, duration, nrp_area,
+                            sfi_legal_remit, form.ethical_issues.data, form.applicant_country.data,
+                            form.list_of_co_applicants.data, form.list_of_collaborators.data, form.lay_abstract.data,
+                            1, ro_approval, submitted,
+                            application_successful, email,
+                            form.program_documents.data, form.scientific_abstract.data))
                     connection.commit()
                     flash('Application sent', 'success')
             finally:

@@ -57,6 +57,7 @@
                       <th>Proposal Name</th>
                       <th>Target Group</th>
                       <th>Text</th>
+                      <th>NRP Area</th>
                       <th>Report Guidelines</th>
                       <th>Eligibility Criteria</th>
                       <th>Duration</th>
@@ -70,15 +71,16 @@
                     <tr>
                         <td>{{ row.proposal_name }}</td>
                         <td>{{ row.description_of_target_group }}</td>
-                        <td>{{ row.description_of_proposal_deadlines }}</td>
                         <td>{{ row.call_text }}</td>
+                        <td>{{ row.nrp_area }}</td>
+                        <td>{{ row.description_of_proposal_deadlines }}</td>
                         <td>{{ row.report_guidelines }}</td>
                         <td>{{ row.eligibility_criteria }}</td>
                         <td>{{ row.duration }}</td>
                         <td>{{ row.time_frame }}</td>
                         <td>{{ row.additional_info }}</td>
-                        <td><a href="{{ url_for('proposal_page.proposalSubmission', proposal_name = row.proposal_name,
-                          duration = row.duration) }}">Apply</a></td>
+                        <td><a  method="POST" href="{{ url_for('proposal_page.proposalSubmission', proposal_name = row.proposal_name,
+                          duration = row.duration, nrp_area = row.nrp_area) }}">Apply</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>
