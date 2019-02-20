@@ -123,6 +123,17 @@ class ConsultantRegisterForm(Form):
 
 
 
+class SubmitProposalForm(Form):
+    # will display proposal name, duration and applicants email as uneditable fields
+    ethical_issues = TextAreaField('Ethical Issues')
+    applicant_country = StringField('Country', [validators.DataRequired(), validators.Length(min=3, max=50)])
+    list_of_co_applicants = StringField('List co-applicants')
+    list_of_collaborators = TextAreaField('List collaborators')
+    lay_abstract = TextAreaField('Lay Abstract', [validators.DataRequired(message='Please enter lay abstract'), validators.Length(min=20, max=65000)])
+    program_documents = TextAreaField('Program Documents', [validators.DataRequired(message='Please enter program documents'), validators.Length(min=20, max=65000)])
+    scientific_abstract = TextAreaField('Scientific Abstract', [validators.DataRequired(message='Please enter scientific abstract'), validators.Length(min=20, max=65000)])
+
+
 class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
     email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
@@ -596,7 +607,7 @@ def show_profile():
         return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
     return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
-@app.route('/proposalcreation', methods=['GET', 'POST'])
+@app.route('/adminCreateProposal', methods=['GET', 'POST'])
 @is_logged_in
 def create_proposal():
     form = CreateProposalForm(request.form)
@@ -637,7 +648,7 @@ def create_proposal():
         else:
             flash('Please select two .pdf files for upload')
 
-    return render_template('admin_create_proposal.html', form=form)
+    return render_template('adminCreateProposal.html', form=form)
 
 @app.route('/pendingProposals')
 @is_logged_in
