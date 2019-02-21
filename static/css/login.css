@@ -7,7 +7,7 @@ h2{
   border-radius:0.5em;
 }
 
-.container .row{
+#container .row{
   padding:2em;
   background:white;
   border:0.2em solid #4785b8;
