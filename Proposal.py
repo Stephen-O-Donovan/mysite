@@ -10,6 +10,7 @@ from utilities import *
 from werkzeug.utils import secure_filename
 from datetime import date
 
+UPLOAD_FOLDER = 'storage/proposals'
 proposal_page = Blueprint('proposal_page', __name__, template_folder='templates')
 
 def is_logged_in(f):
@@ -40,6 +41,8 @@ class CreateProposalForm(Form):
     nrp_area = StringField('NRP Area', [validators.DataRequired(message='Please enter an NRP area'), validators.Length(min=1, max=1)])
     description = StringField('Description', [validators.DataRequired(message='Please enter a description'), validators.Length(min=50, max=65000)])
     report_guidelines = TextAreaField('Report Guidelines', [validators.DataRequired(message='Please enter guidelines'), validators.Length(min=20, max=65000)])
+    description_of_target_group = TextAreaField('Description of Target Group', [validators.DataRequired(message='Please enter description'), validators.Length(min=10, max=65000)])
+
     eligibility_criteria = TextAreaField('Eligibility Criteria', [validators.DataRequired(message='Please enter criteria'),
                                                           validators.Length(min=20, max=65000)])
     duration = StringField('Grant Duration', [validators.DataRequired(message='Please enter duration'), validators.Length(min=5, max=20)])
@@ -49,33 +52,30 @@ class CreateProposalForm(Form):
 @is_logged_in
 def create_proposal():
     form = CreateProposalForm(request.form)
-    if request.method == 'POST':
-        if 'DescriptionOfTargetGroup' not in request.files or 'DescriptionOfProposalDeadlines' not in request.files:
+    if request.method == 'POST' and form.validate():
+        if 'AdditionalInfo' not in request.files:
             flash('Please include all files')
             return redirect(request.url)
 
-        description_of_target_group = request.files['DescriptionOfTargetGroup']
-        description_of_proposal_deadlines = request.files['DescriptionOfProposalDeadlines']
+        additional_info_pdf = request.files['AdditionalInfo']
 
-        if description_of_target_group.filename == '' or description_of_proposal_deadlines.filename == '':
+        if additional_info_pdf.filename == '':
             flash('Please include all files')
             return redirect(request.url)
 
-        if (description_of_target_group and allowed_file(description_of_target_group.filename)) and (description_of_proposal_deadlines and allowed_file(description_of_proposal_deadlines.filename)):
-            target_group_filename = secure_filename(description_of_target_group.filename)
-            description_of_target_group.save(os.path.join(app.config['UPLOAD_FOLDER'], target_group_filename))
-            proposal_deadline_filename = secure_filename(description_of_proposal_deadlines.filename)
-            description_of_proposal_deadlines.save(os.path.join(app.config['UPLOAD_FOLDER'], proposal_deadline_filename))
+        if (additional_info_pdf and allowed_file(additional_info_pdf.filename)):
+            additional_info = secure_filename(additional_info_pdf.filename)
+            additional_info_pdf.save(os.path.join(UPLOAD_FOLDER, additional_info))
 
             try:
                 connection = create_connection()
 
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        'INSERT INTO CFP(proposal_name, description_of_target_group, description_of_proposal_deadlines,'
+                        'INSERT INTO CFP(proposal_name, description_of_target_group, additional_info,'
                         ' nrp_area, call_text, report_guidelines, eligibility_criteria, duration, time_frame)'
                         ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                        (form.proposal_name.data, target_group_filename, proposal_deadline_filename, form.nrp_area.data,
+                        (form.proposal_name.data, form.description_of_target_group.data, additional_info, form.nrp_area.data,
                          form.description.data, form.report_guidelines.data, form.eligibility_criteria.data,
                          form.duration.data, form.time_frame.data))
                     connection.commit()
@@ -84,7 +84,7 @@ def create_proposal():
             finally:
                 connection.close()
         else:
-            flash('Please select two .pdf files for upload')
+            flash('Please select a .pdf file for upload')
 
     return render_template('adminCreateProposal.html', form=form)
 
