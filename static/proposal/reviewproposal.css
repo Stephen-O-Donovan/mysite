@@ -55,3 +55,7 @@ padding:2em;
     background-color:LightGrey;
 }
 
+#container #bca p{
+  color: blue;
+  text-align: center;
+}

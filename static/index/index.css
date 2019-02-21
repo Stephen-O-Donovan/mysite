@@ -42,6 +42,11 @@ body {
   	border-radius: 5px;
 }
 
+#c .container article #p{
+  text-align: center;
+  color: blue;
+
+}
 #c .container #act .btn.btn-info{
   
 }
