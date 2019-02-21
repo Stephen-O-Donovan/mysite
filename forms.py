@@ -32,13 +32,13 @@ class BasicProfileForm(Form):
 class ProfileAcademicColForm(Form):
     start_date = DateField('Start Date', [validators.DataRequired()])
     end_date = DateField('End Date', [validators.DataRequired()])
-    institution_name = StringField('Name of Institution', [validators.DataRequired(), validators.Length(min=2, max=30)])
-    department_in_institution = StringField('Department within Institution', [validators.DataRequired(), validators.Length(min=2, max=30)])
-    location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=50)])
-    collaborator_name = StringField('Name of Collaborator', [validators.DataRequired(), validators.Length(min=2, max=30)])
-    primary_goal = StringField('Primary Goal of Collaboration', [validators.DataRequired(), validators.Length(min=2, max=60)])
+    institution_name = StringField('Name of Institution', [validators.DataRequired(message="Please enter valid institution name"), validators.Length(min=2, max=30)])
+    department_in_institution = StringField('Department within Institution', [validators.DataRequired(message="Please enter valid department name"), validators.Length(min=2, max=30)])
+    location = StringField('Location', [validators.DataRequired(message="Please enter valid location"), validators.Length(min=2, max=50)])
+    collaborator_name = StringField('Name of Collaborator', [validators.DataRequired(message="Please enter valid name"), validators.Length(min=2, max=30)])
+    primary_goal = StringField('Primary Goal of Collaboration', [validators.DataRequired(message="Please enter goal between 2-60 characters."), validators.Length(min=2, max=60)])
     frequency_of_interaction = IntegerField('Frequency Of Interaction', [validators.DataRequired(message="Please enter a valid number")])
-    grant_no = StringField('Primary Attribution', [validators.DataRequired(), validators.Length(min=1, max=18)])
+    grant_no = StringField('Primary Attribution', [validators.DataRequired(message="Please enter valid grant number"), validators.Length(min=1, max=18)])
 
 class ProfileCommunicationForm(Form):
     comm_year = IntegerField('Year', [validators.DataRequired(), validators.number_range(min=1900, max=date.today().year)])
@@ -57,12 +57,13 @@ class ProfileEducationForm(Form):
     field_of_study = StringField('Field Of Study', [validators.DataRequired(), validators.Length(min=2, max=20)])
     institution = StringField('Institution', [validators.DataRequired(), validators.Length(min=2, max=50)])
     location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=50)])
-    degree_year = IntegerField('Degree Year', [validators.DataRequired(), validators.number_range(min=1900, max=date.today().year)])
+    degree_year = StringField('Graduation Date', [validators.DataRequired()])
 
 class ProfileEmploymentForm(Form):
     institution = StringField('Institution', [validators.DataRequired(), validators.Length(min=2, max=50)])
     location = StringField('Location', [validators.DataRequired(), validators.Length(min=2, max=50)])
-    emp_years = IntegerField('Years', [validators.DataRequired(message="Please enter a valid number")])
+    start_date = IntegerField('Start Date', [validators.DataRequired(message="Please enter a valid date")])
+    end_date = IntegerField('End Date', [validators.DataRequired(message="Please enter a valid date")])
 
 class ProfileFundingForm(Form):
     start_date = DateField('Start Date', [validators.DataRequired()])

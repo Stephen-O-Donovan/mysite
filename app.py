@@ -142,7 +142,7 @@ def show_profile():
     if request.method == 'POST':
         connection = create_connection()
         with connection.cursor() as cursor:
-            if request.form['submit'] == 'Save Personal Info':
+            if request.form['submit'] == 'Save Personal Info' and form1.validate():
                 cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s, job_title=%s, institution=%s,'
                                'orcid=%s, phone=%s, phone_extension=%s'
                                'WHERE email=%s',
@@ -151,7 +151,7 @@ def show_profile():
                                 email])
                 connection.commit()
 
-            elif request.form['submit'] == 'Add Education Info':
+            elif request.form['submit'] == 'Add Education Info' and form2.validate():
                 cursor.execute('INSERT INTO Profile_Education_Info (email, degree, field_of_study, institution, location, degree_year)'
                                ' VALUES (%s, %s, %s, %s, %s, %s)',
                                [email, form2.degree.data, form2.field_of_study.data, form2.institution.data, form2.location.data, form2.degree_year.data])
@@ -161,11 +161,11 @@ def show_profile():
                 cursor.execute('DELETE FROM Profile_Education_Info WHERE degree=%s AND email=%s', [request.form['degree'], email])
                 connection.commit()
 
-            elif request.form['submit'] == 'Add Employment Info':
+            elif request.form['submit'] == 'Add Employment Info' and form3.validate():
                 cursor.execute(
-                    'INSERT INTO Profile_Employment (email, institution, location, emp_years)'
-                    ' VALUES (%s, %s, %s, %s)',
-                    [email, form3.institution.data, form3.location.data, form3.emp_years.data])
+                    'INSERT INTO Profile_Employment (email, institution, location, start_date, end_date)'
+                    ' VALUES (%s, %s, %s, %s, %s)',
+                    [email, form3.institution.data, form3.location.data, form3.start_date.data, form3.end_date.data])
                 connection.commit()
             elif request.form['submit'] == 'Remove Employment Info':
                 cursor.execute('DELETE FROM Profile_Employment WHERE institution=%s AND email=%s',
