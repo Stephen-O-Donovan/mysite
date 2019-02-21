@@ -4,3 +4,4 @@ passlib
 PyMySQL
 flask-sslify
 pyOpenSSL
+sendgrid
