@@ -1,7 +1,5 @@
 import pymysql
 import sendgrid
-from sendgrid.helpers.mail import *
-import os
 
 ALLOWED_EXTENSIONS = set(['pdf', 'odt', 'txt'])
 def create_connection():
@@ -19,11 +17,11 @@ def allowed_file(filename):
 
 def send_email(to_email, subject, content):
     sg = sendgrid.SendGridAPIClient(apikey='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')
-    from_email = Email("SFI@groupproject.com")
-    to_email = Email(to_email)
+    from_email = sendgrid.helpers.mailEmail("SFI@groupproject.com")
+    to_email = sendgrid.helpers.mailEmail(to_email)
     subject = subject
-    content = Content("text/plain", content)
-    mail = Mail(from_email, subject, to_email, content)
+    content = sendgrid.helpers.mailContent("text/plain", content)
+    mail = sendgrid.helpers.mailMail(from_email, subject, to_email, content)
     response = sg.client.mail.send.post(request_body=mail.get())
     print(response.status_code)
     print(response.body)

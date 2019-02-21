@@ -38,7 +38,8 @@ class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
     #email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
     #                              validators.Email(message="Invalid email")])
-    nrp_area = StringField('NRP Area', [validators.DataRequired(message='Please enter an NRP area'), validators.Length(min=1, max=1)])
+    nrp_area = StringField('NRP Area', [validators.DataRequired(message='Please enter an NRP area'), validators.Length(min=1, max=1)],
+                           choices=[('a', 'A'), ('n', 'N'), ('s', 'S')])
     description = StringField('Description', [validators.DataRequired(message='Please enter a description'), validators.Length(min=50, max=65000)])
     report_guidelines = TextAreaField('Report Guidelines', [validators.DataRequired(message='Please enter guidelines'), validators.Length(min=20, max=65000)])
     description_of_target_group = TextAreaField('Description of Target Group', [validators.DataRequired(message='Please enter description'), validators.Length(min=10, max=65000)])
