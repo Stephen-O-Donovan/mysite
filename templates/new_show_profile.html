@@ -208,12 +208,7 @@
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form2.institution, class_='form-control')}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-lg-8">
-                      {{render_field(form2.degree_year, class_='form-control')}}
+                      {{render_field(form2.degree_year, class_='form-control', type="date")}}
                     </div>
                   </div>
                   <div class="form-group">
@@ -271,7 +266,12 @@
                   </div>
                   <div class="form-group">
                     <div class="col-lg-8">
-                      {{render_field(form3.emp_years, class_='form-control')}}
+                      {{render_field(form3.start_date, class_='form-control', type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form3.end_date, class_='form-control', type="date")}}
                     </div>
                   </div>
                   <div class="form-group">
@@ -291,7 +291,9 @@
                       <ul class="list-group">
                         <li class="list-group-item">Institution/Company: {{ row.institution }}</li>
                         <li class="list-group-item">Location: {{ row.location }}</li>
-                        <li class="list-group-item">Years: {{ row.emp_years }}</li>
+                        <li class="list-group-item">Years: {{ row.start_date }}</li>
+                        <li class="list-group-item">Years: {{ row.end_date }}</li>
+
                           <input name='institution' type='text' value='{{ row.institution }}' hidden>
                           <input type="submit" class="btn btn-primary" name="submit" value="Remove Employment Info">
                         </li>
