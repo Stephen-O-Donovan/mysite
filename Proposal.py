@@ -48,6 +48,7 @@ class CreateProposalForm(Form):
     duration = StringField('Grant Duration', [validators.DataRequired(message='Please enter duration'), validators.Length(min=5, max=20)])
     time_frame = StringField('Start Time Frame', [validators.DataRequired(message='Please enter start time frame'), validators.Length(min=5, max=100)])
 
+
 @proposal_page.route('/adminCreateProposal', methods=['GET', 'POST'])
 @is_logged_in
 def create_proposal():
@@ -244,7 +245,70 @@ def reviewIndividualProposal():
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM GrantApplication WHERE submitted=1 AND email = %s AND proposal_name = %s',(e,proposal_name))
             rpdata2 = cursor.fetchone()
-            print(rpdata2)
     finally:
         connection.close()
     return render_template('reviewIndividualProposal.html', rpdata2=rpdata2)
+
+
+@proposal_page.route('/universityReviewListProposal')
+@is_logged_in
+def universityReviewListProposal():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+
+    accept = request.args.get('accept',None)
+    pn = request.args.get('pn',None)
+    email = request.args.get('email',None)
+
+    print(accept,pn,email)
+
+    if accept !=None:
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
+            #1 is accepted
+                print(123123121231231231)
+                if accept == '1':
+                    print(4564556454645646546)
+                    cursor.execute('UPDATE GrantApplication SET university_accepted = 1 WHERE proposal_name = %s AND email = %s',[pn,email])
+                    connection.commit()
+                    display = 'Proposal "%s" from researcher %s has been accepted.',[pn, email]
+                    flash(display,'success')
+                else:
+                    print(7897897989798798798)
+                    cursor.execute('UPDATE GrantApplication SET university_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
+                    connection.commit()
+                    display='Proposal "%s" from researcher %s has been rejected.',[pn, email]
+                    print('Proposal "%s" from researcher %s has been rejected.',[pn, email])
+                    flash(display,'success')
+                cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 0 AND reviewer_accepted = 0 AND admin_accepted = 0')
+                urpdata = cursor.fetchall()
+                return render_template('universityReviewListProposal.html', urpdata=urpdata)
+        finally:
+            connection.close()
+
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 0 AND reviewer_accepted = 0 AND admin_accepted = 0')
+            urpdata = cursor.fetchall()
+    finally:
+        connection.close()
+    return render_template('universityReviewListProposal.html', urpdata=urpdata)
+
+@proposal_page.route('/universityReviewIndividualProDetail')
+@is_logged_in
+def universityReviewIndividualProDetail():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+
+    try:
+        e = request.args.get('e',None)
+        proposal_name = request.args.get('proposal_name',None)
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM GrantApplication WHERE submitted=1 AND email = %s AND proposal_name = %s',(e,proposal_name))
+            urpdata2 = cursor.fetchone()
+    finally:
+        connection.close()
+    return render_template('universityReviewIndividualProDetail.html', urpdata2=urpdata2)
