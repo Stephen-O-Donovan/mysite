@@ -378,6 +378,69 @@
           </div>
         </div>
 
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse5">Distinction and awards</a>
+              </h3>
+            </div>
+
+            <div id="collapse5" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form5.DandA_year, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form5.award_body, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form5.detail, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form5.teamate_name, class_='form-control')}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Award Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+                {% for row in p5_data %}
+                <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group list-group-flush">
+                      <ul class="list-group">
+                        <li class="list-group-item ">Year: {{ row.DandA_year }}</li>
+                        <li class="list-group-item">Awarding body: {{ row.award_body }}</li>
+                        <li class="list-group-item">Details of award: {{ row.detail }}</li>
+                        <li class="list-group-item">Team member name: {{ row.teamate_name }}</li>
+                        <li class="list-group-item">
+                          <input name='body' type='text' value='{{ row.award_body }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Award Info">
+                        </li>
+                      </ul>
+                </div>
+                </form>
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </div>
