@@ -137,6 +137,7 @@ def show_profile():
     form1 = BasicProfileForm(request.form)
     form2 = ProfileEducationForm(request.form)
     form3 = ProfileEmploymentForm(request.form)
+    form4 = ProfileProfessSocForm(request.form)
     if 'email' in session:
         email = session['email']
     if request.method == 'POST':
@@ -171,6 +172,20 @@ def show_profile():
                 cursor.execute('DELETE FROM Profile_Employment WHERE institution=%s AND email=%s',
                                [request.form['institution'], email])
                 connection.commit()
+
+
+            elif request.form['submit'] == 'Add Society Info' and form4.validate():
+                cursor.execute('INSERT INTO Profile_Profess_soc (email, start_date,end_date,name_of_soc,type_of_membership,status)'
+                               ' VALUES (%s, %s, %s, %s, %s, %s)',
+                               [email, form4.start_date.data, form4.end_date.data, form4.name_of_soc.data, form4.type_of_membership.data, form4.status.data])
+                connection.commit()
+                pass
+            elif request.form['submit'] == 'Remove Society Info':
+                cursor.execute('DELETE FROM Profile_Profess_soc WHERE name_of_soc=%s AND email=%s',
+                               [request.form['society'], email])
+                connection.commit()
+
+
 
     try:
         connection = create_connection()
@@ -236,7 +251,7 @@ def show_profile():
 
     if verified == {u'is_verified': 0}:
         return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
-    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
+    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3,form4=form4, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
 @app.route('/activeProjects')
 @is_logged_in

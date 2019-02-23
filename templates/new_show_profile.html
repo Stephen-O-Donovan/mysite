@@ -307,6 +307,78 @@
         </div>
 
 
+
+
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse4">Professional societies</a>
+              </h3>
+            </div>
+
+            <div id="collapse4" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form4.start_date, class_='form-control',type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form4.end_date, class_='form-control',type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form4.name_of_soc, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form4.type_of_membership, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form4.status, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Society Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+                {% for row in p4_data %}
+                <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group list-group-flush">
+                      <ul class="list-group">
+                        <li class="list-group-item ">Start date: {{ row.start_date }}</li>
+                        <li class="list-group-item">End date: {{ row.end_date }}</li>
+                        <li class="list-group-item">Name of society: {{ row.name_of_soc }}</li>
+                        <li class="list-group-item">Membership type: {{ row.type_of_membership }}</li>
+                        <li class="list-group-item">Status: {{ row.status }}</li>
+                        <li class="list-group-item">
+                          <input name='society' type='text' value='{{ row.name_of_soc }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Society Info">
+                        </li>
+                      </ul>
+                </div>
+                </form>
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
