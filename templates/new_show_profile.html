@@ -441,6 +441,88 @@
           </div>
         </div>
 
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse6">Funding Diversification</a>
+              </h3>
+            </div>
+
+            <div id="collapse6" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.start_date, class_='form-control', type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.end_date, class_='form-control',type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.amount_fund, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.fund_body, class_='form-control')}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.fund_program, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.status, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form6.grant_no, class_='form-control')}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Funding Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+                {% for row in p6_data %}
+                <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group list-group-flush">
+                      <ul class="list-group">
+                        <li class="list-group-item ">Start date: {{ row.start_date }}</li>
+                        <li class="list-group-item">End date: {{ row.end_date }}</li>
+                        <li class="list-group-item">Amount of funding: {{ row.amount_fund }}</li>
+                        <li class="list-group-item">Funding body: {{ row.fund_body }}</li>
+                        <li class="list-group-item">Funding program: {{ row.fund_program }}</li>
+                        <li class="list-group-item">Status: {{ row.status }}</li>
+                        <li class="list-group-item">Grant number: {{ row.grant_no }}</li>
+                        <li class="list-group-item">
+                          <input name='grant' type='text' value='{{ row.grant_no }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Funding Info">
+                        </li>
+                      </ul>
+                </div>
+                </form>
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </div>
