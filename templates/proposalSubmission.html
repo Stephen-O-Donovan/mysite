@@ -69,12 +69,9 @@
                       Applicant: {{ email }}
                   </div>
 
-              <!--   <div class="container">
-                   <label name=DescriptionOfProposalDeadlines>Description of proposal deadlines as pdf</label>
-                   <div>
-                   <input type=file name=DescriptionOfProposalDeadlines>
+                  <div class='form-group'>
+                    {{render_field(form.sfi_legal_remit, class_='form-control')}}
                  </div>
-                 </div> -->
                  <div class='form-group'>
                       {{render_field(form.ethical_issues, class_='form-control')}}
                   </div>
@@ -90,16 +87,25 @@
                  <div class='form-group'>
                       {{render_field(form.lay_abstract, class_='form-control')}}
                   </div>
-                 <div class='form-group'>
-                      {{render_field(form.program_documents, class_='form-control')}}
+                  <div class="container">
+                    <label name=ProgramDocuments>Program documents as pdf</label>
+                    <div>
+                      <input type=file name=ProgramDocuments>
+                    </div>
                   </div>
                   <div class='form-group'>
                        {{render_field(form.scientific_abstract, class_='form-control')}}
                    </div>
                    <div class='form-group'>
+                        <p>Submission of an application confirms acceptance of and agreement with the SFI Terms and
+                            Conditions of Research Grants; that the applicant meets eligibility requirements; that the project
+                            is in full agreement with all legal and regulatory matters governing research in Ireland; that no
+                            aspect of this project is already being funded from another source and that all details provided
+                            are correct.</p>
                         {{render_field(form.declaration_acceptance, class_='form-control')}}
                     </div>
-                  <p id='p-before-sumbit'><input id='submit' type='submit' value='submit' class='btn btn-block btn-lg btn-primary'></p>
+                  <p><a class='btn btn-block btn-lg btn-primary' href="{{ url_for('proposal_page.proposalSubmission', save = "save") }}">Save Proposal</a></p>
+                  <p id='p-before-sumbit'><input id='submit' type='submit' value='Submit' class='btn btn-block btn-lg btn-primary'></p>
               </form>
           </div>
         </div>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>In Press Proposals</title>
+    <title>Saved Proposals</title>
 
     <!-- Bootstrap core CSS-->
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -48,29 +48,25 @@
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
-              Your In Press Proposals</div>
+              Your Saved Proposals</div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Publication Year</th>
-                      <th>Type</th>
-                      <th>Title</th>
-                      <th>Journal Name</th>
-                      <th>DOI</th>
-                      <th>Grant Number</th>
+                      <th>Proposal Name</th>
+                      <th>Duration of award</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for row in rows %}
                     <tr>
-                        <td>{{ row.pub_yr }}</td>
-                        <td>{{ row.pub_type }}</td>
-                        <td>{{ row.title }}</td>
-                        <td>{{ row.journal_name }}</td>
-                        <td>{{ row.DOI }}</td>
-                        <td>{{ row.grant_no }}</td>
+                        <td>{{ row.proposal_name }}</td>
+                        <td>{{ row.duration_of_award_in_months}}</td>
+                        <td><a href="{{ url_for('proposal_page.savedProposals', edit = edit) }}">Edit</a></td>
+                        <td><a href="{{ url_for('proposal_page.savedProposals', delete = delete) }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>

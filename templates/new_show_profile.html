@@ -524,6 +524,145 @@
         </div>
 
 
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse7">Team Members</a>
+              </h3>
+            </div>
+
+            <div id="collapse7" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form7.start_date, class_='form-control', type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form7.depart_date, class_='form-control',type="date")}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form7.name, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form7.position, class_='form-control')}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form7.grant_no, class_='form-control')}}
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Team Member Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+                {% for row in p7_data %}
+                <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group list-group-flush">
+                      <ul class="list-group">
+                        <li class="list-group-item ">Start date: {{ row.start_date }}</li>
+                        <li class="list-group-item">Depart date: {{ row.depart_date }}</li>
+                        <li class="list-group-item">Name: {{ row.name }}</li>
+                        <li class="list-group-item">Position: {{ row.position }}</li>
+                        <li class="list-group-item">Grant number: {{ row.grant_no }}</li>
+                        <li class="list-group-item">
+                          <input name='name' type='text' value='{{ row.name }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Team Member Info">
+                        </li>
+                      </ul>
+                </div>
+                </form>
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse8">Impacts</a>
+              </h3>
+            </div>
+
+            <div id="collapse8" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form8.impact_title, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form8.impact_category, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form8.primary_beneficiary, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form8.grant_no, class_='form-control')}}
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Add Impact Info">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+                {% for row in p8_data %}
+                <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group list-group-flush">
+                      <ul class="list-group">
+                        <li class="list-group-item ">Impact Title: {{ row.impact_title }}</li>
+                        <li class="list-group-item">Impact Category: {{ row.impact_category }}</li>
+                        <li class="list-group-item">Primary Beneficiary: {{ row.primary_beneficiary }}</li>
+                        <li class="list-group-item">Grant number: {{ row.grant_no }}</li>
+                        <li class="list-group-item">
+                          <input name='grant' type='text' value='{{ row.grant_no }}' hidden>
+                          <input type="submit" class="btn btn-primary" name="submit" value="Remove Impact Info">
+                        </li>
+                      </ul>
+                </div>
+                </form>
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
     </div>
   </div>
