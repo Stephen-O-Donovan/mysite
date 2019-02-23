@@ -281,7 +281,7 @@ def reviewproposal():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1')
+            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 1 AND reviewer_accepted = 1 AND admin_accepted = 1')
             rpdata = cursor.fetchall()
     finally:
         connection.close()
