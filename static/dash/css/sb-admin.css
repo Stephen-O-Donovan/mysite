@@ -132,9 +132,11 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .sidebar {
   width: 90px !important;
-  background-color: #212529;
+  background-color: #093C71;
+
   min-height: calc(100vh - 56px);
 }
+
 
 .sidebar .nav-item:last-child {
   margin-bottom: 1rem;

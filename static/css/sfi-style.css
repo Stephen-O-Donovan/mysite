@@ -1,0 +1,43 @@
+nav{
+  background: white;
+  border-bottom: 1px solid blue;
+  color:#0f6fd7;
+
+}
+nav a{
+  color:#0f6fd7;
+
+}
+.dash-icon{
+  margin:0.5em;
+  transition: all .2s ease-in-out;
+  color:#0f6fd7;
+  border-radius: 20em;
+  font-size:7em;
+
+
+}
+.dash-layout{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.dash-icon {
+  justify-content: center;
+  transition: all .2s ease-in-out;
+}
+.dash-icon i{
+  display:inline;
+  padding:0.4em;
+}
+.dash-icon p{
+  font-size:0.25em;
+  text-align: center;
+
+}
+.dash-icon:hover{
+  color:#00AFAB;
+  transform: scale(1.2);
+  text-decoration: none;
+
+}
