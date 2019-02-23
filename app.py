@@ -140,6 +140,8 @@ def show_profile():
     form4 = ProfileProfessSocForm(request.form)
     form5 = ProfileDandAForm(request.form)
     form6 = ProfileFundingForm(request.form)
+    form7 = ProfileTeamateForm(request.form)
+    form8 = ProfileImpactForm(request.form)
     if 'email' in session:
         email = session['email']
     if request.method == 'POST':
@@ -205,6 +207,28 @@ def show_profile():
                 pass
             elif request.form['submit'] == 'Remove Funding Info':
                 cursor.execute('DELETE FROM Profile_Funding WHERE grant_no=%s AND email=%s',
+                               [request.form['grant'], email])
+                connection.commit()
+
+            elif request.form['submit'] == 'Add Team Member Info' and form7.validate():
+                cursor.execute('INSERT INTO Profile_Teamate (email, start_date,depart_date,name,position,grant_no)'
+                               ' VALUES ( %s, %s, %s, %s, %s, %s)',
+                               [email, form7.start_date.data, form7.depart_date.data, form7.name.data, form7.position.data, form6.grant_no.data])
+                connection.commit()
+                pass
+            elif request.form['submit'] == 'Remove Team Member Info':
+                cursor.execute('DELETE FROM Profile_Teamate WHERE name=%s AND email=%s',
+                               [request.form['name'], email])
+                connection.commit()
+
+            elif request.form['submit'] == 'Add Impact Info' and form8.validate():
+                cursor.execute('INSERT INTO Profile_Impact (email, impact_title,impact_category,primary_beneficiary,grant_no)'
+                               ' VALUES ( %s, %s, %s, %s, %s)',
+                               [email, form8.impact_title.data, form8.impact_category.data, form8.primary_beneficiary.data, form8.grant_no.data])
+                connection.commit()
+                pass
+            elif request.form['submit'] == 'Remove Impact Info':
+                cursor.execute('DELETE FROM Profile_Impact WHERE grant_no=%s AND email=%s',
                                [request.form['grant'], email])
                 connection.commit()
 
@@ -274,7 +298,7 @@ def show_profile():
 
     if verified == {u'is_verified': 0}:
         return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
-    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3,form4=form4,form5=form5,form6=form6, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
+    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3,form4=form4,form5=form5,form6=form6,form7=form7,form8=form8, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
 @app.route('/activeProjects')
 @is_logged_in
