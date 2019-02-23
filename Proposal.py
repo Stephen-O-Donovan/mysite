@@ -25,14 +25,15 @@ def is_logged_in(f):
 
 class SubmitProposalForm(Form):
     # will display proposal name, duration and applicants email as uneditable fields
+    sfi_legal_remit = TextAreaField('SFI Legal Remit')
     ethical_issues = TextAreaField('Ethical Issues')
     applicant_country = StringField('Country', [validators.DataRequired(), validators.Length(min=3, max=50)])
     list_of_co_applicants = StringField('List co-applicants')
     list_of_collaborators = TextAreaField('List collaborators')
     lay_abstract = TextAreaField('Lay Abstract', [validators.DataRequired(message='Please enter lay abstract'), validators.Length(min=20, max=65000)])
-    program_documents = TextAreaField('Program Documents', [validators.DataRequired(message='Please enter program documents'), validators.Length(min=20, max=65000)])
+    #program_documents = TextAreaField('Program Documents', [validators.DataRequired(message='Please enter program documents'), validators.Length(min=20, max=65000)])
     scientific_abstract = TextAreaField('Scientific Abstract', [validators.DataRequired(message='Please enter scientific abstract'), validators.Length(min=20, max=65000)])
-    declaration_acceptance = BooleanField("I do declare", [validators.DataRequired(message='Please declare')])
+    declaration_acceptance = BooleanField("I agree", [validators.DataRequired(message='Please declare')])
 
 class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
@@ -91,12 +92,11 @@ def create_proposal():
 @proposal_page.route('/proposalSubmission', methods=['GET', 'POST'])
 @is_logged_in
 def proposalSubmission():
+
     form = SubmitProposalForm(request.form)
     proposal_name = request.args.get('proposal_name', '')
     duration = request.args.get('duration', '')
-    #duration = 0
     nrp_area = request.args.get('nrp_area', '')
-    sfi_legal_remit = ''
     ro_approval = 0
     submitted = 1
     application_successful = 0
@@ -104,8 +104,21 @@ def proposalSubmission():
     if 'email' in session:
         email = session['email']
 
-    if request.method == 'POST':
-        if form.validate():
+    if request.method == 'POST' and form.validate():
+        if 'ProgramDocuments' not in request.files:
+            flash('Please include all pppfiles')
+            return redirect(request.url)
+
+        program_documents_pdf = request.files['ProgramDocuments']
+
+        if program_documents_pdf.filename == '':
+           flash('Please include all files')
+           return redirect(request.url)
+
+        if (program_documents_pdf and allowed_file(program_documents_pdf.filename)):
+            program_documents = secure_filename(program_documents_pdf.filename)
+            program_documents_pdf.save(os.path.join(UPLOAD_FOLDER, program_documents))
+
             try:
                 connection = create_connection()
                 with connection.cursor() as cursor:
@@ -126,13 +139,14 @@ def proposalSubmission():
                         ' %s, %s,'
                         ' %s, %s)',
                         (proposal_name, duration, nrp_area,
-                            sfi_legal_remit, form.ethical_issues.data, form.applicant_country.data,
+                            form.sfi_legal_remit.data, form.ethical_issues.data, form.applicant_country.data,
                             form.list_of_co_applicants.data, form.list_of_collaborators.data, form.lay_abstract.data,
                             1, ro_approval, submitted,
                             application_successful, email,
-                            form.program_documents.data, form.scientific_abstract.data))
+                            program_documents, form.scientific_abstract.data))
                     connection.commit()
                     flash('Application sent', 'success')
+                    return render_template('dashboard.html')
             finally:
                 connection.close()
         else:
