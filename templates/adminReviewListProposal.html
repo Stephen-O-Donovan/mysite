@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Review proposal</title>
+    <title>SB Admin - University Review proposal</title>
 
     <!-- Bootstrap core CSS-->
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    {% include 'nav.html' %}
+    {% include 'uninav.html' %}
 
       <div id="content-wrapper">
 
@@ -60,10 +60,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for row in rpdata %}
+                    {% for row in urpdata %}
                     <tr>
                         <td>
-                          <a href="{{ url_for('proposal_page.reviewIndividualProposal', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
+                          <a href="{{ url_for('proposal_page.adminReviewIndividualProDetail', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
                         </td>
                         <td>{{ row.email }}</td>
                     </tr>
@@ -134,3 +134,4 @@
   {% include 'footer.html' %}
 
 </html>
+

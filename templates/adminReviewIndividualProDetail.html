@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Review proposal</title>
+    <title>SB Admin - University Review proposal</title>
 
     <!-- Bootstrap core CSS-->
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    {% include 'nav.html' %}
+    {% include 'uninav.html' %}
 
       <div id="content-wrapper">
 
@@ -44,51 +44,51 @@
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Accepted Proposals</a>
+              <a href="#">Non-accepted Proposals</a>
             </li>
-            <li class="breadcrumb-item active">{{ rpdata2.email }} proposal</li>
+            <li class="breadcrumb-item active">{{ urpdata2.email }} proposal</li>
           </ol>
 
       <!-- proposal detail start in here-->
               <div id="container">
                  <article id="h5">
-                    <h5 >Proposal Title: {{ rpdata2.proposal_name }}</h5>
+                    <h5 >Proposal Title: {{ urpdata2.proposal_name }}</h5>
                  </article>
                  <article>
                     <h6>Duration of award requested:</h6>
-                    <p>{{ rpdata2.duration_of_award_in_months}}</p>
+                    <p>{{ urpdata2.duration_of_award_in_months}}</p>
                </article>
                <article>
                     <h6>National Research Priority (NRP) Area:</h6>
-                    {% if rpdata2.nrp_area  == 'A'%}
+                    {% if urpdata2.nrp_area  == 'A'%}
                         <p>Priority Area A - Future Networks and Communications</p>
-                    {% elif rpdata2.nrp_area  == 'B'%}
+                    {% elif urpdata2.nrp_area  == 'B'%}
                         <p>Priority Area B - Data Analytics, Management, Security and Privacy </p>
-                    {% elif rpdata2.nrp_area  == 'C'%}
+                    {% elif urpdata2.nrp_area  == 'C'%}
                         <p>Priority Area C - Digital Platforms, Content and Applications </p>
-                    {% elif rpdata2.nrp_area  == 'D'%}
+                    {% elif urpdata2.nrp_area  == 'D'%}
                         <p>Priority Area D - Connected Health and Independent Living </p>
-                    {% elif rpdata2.nrp_area  == 'E'%}
+                    {% elif urpdata2.nrp_area  == 'E'%}
                         <p>Priority Area E - Medical Devices </p>
-                    {% elif rpdata2.nrp_area  == 'F'%}
+                    {% elif urpdata2.nrp_area  == 'F'%}
                         <p>Priority Area F – Diagnostics </p>
-                    {% elif rpdata2.nrp_area  == 'G'%}
+                    {% elif urpdata2.nrp_area  == 'G'%}
                         <p>Priority Area G – Therapeutics: Synthesis, Formulation, Processing and Drug Delivery </p>
-                    {% elif rpdata2.nrp_area  == 'H'%}
+                    {% elif urpdata2.nrp_area  == 'H'%}
                         <p>Priority Area H - Food for Health </p>
-                    {% elif rpdata2.nrp_area  == 'I'%}
+                    {% elif urpdata2.nrp_area  == 'I'%}
                         <p>Priority Area I - Sustainable Food Production and Processing </p>
-                    {% elif rpdata2.nrp_area  == 'J'%}
+                    {% elif urpdata2.nrp_area  == 'J'%}
                         <p>Priority Area J – Marine Renewable Energy </p>
-                    {% elif rpdata2.nrp_area  == 'K'%}
+                    {% elif urpdata2.nrp_area  == 'K'%}
                         <p>Priority Area K - Smart Grids & Smart Cities </p>
-                    {% elif rpdata2.nrp_area  == 'L'%}
+                    {% elif urpdata2.nrp_area  == 'L'%}
                         <p>Priority Area L - Manufacturing Competitiveness </p>
-                    {% elif rpdata2.nrp_area  == 'M'%}
+                    {% elif urpdata2.nrp_area  == 'M'%}
                         <p>Priority Area M - Processing Technologies and Novel Materials </p>
-                    {% elif rpdata2.nrp_area  == 'N'%}
+                    {% elif urpdata2.nrp_area  == 'N'%}
                         <p>Priority Area N - Innovation in Services and Business Processes </p>
-                    {% elif rpdata2.nrp_area  == 'S'%}
+                    {% elif urpdata2.nrp_area  == 'S'%}
                         <p>Software</p>
                     {% else %}
                         <p>Other</p>
@@ -96,34 +96,34 @@
                </article>
                <article>
                     <h6>How the proposal is aligned with SFI's legal remit:</h6>
-                    <p>{{ rpdata2.sfi_legal_remit }}</p>
+                    <p>{{ urpdata2.sfi_legal_remit }}</p>
                </article>
                <article>
                     <h6>Ethical issues:</h6>
-                    <p>{{ rpdata2.ethical_issues }}</p>
+                    <p>{{ urpdata2.ethical_issues }}</p>
                </article>
                <article>
                     <h6>Applicant’s location (country) at the time of submission</h6>
-                    <p> {{ rpdata2.applicant_country }}</p>
+                    <p> {{ urpdata2.applicant_country }}</p>
                </article>
                <article>
                     <h6>A list of co-applicants, if applicable</h6>
 
-                    <p>{{ rpdata2.list_of_co_applicants }}</p>
+                    <p>{{ urpdata2.list_of_co_applicants }}</p>
                </article>
                <article>
                     <h6>A list of collaborators, if applicable.</h6>
                     <p>Formmat: Name, organization, Email;</p>
-                    <p>{{ rpdata2.list_of_collaborators }}</p>
+                    <p>{{ urpdata2.list_of_collaborators }}</p>
                </article>
                <article>
                     <h6>Scientific abstract</h6>
-                    <p>{{ rpdata2.scientific_abstract }}</p>
+                    <p>{{ urpdata2.scientific_abstract }}</p>
                </article>
                <article>
                     <h6>Programme doucments:</h6>
-                    <a id="bca" href="static/storage/proposals/{{ rpdata2.program_documents }}" download>
-                      <p>{{ rpdata2.program_documents }}</p>
+                    <a id="bca" href="static/storage/proposals/{{ urpdata2.program_documents }}" download>
+                      <p>{{ urpdata2.program_documents }}</p>
                     </a>
                </article>
                <article>
@@ -133,7 +133,14 @@
                     </p>
                     <p>I Agreed</p>
                </article>
-            <a id="abc" href="{{ url_for('proposal_page.reviewproposal') }}">Back to previos page</a>
+
+               <article>
+                    <h6>Do you accepted this proposal?</h6>
+                    <p>Please click one of the following button to accept or reject this proposal.</p>
+                    <a href="{{ url_for('proposal_page.adminReviewListProposal', accept='1', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Accept</p></a>
+                    <a href="{{ url_for('proposal_page.adminReviewListProposal', accept='0', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Reject</p></a>
+               </article>
+            <a id="abc" href="{{ url_for('proposal_page.adminReviewListProposal') }}">Back to previos page</a>
           </div>
       <!--proposal detail end here-->
         </div>
