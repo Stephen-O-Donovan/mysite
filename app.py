@@ -300,6 +300,7 @@ def show_profile():
         return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
     return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3,form4=form4,form5=form5,form6=form6,form7=form7,form8=form8, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
+
 @app.route('/activeProjects')
 @is_logged_in
 def activeProjects():
@@ -314,6 +315,76 @@ def activeProjects():
     finally:
        connection.close()
     return render_template('activeProjects.html', rows=rows)
+
+@app.route('/yearlyReports', methods=['GET', 'POST'])
+@is_logged_in
+def yearlyReports():
+    YRform = yearlyReportForm(request.form)
+    if 'email' in session:
+        email = session['email']
+    if request.method == 'POST':
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            if request.form['submit'] == 'Submmit records' and form1.validate():
+                cursor.execute('UPDATE Users SET publications=%s, eduPub=%s, academic_collaborations=%s, '
+                               'non_academic_collaborations=%s, commercialisation=%s, '
+                               'deviations_of_research=%s, bullet_research_point=%s, challenges=%s, impact=%s, '
+                               'plannes_activities=%s '
+                               'WHERE email=%s',
+                               [YRform.publications.data,YRform.eduPub.data,YRform.academic_collaborations.data,YRform.non_academic_collaborations.data,YRform.commercialisation.data,YRform.deviations_of_research.data,YRform.bullet_research_point.data,YRform.challenges.data,YRform.impact.data,YRform.planned_activities.data,
+                                email])
+                connection.commit()
+
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+
+            # redirect to basic show profile page if not verified
+            cursor.execute('SELECT is_verified FROM Users WHERE email = %s', [email])
+            verified = cursor.fetchone()
+
+            # get data from tables
+            cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+            p1_data = cursor.fetchone()
+
+            cursor.execute('SELECT * FROM Profile_Education_Info WHERE email = %s', [email])
+            p2_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Employment WHERE email = %s', [email])
+            p3_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Profess_soc WHERE email = %s', [email])
+            p4_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_DandA WHERE email = %s', [email])
+            p5_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Funding WHERE email = %s', [email])
+            p6_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Teamate WHERE email = %s', [email])
+            p7_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Impact WHERE email = %s', [email])
+            p8_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_IandC WHERE email = %s', [email])
+            p9_data = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM Profile_Publications WHERE email = %s', [email])
+            p10_data = cursor.fetchall()
+
+
+    finally:
+        connection.close()
+
+    if verified == {u'is_verified': 0}:
+        return render_template('basicShowProfile.html', YRform=YRform, p1_data=p1_data,
+                               p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data,
+                               p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data)
+    return render_template('yearlyReports.html', YRform=YRform, p1_data=p1_data,
+                           p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data,
+                           p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data)
 
 @app.route('/fundingstatus')
 @is_logged_in
