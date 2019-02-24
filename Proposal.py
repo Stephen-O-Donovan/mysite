@@ -607,11 +607,11 @@ def adminReviewListProposal():
                     display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
-                    cursor.execute('UPDATE GrantApplication SET admin_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
+                    cursor.execute('UPDATE GrantApplication SET admin_accepted = 2 WHERE proposal_name = %s AND email = %s ',[pn,email])
                     connection.commit()
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     flash(display,'success')
-                cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 1 AND reviewer_accepted = 1 AND admin_accepted = 0')
+                cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND admin_accepted = 0')
                 urpdata = cursor.fetchall()
                 return render_template('adminReviewListProposal.html', urpdata=urpdata)
         finally:
@@ -620,7 +620,7 @@ def adminReviewListProposal():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 1 AND reviewer_accepted =1 AND admin_accepted = 0')
+            cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND admin_accepted = 0')
             urpdata = cursor.fetchall()
     finally:
         connection.close()
