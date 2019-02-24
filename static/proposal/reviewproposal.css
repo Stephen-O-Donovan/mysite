@@ -59,3 +59,9 @@ padding:2em;
   color: blue;
   text-align: center;
 }
+
+#container #acrj p{
+  color: blue;
+  text-align: center;
+  background-color: LightGrey;
+}
