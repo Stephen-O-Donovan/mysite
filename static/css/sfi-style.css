@@ -8,6 +8,12 @@ nav a{
   color:#0f6fd7;
 
 }
+a{
+  margin:1px;
+}
+.navbar-brand{
+  float:left;
+}
 .dash-icon{
   margin:0.5em;
   transition: all .2s ease-in-out;

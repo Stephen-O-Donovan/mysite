@@ -12,6 +12,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SFI style CSS-->
+    <link href="../static/css/sfi-style.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -21,19 +23,22 @@
     <!-- Custom styles for this template -->
     <link href="static/css/landing-page.min.css" rel="stylesheet">
 
-    <link href="../static/css/login.css" rel="stylesheet">
+    <link href="../static/css/main.css" rel="stylesheet">
 
   </head>
 
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-light bg-light static-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">SFI</a>
-        <a class="btn btn-primary" href="/register">Register</a>
-      </div>
-    </nav>
+    <nav class="navbar navbar-expand static-top">
+       <div class="container">
+         <a class="navbar-brand" href="/"><img src="/static/img/logo.png" style="max-width: 25%; max-height: auto;" alt="Italian Trulli"></a>
+       </div>
+
+
+       <a class="btn btn-primary" href="/register">Register</a>
+
+     </nav>
 
     <!-- Masthead -->
     <header class="masthead text-white text-center">
@@ -41,7 +46,7 @@
       <div id="container" class="container">
         <div class="row">
           <div class="col-xl-12 mx-auto">
-            <form method='POST'>
+            <form class="main-form" method='POST'>
               {% include 'includes/_messages.html' %}
               <h2>Login</h2>
                       <div class="form-group">

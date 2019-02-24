@@ -12,6 +12,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SFI style CSS-->
+    <link href="../static/css/sfi-style.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -29,13 +31,17 @@
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-light bg-light static-top">
-      <div class="container">
-        <a class="navbar-brand" href="#"><img src="/static/img/logo.png" style="max-width: 25%; max-height: auto;" alt="Italian Trulli"></a>
-        <a class="btn btn-primary" href="/login">Sign In</a>
-        <a class="btn btn-primary" href="/register">Register</a>
-      </div>
-    </nav>
+    <nav class="navbar navbar-expand static-top">
+       <div class="container">
+         <a class="navbar-brand" href="/"><img src="/static/img/logo.png" style="max-width: 25%; max-height: auto;" alt="Italian Trulli"></a>
+       </div>
+
+       <a class="btn btn-primary" href="/login">Sign In</a>
+       <a class="btn btn-primary" href="/register">Register</a>
+
+     </nav>
+
+
 
     <!-- Call for proposal start here -->
 
@@ -46,7 +52,7 @@
     <div class="carousel-item{% if loop.index == 1 %} active{% endif %}">
         <div class="container">
       <article id="act">
-    <div class="text-center"> 
+    <div class="text-center">
       <a type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">
         <h5 >Call For Proposal: {{ info.proposal_name }}</h5>
       </a>
