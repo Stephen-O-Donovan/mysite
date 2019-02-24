@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SFI - Edit Proposal</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="static/dash/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="static/dash/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="static/dash/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="static/proposal/proposal.css" rel="stylesheet">
+
+
+  </head>
+
+  <body id="page-top">
+
+    {% include 'dashboardNav.html' %}
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'nav.html' %}
+
+      <div id="content-wrapper">
+
+        <div class="-fluid">
+
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Submit Proposal</a>
+            </li>
+          </ol>
+
+ <!-- star the create proposal page here -->
+    <header class="masthead text-center">
+      <div class="overlay"></div>
+      <div id="container" class="container">
+        <div class="row">
+
+          <div class="col-xl-12 mx-auto">
+              {% include 'includes/_messages.html' %}
+              {% from 'includes/_formhelpers.html' import render_field %}
+               <form method='POST' enctype=multipart/form-data>
+                  <div class='form-group'>
+                      Proposal: {{ proposal_name }}
+                  </div>
+                  <div class='form-group'>
+                      Duration: {{ duration }}
+                  </div>
+                  <div class='form-group'>
+                      NRP Area: {{ nrp_area }}
+                  </div>
+                  <div class='form-group'>
+                      Applicant: {{ email }}
+                  </div>
+
+                  <div class='form-group'>
+                    {{render_field(form.sfi_legal_remit, class_='form-control', value=g_data.sfi_legal_remit)}}
+                 </div>
+                 <div class='form-group'>
+                      {{render_field(form.ethical_issues, class_='form-control', value=g_data.ethical_issues)}}
+                  </div>
+                 <div class='form-group'>
+                      {{render_field(form.applicant_country, class_='form-control', value=g_data.applicant_country)}}
+                  </div>
+                 <div class='md-form'>
+                      {{render_field(form.list_of_co_applicants, class_='form-control', rows="3", value=g_data.list_of_co_applicants)}}
+                  </div>
+                 <div class='md-form'>
+                      {{render_field(form.list_of_collaborators, class_='form-control', rows="3", value=g_data.list_of_collaborators)}}
+                  </div>
+                 <div class='form-group'>
+                      {{render_field(form.lay_abstract, class_='form-control', value=g_data.lay_abstract)}}
+                  </div>
+                  <div class="container">
+                    <label name=ProgramDocuments>Program documents as pdf</label>
+                    <div>
+                      <input type=file name=ProgramDocuments>
+                    </div>
+                  </div>
+                  <div class='form-group'>
+                       {{render_field(form.scientific_abstract, class_='form-control', value=g_data.scientific_abstract)}}
+                   </div>
+                   <div class='form-group'>
+                        <p>Submission of an application confirms acceptance of and agreement with the SFI Terms and
+                            Conditions of Research Grants; that the applicant meets eligibility requirements; that the project
+                            is in full agreement with all legal and regulatory matters governing research in Ireland; that no
+                            aspect of this project is already being funded from another source and that all details provided
+                            are correct.</p>
+                        {{render_field(form.declaration_acceptance, class_='form-control')}}
+                    </div>
+
+                  <p id='p-before-submit'><input name="save"  type='submit' value='Save' class='btn btn-block btn-lg btn-primary'></p>
+                  <p id='p-before-submit'><input name="submit"  type='submit' value='Submit' class='btn btn-block btn-lg btn-primary'></p>
+              </form>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="static/dash/vendor/jquery/jquery.min.js"></script>
+    <script src="static/dash/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/dash/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="static/dash/vendor/chart.js/Chart.min.js"></script>
+    <script src="static/dash/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="static/dash/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/dash/js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="static/dash/js/demo/datatables-demo.js"></script>
+    <script src="static/dash/js/demo/chart-area-demo.js"></script>
+
+  </body>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+</html>

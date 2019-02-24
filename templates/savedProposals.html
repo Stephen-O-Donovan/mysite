@@ -65,8 +65,8 @@
                     <tr>
                         <td>{{ row.proposal_name }}</td>
                         <td>{{ row.duration_of_award_in_months}}</td>
-                        <td><a href="{{ url_for('proposal_page.savedProposals', edit = edit) }}">Edit</a></td>
-                        <td><a href="{{ url_for('proposal_page.savedProposals', delete = delete) }}">Delete</a></td>
+                        <td><a href="{{ url_for('proposal_page.savedProposals', edit = "edit", proposal_name = row.proposal_name ) }}">Edit</a></td>
+                        <td><a href="{{ url_for('proposal_page.savedProposals', delete = "delete", proposal_name = row.proposal_name) }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>
