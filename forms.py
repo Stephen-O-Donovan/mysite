@@ -28,6 +28,20 @@ class BasicProfileForm(Form):
     #     validators.EqualTo("Password", message='Passwords do not match')
     # ])
 
+    
+class yearlyReportForm(Form):
+        publications = StringField('Publications', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        eduPub = StringField('Educations & Public engagement activities', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        academic_collaborations = StringField('Academic collaborations',  [validators.DataRequired(), validators.Length(min=5, max=100)])
+        non_academic_collaborations = StringField('Non-academic collaborations', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        commercialisation = StringField('Commercialisation', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        deviations_of_research = StringField('Deviations of research', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        bullet_research_point = StringField('Bullet research point', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        challenges = StringField('Challenges', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        impact = StringField('Impact', [validators.DataRequired(), validators.Length(min=5, max=100)])
+        planned_activities = TextAreaField('Planned activities', [validators.DataRequired(), validators.Length(min=20, max=200)])
+        
+        
 class ProfileAcademicColForm(Form):
     start_date = DateField('Start Date', [validators.DataRequired()])
     end_date = DateField('End Date', [validators.DataRequired()])
