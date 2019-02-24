@@ -137,8 +137,8 @@
                <article>
                     <h6>Do you accepted this proposal?</h6>
                     <p>Please click one of the following button to accept or reject this proposal.</p>
-                    <a href="{{ url_for('proposal_page.adminReviewListProposal', accept='1', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Accept</p></a>
-                    <a href="{{ url_for('proposal_page.adminReviewListProposal', accept='0', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Reject</p></a>
+                    <a id='acrj' href="{{ url_for('proposal_page.adminReviewListProposal', accept='1', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Accept</p></a>
+                    <a id='acrj' href="{{ url_for('proposal_page.adminReviewListProposal', accept='0', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Reject</p></a>
                </article>
             <a id="abc" href="{{ url_for('proposal_page.adminReviewListProposal') }}">Back to previos page</a>
           </div>

@@ -323,12 +323,12 @@ def universityReviewListProposal():
                 if accept == '1':
                     cursor.execute('UPDATE GrantApplication SET university_accepted = 1 WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
-                    display = 'Proposal "%s" from researcher %s has been accepted.',[pn, email]
+                    display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
                     cursor.execute('UPDATE GrantApplication SET university_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
-                    display='Proposal "%s" from researcher %s has been rejected.',[pn, email]
+                    display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     print('Proposal "%s" from researcher %s has been rejected.',[pn, email])
                     flash(display,'success')
                 cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 0 AND reviewer_accepted = 0 AND admin_accepted = 0')
@@ -382,13 +382,12 @@ def reviewerReviewListProposal():
                 if accept == '1':
                     cursor.execute('UPDATE GrantApplication SET reviewer_accepted = 1 WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
-                    display = 'Proposal "%s" from researcher %s has been accepted.',[pn, email]
+                    display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
                     cursor.execute('UPDATE GrantApplication SET reviewer_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
-                    display='Proposal "%s" from researcher %s has been rejected.',[pn, email]
-                    print('Proposal "%s" from researcher %s has been rejected.',[pn, email])
+                    display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     flash(display,'success')
                 cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 1 AND reviewer_accepted = 0 AND admin_accepted = 0')
                 urpdata = cursor.fetchall()
@@ -441,13 +440,12 @@ def adminReviewListProposal():
                 if accept == '1':
                     cursor.execute('UPDATE GrantApplication SET admin_accepted = 1 WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
-                    display = 'Proposal "%s" from researcher %s has been accepted.',[pn, email]
+                    display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
                     cursor.execute('UPDATE GrantApplication SET admin_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
-                    display='Proposal "%s" from researcher %s has been rejected.',[pn, email]
-                    print('Proposal "%s" from researcher %s has been rejected.',[pn, email])
+                    display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     flash(display,'success')
                 cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 1 AND reviewer_accepted = 1 AND admin_accepted = 0')
                 urpdata = cursor.fetchall()
