@@ -66,6 +66,9 @@
                       Duration: {{ duration }}
                   </div>
                   <div class='form-group'>
+                      NRP Area: {{ nrp_area }}
+                  </div>
+                  <div class='form-group'>
                       Applicant: {{ email }}
                   </div>
 
@@ -104,8 +107,11 @@
                             are correct.</p>
                         {{render_field(form.declaration_acceptance, class_='form-control')}}
                     </div>
-                  <p><a class='btn btn-block btn-lg btn-primary' href="{{ url_for('proposal_page.proposalSubmission', save = "save") }}">Save Proposal</a></p>
-                  <p id='p-before-sumbit'><input id='submit' type='submit' value='Submit' class='btn btn-block btn-lg btn-primary'></p>
+
+                  <!--<p><a class='btn btn-block btn-lg btn-primary' href="{{ url_for('proposal_page.proposalSubmission',
+                    save = "save",  proposal_name = proposal_name, duration=duration, nrp_area=nrp_area) }}">Save Proposal</a></p>-->
+                  <p id='p-before-submit'><input name="save"  type='submit' value='Save' class='btn btn-block btn-lg btn-primary'></p>
+                  <p id='p-before-submit'><input name="submit"  type='submit' value='Submit' class='btn btn-block btn-lg btn-primary'></p>
               </form>
           </div>
         </div>

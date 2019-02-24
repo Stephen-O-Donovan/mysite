@@ -102,21 +102,43 @@ def proposalSubmission():
     submitted = 1
     application_successful = 0
     program_documents = ""
+    save = request.args.get('save', '')
 
     if 'email' in session:
         email = session['email']
 
-    if request.method == 'GET':
-        save = request.args.get('save', '')
+    if request.method == 'POST' and request.form['save'] == 'Save':
+        submitted = 0
         proposal_name = request.args.get('proposal_name', '')
         duration = request.args.get('duration', '')
         nrp_area = request.args.get('nrp_area', '')
-        submitted = 0
-        if save:
-            try:
-                connection = create_connection()
-                with connection.cursor() as cursor:
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
 
+
+                cursor.execute('SELECT proposal_name FROM GrantApplication WHERE email = %s', [email])
+                existing_edit = cursor.fetchone()
+
+                if existing_edit:
+                    cursor.execute(
+                        'UPDATE GrantApplication'
+                        ' SET '
+                        ' sfi_legal_remit=%s, ethical_issues=%s, applicant_country=%s, '
+                        ' list_of_co_applicants=%s, list_of_collaborators=%s, lay_abstract=%s,'
+                        ' program_documents=%s, scientific_abstract=%s'
+                        ' WHERE email=%s',
+                        (
+                            form.sfi_legal_remit.data, form.ethical_issues.data, form.applicant_country.data,
+                            form.list_of_co_applicants.data, form.list_of_collaborators.data, form.lay_abstract.data,
+                            program_documents, form.scientific_abstract.data, email
+                            )
+                            )
+                    connection.commit()
+                    flash('Application saved', 'success')
+                    return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration, nrp_area=nrp_area)
+
+                else:
                     cursor.execute(
                         'INSERT INTO GrantApplication'
                         '(proposal_name, duration_of_award_in_months, nrp_area,'
@@ -140,9 +162,9 @@ def proposalSubmission():
                             program_documents, form.scientific_abstract.data))
                     connection.commit()
                     flash('Application saved', 'success')
-                    return render_template('savedProposals.html')
-            finally:
-                connection.close()
+                    return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration, nrp_area=nrp_area)
+        finally:
+            connection.close()
 
     if request.method == 'POST' and form.validate():
         if 'ProgramDocuments' not in request.files:
@@ -185,15 +207,15 @@ def proposalSubmission():
                             application_successful, email,
                             program_documents, form.scientific_abstract.data))
                     connection.commit()
-                    flash('Application sent', 'success')
+                    #flash('Application sent', 'success')
                     return render_template('dashboard.html')
             finally:
                 connection.close()
         else:
             flash('Please complete all fields')
-            return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration)
+            return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration, nrp_area=nrp_area)
 
-    return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration)
+    return render_template('proposalSubmission.html', form=form, email=email, proposal_name=proposal_name, duration=duration, nrp_area=nrp_area)
 
 @proposal_page.route('/callForProposals')
 @is_logged_in
@@ -203,6 +225,7 @@ def callForProposals():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
+            #need to not show cfp that have been submitted
             cursor.execute('SELECT * FROM CFP')
             rows = cursor.fetchall()
 
@@ -480,4 +503,3 @@ def adminReviewIndividualProDetail():
     finally:
         connection.close()
     return render_template('adminReviewIndividualProDetail.html', urpdata2=urpdata2)
-
