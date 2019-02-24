@@ -226,7 +226,7 @@ def callForProposals():
         connection = create_connection()
         with connection.cursor() as cursor:
             #need to not show cfp that have been submitted
-            cursor.execute('SELECT * FROM CFP')
+            cursor.execute('SELECT * FROM CFP WHERE email != %s', email)
             rows = cursor.fetchall()
 
     finally:
