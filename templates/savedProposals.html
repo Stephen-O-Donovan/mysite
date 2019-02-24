@@ -56,6 +56,7 @@
                     <tr>
                       <th>Proposal Name</th>
                       <th>Duration of award</th>
+                      <th>NRP Area</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -65,8 +66,11 @@
                     <tr>
                         <td>{{ row.proposal_name }}</td>
                         <td>{{ row.duration_of_award_in_months}}</td>
-                        <td><a href="{{ url_for('proposal_page.savedProposals', edit = "edit", proposal_name = row.proposal_name ) }}">Edit</a></td>
-                        <td><a href="{{ url_for('proposal_page.savedProposals', delete = "delete", proposal_name = row.proposal_name) }}">Delete</a></td>
+                        <td>{{ row.nrp_area}}</td>
+                        <td><a href="{{ url_for('proposal_page.savedProposals', edit = "edit",
+                          proposal_name = row.proposal_name, duration = row.duration_of_award_in_months, nrp_area = row.nrp_area ) }}">Edit</a></td>
+                        <td><a href="{{ url_for('proposal_page.savedProposals', delete = "delete",
+                          proposal_name = row.proposal_name, duration = row.duration_of_award_in_months, nrp_area = row.nrp_area) }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>

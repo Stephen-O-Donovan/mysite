@@ -225,7 +225,7 @@ def callForProposals():
         connection = create_connection()
         with connection.cursor() as cursor:
             #need to not show cfp that have been submitted
-            cursor.execute('SELECT * FROM CFP WHERE email != %s', email)
+            cursor.execute('SELECT * FROM CFP')
             rows = cursor.fetchall()
 
     finally:
@@ -268,6 +268,8 @@ def activeProposals():
 def savedProposals():
 
     proposal_name = request.args.get('proposal_name', '')
+    nrp_area = request.args.get('nrp_area', '')
+    duration = request.args.get('duration', '')
 
     if 'email' in session:
         email = session['email']
@@ -281,12 +283,13 @@ def savedProposals():
             cursor.execute('SELECT * FROM GrantApplication WHERE email = %s', [email])
             rows = cursor.fetchall()
             if edit:
-                #cursor.execute('SELECT * FROM GrantApplication WHERE email = %s AND proposal_name = %s', [email, proposal_name])
-                #rows = cursor.fetchall()
-                return proposalEditSubmission()
+                #return render_template('proposalEditSubmission.html', proposal_name=proposal_name, duration=duration, nrp_area=nrp_area)
+                return proposalEditSubmission(proposal_name, duration, nrp_area)
 
-            #cursor.execute('SELECT * FROM GrantApplication WHERE email = %s', [email])
-            #rows = cursor.fetchall()
+            if delete:
+                cursor.execute('DELETE FROM GrantApplication WHERE email=%s AND proposal_name=%s', [email, proposal_name])
+                connection.commit()
+                return render_template('savedProposals.html', rows=rows, proposal_name=proposal_name)
 
     finally:
         connection.close()
@@ -294,12 +297,17 @@ def savedProposals():
 
 @proposal_page.route('/proposalEditSubmission')
 @is_logged_in
-def proposalEditSubmission():
+def proposalEditSubmission(proposal_name, duration, nrp_area):
 
     form = SubmitProposalForm(request.form)
-    proposal_name = request.args.get('proposal_name', '')
-    duration = request.args.get('duration', '')
-    nrp_area = request.args.get('nrp_area', '')
+    #proposal_name = request.args.get('proposal_name', '')
+    #duration = request.args.get('duration', '')
+    #nrp_area = request.args.get('nrp_area', '')
+    proposal_name = proposal_name
+    duration = duration
+    nrp_area = nrp_area
+
+
     ro_approval = 0
     submitted = 1
     application_successful = 0
@@ -313,7 +321,7 @@ def proposalEditSubmission():
         with connection.cursor() as cursor:
 
             cursor.execute('SELECT * FROM GrantApplication WHERE email = %s and proposal_name = %s', [email, proposal_name])
-            g_data = cursor.fetchone()
+            g_data = cursor.fetchall()
 
             if request.method == 'POST' and request.form['save'] == 'Save':
                 submitted = 0
