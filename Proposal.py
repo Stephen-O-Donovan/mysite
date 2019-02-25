@@ -490,7 +490,7 @@ def universityReviewListProposal():
                     display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
-                    cursor.execute('UPDATE GrantApplication SET university_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
+                    cursor.execute('DELETE FROM GrantApplication WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     print('Proposal "%s" from researcher %s has been rejected.',[pn, email])
@@ -549,7 +549,7 @@ def reviewerReviewListProposal():
                     display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
-                    cursor.execute('UPDATE GrantApplication SET reviewer_accepted = 2 WHERE proposal_name = %s AND email = %s',[pn,email])
+                    cursor.execute('DELETE FROM GrantApplication WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     flash(display,'success')
@@ -607,7 +607,7 @@ def adminReviewListProposal():
                     display = 'Proposal', pn, 'from researcher',email,'has been accepted.'
                     flash(display,'success')
                 else:
-                    cursor.execute('UPDATE GrantApplication SET admin_accepted = 2 WHERE proposal_name = %s AND email = %s ',[pn,email])
+                    cursor.execute('DELETE FROM GrantApplication WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     flash(display,'success')

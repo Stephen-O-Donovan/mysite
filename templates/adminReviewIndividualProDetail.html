@@ -140,12 +140,6 @@
                     <p>Please click one of the following button to accept or reject this proposal.</p>
                     <a id='acrj' href="{{ url_for('proposal_page.adminReviewListProposal', accept='1', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Accept</p></a>
                     <a id='acrj' href="{{ url_for('proposal_page.adminReviewListProposal', accept='0', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Reject</p></a>
-                    {% elif urpdata2.university_accepted==2%}
-                    <h6>Accept/Reject proposal</h6>
-                    <p>This proposal has been rejected by university</p>
-                    {% elif urpdata2.reviewer_accepted==2%}
-                    <h6>Accept/Reject proposal</h6>
-                    <p>This proposal has been rejected by consultants</p>
                     {% else %}
                     <h6>Accept/Reject proposal</h6>
                     <p>Please wait until the university and consultant accepted this proposal.</p>
