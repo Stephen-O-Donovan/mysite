@@ -139,6 +139,9 @@
                     <h6>Do you accepted this proposal?</h6>
                     <p>Please click one of the following button to accept or reject this proposal.</p>
                     <a id='acrj' href="{{ url_for('proposal_page.adminReviewListProposal', accept='1', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Accept</p></a>
+                    <p>If you want to reject this proposal, Please click the following button to send email to researcher first.</p>
+                    <a id='acrj' href="mailto:{{urpdata2.email}}?subject=About your {{urpdata2.proposal_name}} proposal application&body=Dear Sir/Madam, Your application of proposal {{urpdata2.proposal_name}} has been rejected by the SFI Admin. Regards, SFI"><p>Send email</p></a>
+                    <p>After you send email, click reject button. Thank you.</p>
                     <a id='acrj' href="{{ url_for('proposal_page.adminReviewListProposal', accept='0', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Reject</p></a>
                     {% else %}
                     <h6>Accept/Reject proposal</h6>
