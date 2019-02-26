@@ -1,5 +1,7 @@
 import pymysql
 import sendgrid
+import datetime
+import threading
 
 ALLOWED_EXTENSIONS = set(['pdf', 'odt', 'txt'])
 def create_connection():
@@ -26,3 +28,22 @@ def send_email(to_email, subject, content):
     print(response.status_code)
     print(response.body)
     print(response.headers)
+
+
+
+def mail_check():
+    x = datetime.datetime.now()
+
+    subject = 'Yearly Report Reminder'
+    content = "Please don't forget to submit your yearly report"
+    if x.strftime("%d") == 1 and x.strftime('%m') % 2 == 0:
+        try:
+            connection = create_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT email FROM GrantApplications WHERE admin_accepted=1 and reviewer_accepted=1 and university_accepted=1')
+                for email in cursor.fetchall():
+                    send_email(email, subject, content)
+        finally:
+            connection.close()
+    threading.Timer(86400, mail_check).start()
+
