@@ -403,4 +403,5 @@ def fundingstatus():
 
 if __name__ == '__main__':
     #app.run(ssl_context='adhoc')
+    mail_check()
     app.run(debug=True)
