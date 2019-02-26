@@ -207,6 +207,11 @@ def proposalSubmission():
                             program_documents, form.scientific_abstract.data))
                     connection.commit()
                     #flash('Application sent', 'success')
+                    try:
+                        cursor.execute('SELECT uni.emails FROM University_Users as uni AND Users as users WHERE users.email = %s AND u.university_name == users.institution', (email))
+                        send_email(cursor.fetchone()['emails'], 'Proposal Submitted', 'A member of your institution has made a proposal please review this on your account')
+                    except:
+                        print('Please inter emails for universitys in database')
                     return render_template('dashboard.html')
             finally:
                 connection.close()
@@ -495,6 +500,10 @@ def universityReviewListProposal():
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
                     print('Proposal "%s" from researcher %s has been rejected.',[pn, email])
                     flash(display,'success')
+                    try:
+                        send_email(email, 'Proposal Rejected', 'Your proposal has been rejected by: Your institution')
+                    except:
+                        print('Please enter valid emails for users')
                 cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 0 AND reviewer_accepted = 0 AND admin_accepted = 0')
                 urpdata = cursor.fetchall()
                 return render_template('universityReviewListProposal.html', urpdata=urpdata)
@@ -552,6 +561,10 @@ def reviewerReviewListProposal():
                     cursor.execute('DELETE FROM GrantApplication WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
+                    try:
+                        send_email(email, 'Proposal Rejected', 'Your proposal has been rejected by: A reviewer')
+                    except:
+                        print('Please enter valid emails for users')
                     flash(display,'success')
                 cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND university_accepted = 1 AND reviewer_accepted = 0 AND admin_accepted = 0')
                 urpdata = cursor.fetchall()
@@ -610,6 +623,10 @@ def adminReviewListProposal():
                     cursor.execute('DELETE FROM GrantApplication WHERE proposal_name = %s AND email = %s',[pn,email])
                     connection.commit()
                     display='Proposal', pn, 'from researcher',email,'has been rejected.'
+                    try:
+                        send_email(email, 'Proposal Rejected', 'Your proposal has been rejected by: An SFI Admin')
+                    except:
+                        print('Please enter valid emails for users')
                     flash(display,'success')
                 cursor.execute('SELECT * FROM GrantApplication WHERE submitted = 1 AND declaration_acceptance = 1 AND admin_accepted = 0')
                 urpdata = cursor.fetchall()
