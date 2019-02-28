@@ -153,7 +153,7 @@ def adminProfile():
 
             #get data from tables
             cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
-            p1_data = cursor.fetchall()
+            p1_data = cursor.fetchone()
 
     finally:
         connection.close()
