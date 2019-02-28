@@ -40,7 +40,7 @@ def dashboard():
             if user_type["user_type"] == "U":
                 return universityDashboard()
             if user_type["user_type"] == "C":
-                return consultantDashboard()
+                return reviewerDashboard()
 
 
             #redirect to limited dashboard if not yet verified
@@ -103,7 +103,7 @@ def universityDashboard():
         connection.close()
     return render_template('universityDashboard.html', verifiedResearchers=verifiedResearchers, unVerifiedResearchers=unVerifiedResearchers)
 
-@dashboard_page.route('/consultantDashboard')
+@dashboard_page.route('/reviewerDashboard')
 @is_logged_in
-def consultantDashboard():
-    return render_template('consultantDashboard.html')
+def reviewerDashboard():
+    return render_template('reviewerDashboard.html')

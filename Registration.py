@@ -124,7 +124,7 @@ def adminRegisterUser():
         if user_type == "U":
             return redirect(url_for('registration_page.universityRegistration'))
         if user_type == "C":
-            return redirect(url_for('registration_page.consultantRegistration'))
+            return redirect(url_for('registration_page.reviewerRegistration'))
 
 
     return render_template('adminRegisterUser.html',form=form)
@@ -167,9 +167,9 @@ def adminRegistration():
 
 
 
-@registration_page.route('/consultantRegistration', methods=['GET', 'POST'])
+@registration_page.route('/reviewerRegistration', methods=['GET', 'POST'])
 @is_logged_in
-def consultantRegistration():
+def reviewerRegistration():
     form = ConsultantRegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         prefix = form.Prefix.data
@@ -198,10 +198,10 @@ def consultantRegistration():
                 else:
                     #Redirect if username is taken
                     flash('Email already in use', 'danger')
-                    return redirect(url_for('registration_page.consultantRegistration'))
+                    return redirect(url_for('registration_page.reviewerRegistration'))
         finally:
             connection.close()
-    return render_template('/consultantRegistration.html',form=form)
+    return render_template('/reviewerRegistration.html',form=form)
 
 
 @registration_page.route('/universityRegistration', methods=['GET', 'POST'])
