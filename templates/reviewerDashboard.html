@@ -43,12 +43,6 @@
         </li>
 
         <li class="nav-item">
-         <a class="nav-link" href="{{ url_for('proposal_page.reviewerReviewListProposal') }}">
-           <i class="fas fa-fw fa-grin"></i>
-           <span>Proposals in Review</span></a>
-       </li>
-
-        <li class="nav-item">
           <a class="nav-link" href="{{ url_for('profile_page.reviewerProfile') }}">
             <i class="fas fa-fw fa-grin"></i>
             <span>View/Edit Profile</span></a>
@@ -59,6 +53,40 @@
       <div id="content-wrapper">
 
         <div class="container-fluid">
+
+          <!--list of accepted proposal start in here-->
+               <div class="card mb-3">
+                <div class="card-header">
+                  <i class="fas fa-table"></i>
+                  Non-accepted Proposals</div>
+                  {% include 'includes/_messages.html' %}
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Proposal Name</th>
+                          <th>From Researcher</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in urpdata %}
+                        <tr>
+                            <td>
+                              <a href="{{ url_for('proposal_page.reviewerReviewIndividualProDetail', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
+                            </td>
+                            <td>{{ row.email }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+          <!--list of accepted proposal list end here-->
+            </div>
 
 
         </div>
