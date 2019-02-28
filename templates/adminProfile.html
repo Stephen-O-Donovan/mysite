@@ -9,13 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Register User</title>
+    <title>{{ p1_data.first_name }} Profile</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="../static/css/main.css" rel="stylesheet">
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- SFI style CSS-->
-    <link href="../static/css/sfi-style.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
     <link href="static/dash/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -26,6 +23,8 @@
     <!-- Custom styles for this template-->
     <link href="static/dash/css/sb-admin.css" rel="stylesheet">
 
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" type="text/css" href="static/showprofile/css/show-profile.css">
   </head>
 
   <body id="page-top">
@@ -34,6 +33,7 @@
 
     <div id="wrapper">
 
+      <!-- Sidebar -->
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
 
@@ -51,41 +51,91 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('adminProfile') }}">
+          <a class="nav-link" href="{{ url_for('registration_page.adminRegisterUser') }}">
             <i class="fas fa-fw fa-grin"></i>
-            <span>View/Edit Profile</span></a>
+            <span>Register a user</span></a>
         </li>
-
       </ul>
 
       <div id="content-wrapper">
 
-        <div class="container-fluid">
+        <div class="-fluid">
 
-          <!-- register form-->
-          <header class="masthead text-white text-center">
-            <div class="overlay"></div>
+
+          <!--Profile show here-->
             <div class="container">
+              <hr>
               <div class="row">
-                <div class="col-xl-12 mx-auto">
-                    {% include 'includes/_messages.html' %}
-                    {% from 'includes/_formhelpers.html' import render_field %}
-                     <form method='POST' class="main-form">
-                        <h2>Select a user type to register</h2>
-                        <fieldset>
-                        <div class='form-group'>
 
-                            {{render_field(form.User_Type, class_='form-control')}}
-                        </div>
-                      </fieldset>
-                        <p><input type='submit' value='Next' class='btn btn-block btn-lg btn-primary'></p>
-                    </form>
-                </div>
-              </div>
+      <!-- edit form column -->
+      {% include 'includes/_messages.html' %}
+      {% from 'includes/_formhelpers.html' import render_field %}
+      <div class="col-md-9 personal-info">
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1">Personal Info</a>
+              </h3>
             </div>
-          </header>
-        </div>
 
+            <div id="collapse1" class="panel-collapse collapse show">
+
+                <form class="form-horizontal" role="form" method="POST">
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.first_name, class_='form-control', value=p1_data.first_name)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.surname, class_='form-control', value=p1_data.surname)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.suffix, class_='form-control', value=p1_data.suffix)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.phone, class_='form-control', value=p1_data.phone)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.phone_extension, class_='form-control', value=p1_data.phone_extension)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+
+                    <div class="col-md-8">
+                      <input type="submit" class="btn btn-primary" name="submit" value="Save Personal Info">
+                      <span></span>
+                      <input type="reset" class="btn btn-default" value="Cancel">
+                    </div>
+
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<hr>
       </div>
       <!-- /.content-wrapper -->
 
@@ -115,6 +165,7 @@
         </div>
       </div>
     </div>
+  </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="static/dash/vendor/jquery/jquery.min.js"></script>
@@ -136,7 +187,6 @@
     <script src="static/dash/js/demo/chart-area-demo.js"></script>
 
   </body>
-
   <!-- Footer -->
   {% include 'footer.html' %}
 
