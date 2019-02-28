@@ -642,9 +642,9 @@ def adminReviewListProposal():
         connection.close()
     return render_template('adminReviewListProposal.html', urpdata=urpdata)
 
-@proposal_page.route('/adminReviewIndividualProDetail')
+@proposal_page.route('/adminIndividualProposal')
 @is_logged_in
-def adminReviewIndividualProDetail():
+def adminIndividualProposal():
     if 'email' not in session:
         return redirect(url_for('login'))
 
@@ -657,4 +657,4 @@ def adminReviewIndividualProDetail():
             urpdata2 = cursor.fetchone()
     finally:
         connection.close()
-    return render_template('adminReviewIndividualProDetail.html', urpdata2=urpdata2)
+    return render_template('adminIndividualProposal.html', urpdata2=urpdata2)

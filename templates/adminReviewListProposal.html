@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Review Proposal</title>
+    <title>SB Admin - Review Proposals</title>
 
     <!-- Bootstrap core CSS-->
     <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +75,7 @@
                     {% for row in urpdata %}
                     <tr>
                         <td>
-                          <a href="{{ url_for('proposal_page.adminReviewIndividualProDetail', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
+                          <a href="{{ url_for('proposal_page.adminIndividualProposal', e=row.email, proposal_name=row.proposal_name) }}">{{ row.proposal_name }}</a>
                         </td>
                         <td>{{ row.email }}</td>
                     </tr>
