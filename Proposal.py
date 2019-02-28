@@ -205,10 +205,12 @@ def proposalSubmission():
                     connection.commit()
                     #flash('Application sent', 'success')
                     try:
-                        cursor.execute('SELECT uni.emails FROM University_Users as uni AND Users as users WHERE users.email = %s AND u.university_name == users.institution', (email))
-                        send_email(cursor.fetchone()['emails'], 'Proposal Submitted', 'A member of your institution has made a proposal please review this on your account')
-                    except:
+                        cursor.execute('SELECT emails FROM University_Users WHERE university_name = "ucc"')
+                        print(cursor.fetchone()['emails'])
+                        send_email("joeydelarago@gmail.com", 'Proposal Submitted', 'A member of your institution has made a proposal please review this on your account')
+                    except Exception as e:
                         print('Please inter emails for universitys in database')
+                        print(e)
                     return render_template('dashboard.html')
             finally:
                 connection.close()

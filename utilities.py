@@ -19,7 +19,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def send_email(email, subject, text):
-    sg = sendgrid.SendGridAPIClient(apikey='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')
+    sg = sendgrid.SendGridAPIClient(apikey='')
     from_email = Email("test@example.com")
     to_email = Email(email)
     subject = subject
