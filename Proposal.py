@@ -105,7 +105,6 @@ def proposalSubmission():
 
     if 'email' in session:
         email = session['email']
-
     if request.method == 'POST' and request.form.get('save'):
         submitted = 0
         proposal_name = request.args.get('proposal_name', '')
@@ -114,8 +113,6 @@ def proposalSubmission():
         try:
             connection = create_connection()
             with connection.cursor() as cursor:
-
-
                 cursor.execute('SELECT proposal_name FROM GrantApplication WHERE email = %s', [email])
                 existing_edit = cursor.fetchone()
 
