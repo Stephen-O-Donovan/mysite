@@ -160,6 +160,35 @@ def adminProfile():
 
     return render_template('adminProfile.html', form=form, p1_data=p1_data)
 
+@app.route('/uniProfile', methods=['GET', 'POST'])
+@is_logged_in
+def uniProfile():
+    form = BasicProfileForm(request.form)
+    if 'email' in session:
+        email = session['email']
+
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+
+            if request.method == 'POST':
+                if request.form['submit'] == 'Save Personal Info':
+                    cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s,'
+                                   'phone=%s, phone_extension=%s'
+                                   'WHERE email=%s',
+                                   [form.first_name.data, form.surname.data, form.suffix.data,
+                                   form.phone.data, form.phone_extension.data, email])
+                    connection.commit()
+
+            #get data from tables
+            cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
+            p1_data = cursor.fetchone()
+
+    finally:
+        connection.close()
+
+    return render_template('uniProfile.html', form=form, p1_data=p1_data)
+
 @app.route('/profile', methods=['GET', 'POST'])
 @is_logged_in
 def show_profile():

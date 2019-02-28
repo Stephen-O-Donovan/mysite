@@ -33,20 +33,35 @@
     {% include 'dashboardNav.html' %}
   <div id="wrapper">
 
-    <!-- Sidebar -->
-    {% include 'uninav.html' %}
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <ul class="sidebar navbar-nav">
+
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('dashboard_page.universityDashboard') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>University Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('proposal_page.universityReviewListProposal') }}">
+           <i class="fas fa-fw fa-grin"></i>
+           <span>Proposals in Review</span></a>
+       </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('uniProfile') }}">
+            <i class="fas fa-fw fa-grin"></i>
+            <span>View/Edit Profile</span></a>
+        </li>
+
+      </ul>
 
       <div id="content-wrapper">
 
         <div class="container-fluid">
-
-          <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="#">Non-accepted Proposals</a>
-            </li>
-            <li class="breadcrumb-item active">{{ urpdata2.email }} proposal</li>
-          </ol>
 
       <!-- proposal detail start in here-->
               <div id="container">
@@ -137,10 +152,10 @@
                     <h6>Do you accepted this proposal?</h6>
                     <p>Please click one of the following button to accept or reject this proposal.</p>
                     <a id='acrj' href="{{ url_for('proposal_page.universityReviewListProposal', accept='1', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Accept</p></a>
-                    
+
                     <a id='acrj' href="{{ url_for('proposal_page.universityReviewListProposal', accept='0', email=urpdata2.email, pn=urpdata2.proposal_name) }}"><p>Reject</p></a>
                </article>
-            <a id="abc" href="{{ url_for('proposal_page.universityReviewListProposal') }}">Back to previos page</a>
+            <a id="abc" href="{{ url_for('proposal_page.universityReviewListProposal') }}">Back to previous page</a>
           </div>
       <!--proposal detail end here-->
         </div>
@@ -175,6 +190,7 @@
         </div>
       </div>
     </div>
+  </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="static/dash/vendor/jquery/jquery.min.js"></script>
