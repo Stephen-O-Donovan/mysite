@@ -80,7 +80,7 @@ def login():
                     return redirect(url_for('dashboard_page.adminDashboard'))
                 elif user_type == "C":
                     flash('logged in as consultant', 'success')
-                    return redirect(url_for('dashboard_page.consultantDashboard'))
+                    return redirect(url_for('dashboard_page.reviewerDashboard'))
                 elif user_type == "U":
                     flash('logged in as university admin', 'success')
                     return redirect(url_for('dashboard_page.universityDashboard'))
