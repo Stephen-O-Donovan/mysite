@@ -13,6 +13,7 @@ from forms import *
 from Registration import *
 from Proposal import *
 from Dashboard import *
+from Profile import *
 
 UPLOAD_FOLDER = 'storage/proposals'
 
@@ -24,6 +25,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.register_blueprint(dashboard_page)
 app.register_blueprint(registration_page)
 app.register_blueprint(proposal_page)
+app.register_blueprint(profile_page)
 
 # Initialise MySQL
 mysql = MySQL(cursorclass=DictCursor)
@@ -100,94 +102,6 @@ def logout():
     session.clear()
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
-
-@app.route('/otherProfile', methods=['GET', 'POST'])
-@is_logged_in
-def otherProfile():
-    form = BasicProfileForm(request.form)
-    if 'email' in session:
-        email = session['email']
-    if request.method == 'POST':
-        connection = create_connection()
-        with connection.cursor() as cursor:
-            if request.form['submit'] == 'Save Personal Info':
-                cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s, job_title=%s, institution=%s,'
-                               'orcid=%s, phone=%s, phone_extension=%s'
-                               'WHERE email=%s',
-                               [form1.first_name.data, form1.surname.data, form1.suffix.data, form1.job_title.data,
-                                form1.institution.data, form1.orcid.data, form1.phone.data, form1.phone_extension.data,
-                                email])
-                connection.commit()
-
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-
-            #get data from tables
-            cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
-            p1_data = cursor.fetchall()
-    finally:
-        connection.close()
-
-    return render_template('otherProfile.html', form1=form1, p1_data=p1_data)
-
-@app.route('/adminProfile', methods=['GET', 'POST'])
-@is_logged_in
-def adminProfile():
-    form = BasicProfileForm(request.form)
-    if 'email' in session:
-        email = session['email']
-
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-
-            if request.method == 'POST':
-                if request.form['submit'] == 'Save Personal Info':
-                    cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s,'
-                                   'phone=%s, phone_extension=%s'
-                                   'WHERE email=%s',
-                                   [form.first_name.data, form.surname.data, form.suffix.data,
-                                   form.phone.data, form.phone_extension.data, email])
-                    connection.commit()
-
-            #get data from tables
-            cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
-            p1_data = cursor.fetchone()
-
-    finally:
-        connection.close()
-
-    return render_template('adminProfile.html', form=form, p1_data=p1_data)
-
-@app.route('/uniProfile', methods=['GET', 'POST'])
-@is_logged_in
-def uniProfile():
-    form = BasicProfileForm(request.form)
-    if 'email' in session:
-        email = session['email']
-
-    try:
-        connection = create_connection()
-        with connection.cursor() as cursor:
-
-            if request.method == 'POST':
-                if request.form['submit'] == 'Save Personal Info':
-                    cursor.execute('UPDATE Users SET first_name=%s, surname=%s, suffix=%s,'
-                                   'phone=%s, phone_extension=%s'
-                                   'WHERE email=%s',
-                                   [form.first_name.data, form.surname.data, form.suffix.data,
-                                   form.phone.data, form.phone_extension.data, email])
-                    connection.commit()
-
-            #get data from tables
-            cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
-            p1_data = cursor.fetchone()
-
-    finally:
-        connection.close()
-
-    return render_template('uniProfile.html', form=form, p1_data=p1_data)
 
 @app.route('/profile', methods=['GET', 'POST'])
 @is_logged_in
