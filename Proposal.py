@@ -52,7 +52,7 @@ class CreateProposalForm(Form):
 
 @proposal_page.route('/adminCreateProposal', methods=['GET', 'POST'])
 @is_logged_in
-def create_proposal():
+def adminCreateProposal():
     form = CreateProposalForm(request.form)
     if request.method == 'POST' and form.validate():
         if 'AdditionalInfo' not in request.files:

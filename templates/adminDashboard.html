@@ -66,23 +66,14 @@
 
         <div class="container-fluid">
 
-          <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="#">Administrator Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Overview</li>
-          </ol>
-
-
         <div class="dash-layout">
-        <a class="dash-icon " href="index.html">
+        <a class="dash-icon " href="{{ url_for('proposal_page.adminCreateProposal') }}">
           <i class="fas fa-bullhorn"></i>
           <p>Calls for Proposals</p>
         </a>
-        <a class="dash-icon " href="index.html">
+        <a class="dash-icon " href="#">
           <i class="fas fa-file-alt"></i>
-          <p>Researcher reports</p>
+          <p>Funding Reports</p>
         </a>
       </div>
 
