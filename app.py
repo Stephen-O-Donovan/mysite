@@ -62,9 +62,8 @@ def login():
         password_candidate = request.form['password']
         cursor = create_connection().cursor()
         result = cursor.execute('SELECT * FROM Users WHERE email = %s', [email])
-        #user_type = cursor.execute('SELECT user_type FROM Users WHERE email = %s', [email])
         form = RegistrationType(request.form)
-        #user_type = form.User_Type.data
+        
         if result > 0:
             data = cursor.fetchone()
             password = data['password']

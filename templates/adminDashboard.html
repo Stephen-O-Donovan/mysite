@@ -61,13 +61,13 @@
             <i class="fas fa-fw fa-grin"></i>
             <span>View/Edit Profile</span></a>
         </li>
-        
+
       </ul>
 
       <div id="content-wrapper">
 
         <div class="container-fluid">
-
+          {% include 'includes/_messages.html' %}
         <div class="dash-layout">
         <a class="dash-icon " href="{{ url_for('proposal_page.adminCreateProposal') }}">
           <i class="fas fa-bullhorn"></i>
