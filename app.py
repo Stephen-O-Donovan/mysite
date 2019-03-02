@@ -296,7 +296,7 @@ def yearlyReports():
     if request.method == 'POST':
         connection = create_connection()
         with connection.cursor() as cursor:
-            if request.form['submit'] == 'Submmit records' and form1.validate():
+            if request.form['submit'] == 'Submmit records' and YRform.validate():
                 cursor.execute('UPDATE Users SET publications=%s, eduPub=%s, academic_collaborations=%s, '
                                'non_academic_collaborations=%s, commercialisation=%s, '
                                'deviations_of_research=%s, bullet_research_point=%s, challenges=%s, impact=%s, '
