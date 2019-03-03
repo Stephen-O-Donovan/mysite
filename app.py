@@ -287,6 +287,23 @@ def activeProjects():
        connection.close()
     return render_template('activeProjects.html', rows=rows)
 
+
+@app.route('/editFunding')
+@is_logged_in
+def editFunding():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Project WHERE active = %s', ['y'])
+            rows = cursor.fetchall()
+
+    finally:
+       connection.close()
+    return render_template('activeProjects.html', rows=rows)
+
+
 @app.route('/yearlyReports', methods=['GET', 'POST'])
 @is_logged_in
 def yearlyReports():
