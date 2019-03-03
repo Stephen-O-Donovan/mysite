@@ -1,0 +1,64 @@
+      {% include 'includes/_messages.html' %}
+      {% from 'includes/_formhelpers.html' import render_field %}
+      <div class="col-md-9 personal-info">
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1">Personal Info</a>
+              </h3>
+            </div>
+
+            <div id="collapse1" class="panel-collapse collapse show">
+
+                <form class="form-horizontal" role="form" method="POST">
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.first_name, class_='form-control', value=p1_data.first_name)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.surname, class_='form-control', value=p1_data.surname)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.suffix, class_='form-control', value=p1_data.suffix)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.phone, class_='form-control', value=p1_data.phone)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form.phone_extension, class_='form-control', value=p1_data.phone_extension)}}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+
+                    <div class="col-md-8">
+                      <input type="submit" class="btn btn-primary" name="submit" value="Save Personal Info">
+                      <span></span>
+                      <input type="reset" class="btn btn-default" value="Cancel">
+                    </div>
+
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>

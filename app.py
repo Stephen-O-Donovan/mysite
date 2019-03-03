@@ -287,10 +287,9 @@ def activeProjects():
        connection.close()
     return render_template('activeProjects.html', rows=rows)
 
-
-@app.route('/editFunding')
+@app.route('/adminProjects')
 @is_logged_in
-def editFunding():
+def adminProjects():
     if 'email' in session:
         email = session['email']
     try:
@@ -301,8 +300,7 @@ def editFunding():
 
     finally:
        connection.close()
-    return render_template('activeProjects.html', rows=rows)
-
+    return render_template('adminProjects.html', rows=rows)
 
 @app.route('/yearlyReports', methods=['GET', 'POST'])
 @is_logged_in
