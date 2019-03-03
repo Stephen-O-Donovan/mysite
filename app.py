@@ -113,6 +113,7 @@ def show_profile():
     form6 = ProfileFundingForm(request.form)
     form7 = ProfileTeamateForm(request.form)
     form8 = ProfileImpactForm(request.form)
+    form9 = passwordSet(request.form)
     if 'email' in session:
         email = session['email']
     if request.method == 'POST':
@@ -202,6 +203,14 @@ def show_profile():
                 cursor.execute('DELETE FROM Profile_Impact WHERE grant_no=%s AND email=%s',
                                [request.form['grant'], email])
                 connection.commit()
+            elif request.form['submit'] == 'Change Password':
+                if form9.validate():
+                    passw = sha256_crypt.encrypt(str(form9.password.data))
+                    cursor.execute('UPDATE Users SET password=%s WHERE email=%s', [passw, email])
+                    connection.commit()
+
+                else:
+                    flash('Passwords do not match')
 
 
 
@@ -269,7 +278,7 @@ def show_profile():
 
     if verified == {u'is_verified': 0}:
         return render_template('basicShowProfile.html' , form1=form1, form2=form2, form3=form3, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
-    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3,form4=form4,form5=form5,form6=form6,form7=form7,form8=form8, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
+    return render_template('new_show_profile.html', form1=form1, form2=form2, form3=form3,form4=form4,form5=form5,form6=form6,form7=form7,form8=form8, form9=form9, p1_data=p1_data, p2_data=p2_data, p3_data=p3_data, p4_data=p4_data, p5_data=p5_data, p6_data=p6_data, p7_data=p7_data, p8_data=p8_data, p9_data=p9_data, p10_data=p10_data, p11_data=p11_data, p13_data=p13_data, p14_data=p14_data, p16_data=p16_data, p17_data=p17_data)
 
 
 @app.route('/activeProjects')

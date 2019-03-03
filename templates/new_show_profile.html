@@ -602,6 +602,45 @@
           </div>
         </div>
 
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+
+              <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse9">Change Password</a>
+              </h3>
+            </div>
+
+            <div id="collapse9" class="panel-collapse collapse">
+                <form class="form-horizontal" role="form" method="POST">
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form9.password, class_='form-control')}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8">
+                      {{render_field(form9.confirm, class_='form-control')}}
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Change Password">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                  </div>
+                  </div>
+                </form>
+
+            </div>
+          </div>
+        </div>
+
 
 
       </div>

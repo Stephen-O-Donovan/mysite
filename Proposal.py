@@ -106,6 +106,7 @@ def proposalSubmission():
 
     if 'email' in session:
         email = session['email']
+
     if request.method == 'POST' and request.form.get('save'):
         submitted = 0
         proposal_name = request.args.get('proposal_name', '')

@@ -23,11 +23,14 @@ class BasicProfileForm(Form):
     phone_extension = SelectField(u'Phone Extension',[validators.DataRequired()], choices=[('353','+353'),('etc','etc.')])
 
 
-    # password = PasswordField('Password')
-    # confirm = PasswordField('Confirm Password', [
-    #     validators.EqualTo("Password", message='Passwords do not match')
-    # ])
 
+
+class passwordSet(Form):
+    password = PasswordField('Password')
+    confirm = PasswordField('Confirm Password', [
+        validators.DataRequired(),
+        validators.EqualTo("password", message='Passwords do not match')
+    ])
     
 class yearlyReportForm(Form):
         publications = StringField('Publications', [validators.DataRequired(), validators.Length(min=5, max=100)])
