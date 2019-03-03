@@ -10,7 +10,7 @@ from utilities import *
 from werkzeug.utils import secure_filename
 from datetime import date
 
-UPLOAD_FOLDER = 'storage/proposals'
+UPLOAD_FOLDER = 'static/storage/proposals'
 proposal_page = Blueprint('proposal_page', __name__, template_folder='templates')
 
 def is_logged_in(f):
@@ -39,7 +39,7 @@ class CreateProposalForm(Form):
     proposal_name = StringField('Proposal Name', [validators.DataRequired(message='Please enter a name'), validators.Length(min=1, max=300)])
     #email = StringField('Email', [validators.DataRequired(), validators.Length(min=3, max=50),
     #                              validators.Email(message="Invalid email")])
-    nrp_area = SelectField('NRP Area', [validators.DataRequired(message='Please enter an NRP area')], choices=[('a', 'A'), ('n', 'N'), ('s', 'S')])
+    nrp_area = SelectField('NRP Area', [validators.DataRequired(message='Please enter an NRP area')], choices=[('a', 'A'), ('b', 'B'),('c', 'C'),('d', 'D'), ('e', 'E'),('f', 'F'),('g', 'G'),('h', 'H'),('i', 'I'),('j', 'J'),('k', 'K'),('l', 'L'),('m', 'M'),('n', 'N'), ('s', 'S'),('o', 'O')])
     description = StringField('Description', [validators.DataRequired(message='Please enter a description'), validators.Length(min=50, max=65000)])
     report_guidelines = TextAreaField('Report Guidelines', [validators.DataRequired(message='Please enter guidelines'), validators.Length(min=20, max=65000)])
     description_of_target_group = TextAreaField('Description of Target Group', [validators.DataRequired(message='Please enter description'), validators.Length(min=10, max=65000)])
@@ -48,6 +48,7 @@ class CreateProposalForm(Form):
                                                           validators.Length(min=20, max=65000)])
     duration = StringField('Grant Duration', [validators.DataRequired(message='Please enter duration'), validators.Length(min=5, max=20)])
     time_frame = StringField('Start Time Frame', [validators.DataRequired(message='Please enter start time frame'), validators.Length(min=5, max=100)])
+    deadline = StringField('Deadline', [validators.DataRequired(message='Please enter the deadline'), validators.Length(min=10, max=10)])
 
 
 @proposal_page.route('/adminCreateProposal', methods=['GET', 'POST'])
@@ -75,11 +76,11 @@ def adminCreateProposal():
                 with connection.cursor() as cursor:
                     cursor.execute(
                         'INSERT INTO CFP(proposal_name, description_of_target_group, additional_info,'
-                        ' nrp_area, call_text, report_guidelines, eligibility_criteria, duration, time_frame)'
-                        ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                        ' nrp_area, call_text, report_guidelines, eligibility_criteria, duration, time_frame, description_of_proposal_deadlines)'
+                        ' VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
                         (form.proposal_name.data, form.description_of_target_group.data, additional_info, form.nrp_area.data,
                          form.description.data, form.report_guidelines.data, form.eligibility_criteria.data,
-                         form.duration.data, form.time_frame.data))
+                         form.duration.data, form.time_frame.data, form.deadline.data))
                     connection.commit()
                     flash('Your files have been uploaded', 'success')
 
