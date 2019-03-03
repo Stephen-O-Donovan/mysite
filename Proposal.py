@@ -441,9 +441,9 @@ def pastProposals():
         connection.close()
     return render_template('pastProposals.html', rows=rows)
 
-@proposal_page.route('/reviewproposal')
+@proposal_page.route('/adminAcceptedProposal')
 @is_logged_in
-def reviewproposal():
+def adminAcceptedProposal():
     if 'email' not in session:
         return redirect(url_for('login'))
     try:
@@ -453,11 +453,11 @@ def reviewproposal():
             rpdata = cursor.fetchall()
     finally:
         connection.close()
-    return render_template('reviewproposal.html', rpdata=rpdata)
+    return render_template('adminAcceptedProposal.html', rpdata=rpdata)
 
-@proposal_page.route('/reviewIndividualProposal')
+@proposal_page.route('/adminAcceptedIndividualPro')
 @is_logged_in
-def reviewIndividualProposal():
+def adminAcceptedIndividualPro():
     if 'email' not in session:
         return redirect(url_for('login'))
 
@@ -470,7 +470,7 @@ def reviewIndividualProposal():
             rpdata2 = cursor.fetchone()
     finally:
         connection.close()
-    return render_template('reviewIndividualProposal.html', rpdata2=rpdata2)
+    return render_template('adminAcceptedIndividualPro.html', rpdata2=rpdata2)
 
 
 @proposal_page.route('/universityReviewListProposal')
