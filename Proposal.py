@@ -8,7 +8,7 @@ from pymysql.cursors import DictCursor
 #from flask_sslify import SSLify
 from utilities import *
 from werkzeug.utils import secure_filename
-from datetime import date
+from datetime import date, datetime
 
 UPLOAD_FOLDER = 'static/storage/proposals'
 proposal_page = Blueprint('proposal_page', __name__, template_folder='templates')
@@ -230,13 +230,21 @@ def callForProposals():
     try:
         connection = create_connection()
         with connection.cursor() as cursor:
+            #get today's date
+            now = datetime.now()
+            formatted_date = now.strftime('%Y-%m-%d')
+
             #need to not show cfp that have been submitted
-            cursor.execute('SELECT * FROM CFP')
-            rows = cursor.fetchall()
+            cursor.execute('SELECT * FROM CFP where description_of_proposal_deadlines >= %s', [formatted_date])
+            activeRows = cursor.fetchall()
+            
+
+            cursor.execute('SELECT * FROM CFP where description_of_proposal_deadlines < %s', [formatted_date])
+            outdatedRows = cursor.fetchall()
 
     finally:
         connection.close()
-    return render_template('callForProposals.html', rows=rows, email=email)
+    return render_template('callForProposals.html', activeRows=activeRows, outdatedRows=outdatedRows ,email=email)
 
 
 @proposal_page.route('/pendingProposals')

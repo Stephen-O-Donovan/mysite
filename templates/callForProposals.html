@@ -58,12 +58,12 @@
                     <tr>
                       <th>Proposal Name</th>
                       <th>Deadline</th>
-                      <th>Full Docaumentation</th>
+                      <th>Full Documentation</th>
                       <th>Apply</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for row in rows %}
+                    {% for row in activeRows %}
                     <tr>
                         <td>{{ row.proposal_name }}</td>
                         <td>{{ row.description_of_proposal_deadlines }}</td>
@@ -74,6 +74,31 @@
                     {% endfor %}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Expired Proposals</div>
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Proposal Name</th>
+                    <th>Deadline</th>
+                    <th>Full Documentation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in outdatedRows %}
+                  <tr>
+                      <td>{{ row.proposal_name }}</td>
+                      <td>{{ row.description_of_proposal_deadlines }}</td>
+                      <td><a href="static/storage/proposals/{{ row.additional_info }}" download>{{ row.additional_info }}</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
               </div>
             </div>
           </div>
