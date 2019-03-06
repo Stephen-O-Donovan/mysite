@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - View current projects</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="static/dash/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="static/dash/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="static/dash/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="static/dash/css/sb-admin.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    {% include 'dashboardNav.html' %}
+
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('dashboard_page.adminDashboard') }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Administrator Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('registration_page.adminRegisterUser') }}">
+          <i class="fas fa-fw fa-grin"></i>
+          <span>Register a user</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('profile_page.adminProfile') }}">
+          <i class="fas fa-fw fa-grin"></i>
+          <span>View/Edit Profile</span></a>
+      </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('profile_page.adminProfile') }}">
+            <i class="fas fa-fw fa-grin"></i>
+            <span>Current projects</span></a>
+        </li>
+
+    </ul>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+      <!--list of accepted proposal start in here-->
+           <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Non-accepted Proposals</div>
+              {% include 'includes/_messages.html' %}
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Amount</th>
+                      <th>Funding Body</th>
+                      <th>Funding Program</th>
+                      <th>Status</th>
+                      <th>Grant Number</th>
+                      <th>Project Name</th>
+                      <th>Project ID</th>
+                      <th>Budget</th>
+                      <th>Yearly reports</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in urpdata %}
+                    <tr>
+                        <td>{{ row.start_date }}</td>
+                        <td>{{ row.end_date }}</td>
+                        <td>{{ row.amount_fund }}</td>
+                        <td>{{ row.fund_body }}</td>
+                        <td>{{ row.fund_program }}</td>
+                        <td>{{ row.status }}</td>
+                        <td>{{ row.grant_no }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ row.project_name }}</td>
+                        <td>{{ row.project_identifier }}</td>
+                        <td>{{ row.project_budget }}</td>
+                        <td>{{ row.Publications }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+      <!--list of accepted proposal list end here-->
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="static/dash/vendor/jquery/jquery.min.js"></script>
+    <script src="static/dash/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/dash/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="static/dash/vendor/chart.js/Chart.min.js"></script>
+    <script src="static/dash/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="static/dash/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/dash/js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="static/dash/js/demo/datatables-demo.js"></script>
+    <script src="static/dash/js/demo/chart-area-demo.js"></script>
+
+  </body>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+</html>
