@@ -24,6 +24,21 @@ def is_logged_in(f):
             return redirect(url_for('login'))
     return wrap
 
+@profile_page.route('/adminviewcurrentprojects')
+@is_logged_in
+def adminviewcurrentprojects():
+    if 'email' in session:
+        email = session['email']
+    try:
+        connection = create_connection()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM Profile_Funding WHERE email = %s', [email])
+            fdata = cursor.fetchall()
+
+    finally:
+        connection.close()
+    return render_template('adminviewcurrentprojects.html', fdata=fdata)
+
 @profile_page.route('/adminProfile', methods=['GET', 'POST'])
 @is_logged_in
 def adminProfile():
